@@ -1,2 +1,23 @@
-# Infotafel-2.0
-Infotafel 2.0 nach neuen Anforderungen haben wir uns entschieden das Projekt neu anzusetzen und den alten Code zu refactoren
+# Infotafel
+
+### Allgemein
+- Fahrplan
+- Wetter
+- Berufsschule
+- Speiseplan
+- Vertretungsplan
+
+### Außen-WG's
+- News (Betreuer)
+- Infos zu Betreuer
+- Freizeitangebote
+- Vertretungsplan
+
+### Iternat
+- News (Betreuer)
+- Infos zu Betreuer
+- Freizeitangebote
+- Vertretungsplan
+
+
+Sharepoint API Bewertung (Essen)
