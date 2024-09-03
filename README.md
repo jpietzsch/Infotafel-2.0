@@ -1,23 +1,5 @@
 # Infotafel
 
-### Allgemein
-- Fahrplan
-- Wetter
-- Berufsschule
-- Speiseplan
-- Vertretungsplan
+**Basiert auf NextJS** 
 
-### Außen-WG's
-- News (Betreuer)
-- Infos zu Betreuer
-- Freizeitangebote
-- Vertretungsplan
-
-### Iternat
-- News (Betreuer)
-- Infos zu Betreuer
-- Freizeitangebote
-- Vertretungsplan
-
-
-Sharepoint API Bewertung (Essen)
+Relevante Information für Azubis und Mitarbeiter auf einer "Infotafel" anzeigen
