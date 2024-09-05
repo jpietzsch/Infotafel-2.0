@@ -28,14 +28,14 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#070707] text-[#e5e5e5]`}
       >
-        <div className="max-w-screen max-h-screen">
+        {/*div around the content*/}
+        <div className="min-w-screen min-h-screen flex flex-col">
 
-          <div className="w-full h-20 bg-yellow-500 flex p-5 text-black font-semibold">
-            <img src="SFZLogo.svg" />
-            <div className="flex-grow"></div>
+          <div className="w-full h-20 bg-yellow-500 flex p-5 text-black font-semibold justify-between">
+            <img src="SFZLogo.svg" className="h-[120%]" />
             <Clock className="text-3xl">time place holder</Clock>
           </div>
-          {children}
+            {children}
         </div>
       </body>
     </html>
