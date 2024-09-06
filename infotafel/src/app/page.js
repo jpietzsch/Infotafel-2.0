@@ -1,3 +1,5 @@
+import Events from "./components/events";
+
 export default function Home() {
   return (
     <div
@@ -11,8 +13,8 @@ export default function Home() {
         </button>
 
         {/*main content */}
-        <div className="w-10/12">tast </div>
-
+        <div className="w-10/12"><Events/> </div>
+        
         {/*right arrow */}
         <button className="w-1/12 flex items-center justify-center">
           <img src="arrowright.png" alt="Left Arrow" />{" "}
