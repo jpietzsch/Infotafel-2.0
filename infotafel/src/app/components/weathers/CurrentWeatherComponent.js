@@ -8,7 +8,7 @@ const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 function CurrentWeatherComponent({ currentWeatherData }) {
   return (
-    <div id="testid" className="flex flex-row justify-evenly w-screen sm:max-w-screen-lg sm:mb-52">
+    <div className="flex flex-row justify-evenly w-screen h-screen sm:max-w-screen-lg sm:mb-52 ">
       <div className="sm:mr-64" style={{ maxWidth: isMobile ? "40%" : "" }}>
         {/* Display the weather description */}
         <h1 className="text-4xl font-bold text-white m-12" tabIndex="0">

@@ -6,8 +6,8 @@ import Lottie from "lottie-react";
 // Component to display daily weather forecast
 export default function DailyForecastComponent({weatherData}) {
   return (
-    <div className="flex mt-10">
-      <div className="bg-black flex flex-col max-w-none w-full text-white">
+    <div className="flex mt-25">
+      <div className="bg-[#070707] flex flex-col max-w-none w-full text-white">
         <div className="flex flex-wrap text-center justify-evenly">
           {weatherData?.daily?.time.slice(0, 6).map((dailyData, index) => (
             <div
