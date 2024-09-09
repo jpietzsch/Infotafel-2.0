@@ -1,10 +1,10 @@
 {
   "weather": {
-    "timestamp": 1725881482222,
+    "timestamp": 1725881820705,
     "data": {
       "latitude": 50.84,
       "longitude": 12.879999,
-      "generationtime_ms": 0.2180337905883789,
+      "generationtime_ms": 0.27489662170410156,
       "utc_offset_seconds": 0,
       "timezone": "GMT",
       "timezone_abbreviation": "GMT",

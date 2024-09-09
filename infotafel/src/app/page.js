@@ -14,7 +14,7 @@ export default function Home() {
         </button>
 
         {/*main content */}
-        <Wetter className="w-10/12"></Wetter>
+        <Events className="w-10/12"></Events>
         
         {/*right arrow */}
         <button className="w-1/12 flex items-center justify-center">

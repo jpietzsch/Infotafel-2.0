@@ -9,17 +9,17 @@ export default function Events() {
     sich bei der Polizei zu melden.`;
   
     return (
-      <div className="w-full flex-1 flex h-full">
+      <div className="w-full flex-1 flex h-1000 items-center">
         <div className="w-7/12 flex flex-col">
-          <h2 className="text-white text-4xl font-bold my-20 mt-40 mx-20">Irgendjemand hat sich gestern von der Brücke gestürzt</h2>
+          <h2 className="text-white text-4xl font-bold mb-20 mx-20">Irgendjemand hat sich gestern von der Brücke gestürzt</h2>
           <p className="text-white text-xl whitespace-pre-line ml-20">
             {content}
           </p>
         </div>
-  
+
         <div className="w-5/12 flex items-center justify-end">
           <img
-            src="hallo.jpeg"
+            src="pipebomb.jpeg"
             alt="bildi"
             style={{
               objectFit: "cover",
@@ -28,7 +28,8 @@ export default function Events() {
               borderRadius: "30px",
               borderStyle: "solid",
               borderColor: "white",
-              borderWidth: "6px"
+              borderWidth: "6px",
+              margin: "auto"
             }}
           />
         </div>
