@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "concurrently": "^9.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
     "lottie": "^0.0.1",
     "lottie-react": "^2.4.0"
   }
