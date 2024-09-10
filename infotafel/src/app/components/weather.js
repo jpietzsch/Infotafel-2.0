@@ -19,7 +19,7 @@ const debug = false;
  *
  * @returns {JSX.Element} The rendered weather component.
  */
-function Wetter() {
+function Weather() {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -79,4 +79,4 @@ function Wetter() {
   );
 }
 
-export default Wetter;
+export default Weather;

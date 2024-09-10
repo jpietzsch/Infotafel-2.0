@@ -1,5 +1,5 @@
 import Events from "./components/events";
-import Wetter from "./components/weather";
+import Weather from "./components/weather";
 
 export default function Home() {
   return (
@@ -14,7 +14,7 @@ export default function Home() {
         </button>
 
         {/*main content */}
-        <Events className="w-10/12"></Events>
+        <Weather className="w-10/12"></Weather>
         
         {/*right arrow */}
         <button className="w-1/12 flex items-center justify-center">
