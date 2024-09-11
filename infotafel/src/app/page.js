@@ -1,6 +1,7 @@
 import Events from "./components/events";
 import Weather from "./components/weather";
 import LocInfo from "./components/locinfo";
+import Foods from "./components/foods";
 
 export default function Home() {
   return (
@@ -15,11 +16,11 @@ export default function Home() {
         </button>
 
         {/*main content */}
-        <LocInfo className="w-10/12 flex-1"></LocInfo>
+        <Foods className="w-10/12 flex-1"></Foods>
         
         {/*right arrow */}
         <button className="w-1/12 flex items-center justify-center">
-          <img src="arrowright.png" alt="Left Arrow" />{" "}
+          <img src="arrowright.png" alt="Left Arrow" />
         </button>
       </div>
     </div>
