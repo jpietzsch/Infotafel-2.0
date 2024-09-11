@@ -1,5 +1,6 @@
 import Events from "./components/events";
 import Weather from "./components/weather";
+import LocInfo from "./components/locinfo";
 
 export default function Home() {
   return (
@@ -14,7 +15,7 @@ export default function Home() {
         </button>
 
         {/*main content */}
-        <Weather className="w-10/12"></Weather>
+        <LocInfo className="w-10/12 flex-1"></LocInfo>
         
         {/*right arrow */}
         <button className="w-1/12 flex items-center justify-center">
