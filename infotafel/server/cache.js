@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
 const cors = require("cors");
+const cheerio = require("cheerio");
 
 const app = express();
 const PORT = 8000;
@@ -45,9 +46,9 @@ const isTimestampExpired = (timestamp, expirationTime) => {
 
 app.get("/cache/weather", async (req, res) => {
   try {
-
+    let cache = {};
     if (fs.existsSync(CACHE_FILE)) {
-      const cache = JSON.parse(fs.readFileSync(CACHE_FILE));
+      cache = JSON.parse(fs.readFileSync(CACHE_FILE));
       if (cache.weather && cache.weather.timestamp && !isTimestampExpired(cache.weather.timestamp, 5)) {
         console.log("return cached weather data")
         return res.json(cache.weather.data);
@@ -56,14 +57,12 @@ app.get("/cache/weather", async (req, res) => {
       }
     }
     let data = await fetchWeatherData();
-    const cache = {
-      weather: {
+    cache.weather = {
         timestamp: Date.now(),
         data
       }
-    }
     fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2));
-    console.log("trigger weather cache")
+    console.log("trigger weather cache");
 
     res.json(data);
 
@@ -72,6 +71,86 @@ app.get("/cache/weather", async (req, res) => {
   }
 })
 //#endregion
+
+
+async function parseFoodHTML(html) {
+  const $ = cheerio.load(html);
+  const daysOfWeek = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"];
+  const data = [];
+  $("div.speiseplan-lang .kw.slide:first").each((index, element) => {
+    let i = 2;
+    daysOfWeek.forEach((day) => {
+      const meals = { menus: { menuName: [], alergenes: [] }, soup: { soupName: [], alergens: [] } };
+      const date = $(element).find(`.col${i}.row1 span`).text().trim().replace(/\s\s+/g, " ");
+
+      for (let j = 2; j <= 6; j++) {
+        const meal = $(element).find(`.col${i}.row${j} p.gericht`).text().trim().replace(/\s\s+/g, " ");
+        const menuParts = meal.split("/");
+
+        if (menuParts.length > 1) {
+          if (j === 2) {
+            meals.soup.soupName.push(menuParts[0].trim());
+            meals.soup.alergens.push(menuParts[1].trim());
+
+          } else {
+            meals.menus.menuName.push(menuParts[0].trim());
+            meals.menus.alergenes.push(menuParts[1].trim());
+          }
+        }
+      }
+      data.push({ date, meals });
+      i++;
+    });
+  });
+
+  return data;
+}
+
+
+app.get("/cache/food", async (req, res) => {
+  try {
+    let cache = {};
+
+    if (fs.existsSync(CACHE_FILE)) {
+      cache = JSON.parse(fs.readFileSync(CACHE_FILE));
+      if (cache.food && cache.food.timestamp && !isTimestampExpired(cache.food.timestamp, 5)) {
+        console.log("return cached food data");
+        return res.json(cache.food.data);
+      } else {
+        console.log("cache expired");
+      }
+    }
+
+    try {
+      console.log("Fetching speiseplan data...");
+      const response = await axios.get(
+        `https://www.kantine-chemnitz.de/speiseplan.html`,
+      );
+      const parsedFooddata = await parseFoodHTML(response.data);
+
+      const timestamp = Date.now();
+
+      cache.food = {
+        timestamp: Date.now(),
+        parsedFooddata
+      }
+
+      fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2));
+
+      res.json(parsedFooddata);
+    } catch (error) {
+      console.error("Error fetching speiseplan data:", error);
+      throw error;
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });
