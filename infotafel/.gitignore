@@ -7,7 +7,8 @@ node_modules
 .yarn/install-state.gz
 
 # testing
-/cache.json
+server/cache.json
+
 /coverage
 
 # next.js
