@@ -3,3 +3,5 @@ infotafel/node_modules/
 
 /node_modules
 infotafel/server/cache.json
+infotafel/server/mealplan_cache.json
+infotafel/server/weather_cache.json
