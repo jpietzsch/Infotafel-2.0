@@ -1,4 +1,5 @@
 import Events from "./components/events";
+import Fahrplan from "./components/bus";
 import Weather from "./components/weather";
 import LocInfo from "./components/locinfo";
 import Foods from "./components/foods";
@@ -16,7 +17,7 @@ export default function Home() {
         </button>
 
         {/*main content */}
-        <Foods className="w-10/12 flex-1"></Foods>
+        <Fahrplan className="w-10/12 flex-1"></Fahrplan>
         
         {/*right arrow */}
         <button className="w-1/12 flex items-center justify-center">

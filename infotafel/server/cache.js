@@ -14,6 +14,8 @@ const longitude = 12.875960703035425;
 
 app.use(cors());
 
+const CACHE_FILE_BUSPLAN = path.join(__dirname, "busplan_cache.json");
+
 const CACHE_FILE = path.join(__dirname, "cache.json");
 
 // full api link
@@ -148,6 +150,116 @@ app.get("/cache/food", async (req, res) => {
   }
 });
 
+// FAHRPLAN
+async function fetchHTML(url) {
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching HTML:", error);
+    throw error;
+  }
+}
+
+function parseHTML(html) {
+  const $ = cheerio.load(html);
+  const data = [];
+  $("div.std3_departure-line").each((index, element) => {
+    const lineNr = $(element)
+      .find(".std3_dm-mot-info a")
+      .text()
+      .trim()
+      .replace(/[^0-9]/g, "")
+      .substring(2, 0);
+    const desc = $(element)
+      .find(".std3_dm-mot-info")
+      .text()
+      .trim()
+      .replace("Stadtbus", "")
+      .replace(/\d+/g, "");
+    const time = $(element).find(".std3_dm-time:first").text().trim();
+    const realtime = $(element).find(".std3_realtime-column").text().trim();
+    const existingEntryIndex = data.findIndex(
+      (entry) => entry.lineNr === lineNr && entry.desc === desc
+    );
+
+    if (existingEntryIndex !== -1) {
+      if (!realtime) {
+        data[existingEntryIndex].times.push({ time });
+      } else {
+        data[existingEntryIndex].times.push({ time, realtime });
+      }
+    } else {
+      if (!realtime) {
+        data.push({ lineNr, desc, times: [{ time }] });
+      } else {
+        data.push({ lineNr, desc, times: [{ time, realtime }] });
+      }
+    }
+    console.log(data);
+  });
+
+  return data;
+}
+
+function formatBusData(parsedData) {
+  const busData = {};
+  parsedData.forEach((entry) => {
+    const { lineNr, desc, times } = entry;
+    const departureTimes = times.map((timeObj) => timeObj.time);
+    const realTimes = times.map((timeObj) => timeObj.realtime);
+    busData[lineNr.trim()] = { desc: desc.trim(), departureTimes, realTimes };
+  });
+  return busData;
+}
+
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${day}.${month}.${year}`;
+}
+
+function formatTime(date) {
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  return `${hours}%3A${minutes}`;
+}
+
+app.get("/cache/busplan", async (req, res) => {
+  const baseUrl = "https://efa.vvo-online.de/VMSSL3/XSLT_DM_REQUEST";
+  const currentDate = new Date();
+  const url = `${baseUrl}?language=de&std3_suggestMacro=std3_suggest&std3_commonMacro=dm&itdLPxx_contractor=&std3_contractorMacro=&includeCompleteStopSeq=1&mergeDep=1&mode=direct&useRealtime=1&name_dm=Chemnitz%2C+Flemmingstr&nameInfo_dm=36030194&type_dm=any&itdDateDayMonthYear=${formatDate(
+    currentDate
+  )}&itdTime=${formatTime(
+    currentDate
+  )}&itdDateTimeDepArr=dep&includedMeans=checkbox&itdLPxx_ptActive=on&useRealtime=1&inclMOT_0=true&inclMOT_1=true&inclMOT_2=true&inclMOT_3=true&inclMOT_4=true&inclMOT_5=true&inclMOT_6=true&inclMOT_7=true&inclMOT_8=true&inclMOT_9=true&inclMOT_10=true&inclMOT_17=true&inclMOT_19=true&imparedOptionsActive=1&sessionID=0&requestID=0&itdLPxx_directRequest=1&coordOutputFormat=WGS84[dd.ddddd]`;
+
+  try {
+    if (fs.existsSync(CACHE_FILE_BUSPLAN)) {
+      const cachedData = JSON.parse(
+        fs.readFileSync(CACHE_FILE_BUSPLAN, "utf8")
+      );
+      //console.log(cachedData)
+      if (!isTimestampExpired(cachedData.timestamp, 1)) {
+        res.json(cachedData);
+        return;
+      }
+    }
+    const html = await fetchHTML(url);
+    const timestamp = Date.now();
+    const parsedData = parseHTML(html);
+    const busData = formatBusData(parsedData);
+    const cacheData = { timestamp, busData };
+    fs.writeFileSync(CACHE_FILE_BUSPLAN, JSON.stringify(cacheData));
+    res.json(cacheData);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+//#endregion
 
 
 
