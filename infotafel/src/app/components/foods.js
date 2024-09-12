@@ -12,7 +12,7 @@ function Foods() {
       try {
         const response = await axios.get("http://localhost:8000/cache/food");
         console.log("Fetched Data: ", response.data);
-        setMealPlan(Array.isArray(response.data.parsedFooddata) ? response.data.parsedFooddata : []);
+        setMealPlan(Array.isArray(response.data) ? response.data : []);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
