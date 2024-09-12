@@ -126,18 +126,18 @@ app.get("/cache/food", async (req, res) => {
       const response = await axios.get(
         `https://www.kantine-chemnitz.de/speiseplan.html`,
       );
-      const parsedFooddata = await parseFoodHTML(response.data);
+      const data = await parseFoodHTML(response.data);
 
       const timestamp = Date.now();
 
       cache.food = {
         timestamp: Date.now(),
-        parsedFooddata
+        data
       }
 
       fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2));
 
-      res.json(parsedFooddata);
+      res.json(data);
     } catch (error) {
       console.error("Error fetching speiseplan data:", error);
       throw error;
