@@ -10,7 +10,7 @@ export default function Home() {
       className="flex-1 bg-cover bg-center w-full h-screen flex flex-col p-0 m-0"
       style={{ backgroundImage: `url('aE12.jpg?v=1')`, objectFit: 'cover' }}
     >
-      <div className="w-full flex-1 flex bg-black/65 w-full h-full">
+      <div className="flex-1 flex bg-black/65 w-full h-full">
         {/*left arrow */}
         <button className="w-1/12 flex items-center justify-center sm:w-1/20 md:w-1/24 lg:w-1/32 xl:w-1/40" tabIndex="1">
           <img src="arrowleft.png" alt="Left Arrow" />
