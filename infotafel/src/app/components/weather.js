@@ -26,15 +26,12 @@ function Weather() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [weatherResponse] =
-          await Promise.all([
-            axios.get(`${API_BASE_URL}/weather`),
-            
-          ]);
+        const [weatherResponse] = await Promise.all([
+          axios.get(`${API_BASE_URL}/weather`),
+        ]);
 
         if (debug) {
           console.log("Weather data:", weatherResponse.data);
-
         }
 
         setWeatherData(weatherResponse.data);
@@ -69,6 +66,10 @@ function Weather() {
 
   return (
     <div className="min-h-full h-screen flex flex-col flex-grow items-center">
+      <h1 className="w-0 h-0" tabIndex="3">
+        Wetter
+      </h1>
+
       <div className="flex h-full w-full justify-center items-center flex-col">
         {/* Current Weather */}
         <CurrentWeatherComponent currentWeatherData={weatherData} />

@@ -11,7 +11,7 @@ function CurrentWeatherComponent({ currentWeatherData }) {
     <div className="flex flex-row justify-evenly w-screen h-screen sm:max-w-screen-lg sm:mb-52 ">
       <div className="sm:mr-64" style={{ maxWidth: isMobile ? "40%" : "" }}>
         {/* Display the weather description */}
-        <h1 className="text-4xl font-bold text-white m-12" tabIndex="0">
+        <h1 className="text-4xl font-bold text-white m-12" tabIndex="4">
           {currentWeatherData?.current
             ? weatherInterpretationCodes[
                 currentWeatherData.current.weather_code
@@ -36,7 +36,7 @@ function CurrentWeatherComponent({ currentWeatherData }) {
           <p
             className="flex flex-row"
             style={{ fontSize: isMobile ? "30px" : "50px" }}
-            tabIndex="0"
+            tabIndex="5"
           >
             <img
               src="weather/staticLogos/thermometer.svg"
@@ -56,7 +56,7 @@ function CurrentWeatherComponent({ currentWeatherData }) {
           <p
             className="flex flex-row"
             style={{ fontSize: isMobile ? "30px" : "50px" }}
-            tabIndex="0"
+            tabIndex="6"
           >
             <img
               src="weather/staticLogos/wind.svg"
@@ -76,7 +76,7 @@ function CurrentWeatherComponent({ currentWeatherData }) {
           <p
             className="flex flex-row"
             style={{ fontSize: isMobile ? "30px" : "50px" }}
-            tabIndex="0"
+            tabIndex="7"
           >
             <img
               src="weather/staticLogos/clouds.svg"
@@ -96,7 +96,7 @@ function CurrentWeatherComponent({ currentWeatherData }) {
           <p
             className="flex flex-row"
             style={{ fontSize: isMobile ? "30px" : "50px" }}
-            tabIndex="0"
+            tabIndex="8"
           >
             <img
               src="weather/staticLogos/moderate-rain.svg"
