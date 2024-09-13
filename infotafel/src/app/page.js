@@ -19,7 +19,7 @@ export default function Home() {
         {/*main content */}
         <Weather className="w-10/12 flex-1"></Weather>
         
-        {/*right arrow */}
+        {/*right arrows */}
         <button className="w-1/12 flex items-center justify-center" tabIndex="50">
           <img src="arrowright.png" alt="Left Arrow" />
         </button>
