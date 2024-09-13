@@ -25,6 +25,9 @@ function Foods() {
 
   return (
     <div className="bg-site-background w-screen mx-auto px-4 text-white flex-grow min-w-screen flex justify-center">
+      <h1 className="w-0 h-0" tabIndex="3">
+        Speiseplan
+      </h1>
       <div className="flex flex-row items-start w-fit h-auto space-x-4">
         {loading ? (
           <div className="text-2xl">Loading...</div>
@@ -34,17 +37,24 @@ function Foods() {
               className="flex flex-col bg-gray-700 p-4 m-4 rounded-lg w-64 flex-grow"
               key={day.date}
             >
-              <h1 className="text-2xl font-bold">{day.date}</h1>
-              <div className="flex flex-col space-y-2 h-1000">
-                {day.meals && day.meals.menus && Array.isArray(day.meals.menus.menuName) && day.meals.menus.menuName.length > 0 ? (
+              <h1 tabindex="4" className="text-2xl font-bold ">
+                {day.date}
+              </h1>
+              <div className="flex flex-col space-y-2 h-1000 ">
+                {day.meals &&
+                day.meals.menus &&
+                Array.isArray(day.meals.menus.menuName) &&
+                day.meals.menus.menuName.length > 0 ? (
                   day.meals.menus.menuName.map((meal, mealIndex) => (
                     <div
                       className="bg-gray-600 p-2 rounded-md h-100 flex flex-col justify-between"
                       key={mealIndex}
                     >
-                      <p className="text-xl">{meal}</p>
+                      <p tabindex="4" className="text-xl">
+                        {meal}
+                      </p>
                       {day.meals.menus.alergenes[mealIndex] ? (
-                        <p className="text-sm text-gray-400">
+                        <p tabindex="4" className="text-sm text-gray-400">
                           Allergene: {day.meals.menus.alergenes[mealIndex]}
                         </p>
                       ) : null}

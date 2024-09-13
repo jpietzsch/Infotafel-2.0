@@ -98,110 +98,79 @@ function Fahrplan() {
   }
 
   return (
-    <div
-      className="mx-auto text-white flex-grow w-full justify-evenly overflow-hidden"
-      tabIndex="0"
-    >
-      <div
-        className="flex flex-grow items-center"
-        tabIndex="0"
-      >
-        <div
-          className="flex w-full justify-center items-center flex-col"
-          tabIndex="0"
-        >
+    
+    <div className="mx-auto text-white flex-grow w-full justify-evenly overflow-hidden">
+      <h1 className="w-0 h-0" tabIndex="3">Fahrplan</h1>
+      <div className="flex flex-grow items-center">
+        <div className="flex w-full justify-center items-center flex-col">
           <ThemeProvider theme={darkTheme}>
-              
-                <div
-                  className="mt-10 flex flex-col items-center w-full font-semibold"
-                  tabIndex="0"
-                >
-                  <div
-                    className="flex w-full justify-evenly items-center"
-                    tabIndex="0"
-                  >
-                    {busplanData &&
-                      busplanData["31"]?.departureTimes
-                        ?.slice(0, 4)
-                        .map((time, index, array) => (
-                          <React.Fragment key={index}>
-                            <Typography tabIndex="0">{time}</Typography>
-                            {index !== array.length - 1 && (
-                              <SvgIcon component={ArrowRight} tabIndex="0" />
-                            )}
-                          </React.Fragment>
-                        ))}
-                  </div>
-                  <div
-                    className="flex w-full justify-evenly items-center mb-5"
-                    tabIndex="0"
-                  >
-                    {busplanData &&
-                      busplanData["31"]?.realTimes
-                        ?.slice(0, 4)
-                        .map((time, index, array) => {
-                          let typographyClass = "";
-                          if (
-                            busplanData["31"].departureTimes[index] !== time
-                          ) {
-                            typographyClass = "text-red-500";
-                          } else {
-                            typographyClass = "text-green-500";
-                          }
-
-                          return (
-                            <React.Fragment key={index}>
-                              <p className={typographyClass} tabIndex="0">
-                                {time}
-                              </p>
-                              {index !== array.length - 1 && (
-                                <SvgIcon component={ArrowRight} tabIndex="0" />
-                              )}
-                            </React.Fragment>
-                          );
-                        })}
-                  </div>
-                </div>
-                <div
-                  className="flex flex-row w-full justify-evenly"
-                  tabIndex="0"
-                >
-                  <div className="flex flex-col space-y-4" tabIndex="0">
-                    {locations["31"].locations.map((location, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center"
-                        tabIndex="0"
-                      >
-                        <div
-                          className="w-4 h-4 bg-white rounded-full"
-                          tabIndex="0"
-                        ></div>
-                        <div className="ml-4" tabIndex="0">
-                          <Typography tabIndex="0">{location}</Typography>
-                          <Typography tabIndex="0">
-                            {busplanData &&
-                              addMinutesToTime(
-                                busplanData["31"]?.realTimes[0] || "00:00",
-                                locations["31"].extra_times[index]
-                              )}
-                          </Typography>
-                        </div>
-                      </div>
+            <div className="mt-10 flex flex-col items-center w-full font-semibold">
+              <div className="flex w-full justify-evenly items-center">
+                {busplanData &&
+                  busplanData["31"]?.departureTimes
+                    ?.slice(0, 4)
+                    .map((time, index, array) => (
+                      <React.Fragment key={index}>
+                        <Typography>{time}</Typography>
+                        {index !== array.length - 1 && (
+                          <SvgIcon component={ArrowRight} />
+                        )}
+                      </React.Fragment>
                     ))}
+              </div>
+              <div className="flex w-full justify-evenly items-center mb-5">
+                {busplanData &&
+                  busplanData["31"]?.realTimes
+                    ?.slice(0, 4)
+                    .map((time, index, array) => {
+                      let typographyClass = "";
+                      if (busplanData["31"].departureTimes[index] !== time) {
+                        typographyClass = "text-red-500";
+                      } else {
+                        typographyClass = "text-green-500";
+                      }
+
+                      return (
+                        <React.Fragment key={index}>
+                          <p className={typographyClass}>{time}</p>
+                          {index !== array.length - 1 && (
+                            <SvgIcon component={ArrowRight} />
+                          )}
+                        </React.Fragment>
+                      );
+                    })}
+              </div>
+            </div>
+            <div className="flex flex-row w-full justify-evenly">
+              <div className="flex flex-col space-y-4">
+                {locations["31"].locations.map((location, index) => (
+                  <div key={index} className="flex items-center">
+                    <div className="w-4 h-4 bg-white rounded-full"></div>
+                    <div className="ml-4">
+                      <Typography tabIndex="4">{location}</Typography>
+                      <Typography tabIndex="4">
+                        {busplanData &&
+                          addMinutesToTime(
+                            busplanData["31"]?.realTimes[0] || "00:00",
+                            locations["31"].extra_times[index]
+                          )}
+                      </Typography>
+                    </div>
                   </div>
-                  <div className="w-1/2" tabIndex="0">
-                    <img
-                      src="31fahrplan.jpg"
-                      alt="Fahrplan 31"
-                      className="w-full"
-                    />
-                  </div>
-                </div>
-                <p className="text-xs text-gray-400" tabIndex="0">
-                  *Alle Angaben sind unverbindlich. Busse können früher oder
-                  später eintreffen. Manchmal auch garnicht.
-                </p>
+                ))}
+              </div>
+              <div className="w-1/2">
+                <img
+                  src="31fahrplan.jpg"
+                  alt="Fahrplan 31"
+                  className="w-full"
+                />
+              </div>
+            </div>
+            <p className="text-xs text-gray-400">
+              *Alle Angaben sind unverbindlich. Busse können früher oder später
+              eintreffen. Manchmal auch garnicht.
+            </p>
           </ThemeProvider>
         </div>
       </div>
