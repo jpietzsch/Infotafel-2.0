@@ -15,13 +15,13 @@ export default function DailyForecastComponent({weatherData}) {
               className=" sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 overflow-hidden"
             >
               {/* Display weekday */}
-              <h1 className="text-m mt-2 font-lg" tabIndex="0">
+              <h1 className="text-m mt-2 font-lg" tabIndex="10">
                 {new Date(dailyData * 1000).toLocaleDateString("de-DE", {
                   weekday: "long",
                 })}
               </h1>
               {/* Display date */}
-              <h1 className="text-sm" tabIndex="0">
+              <h1 className="text-sm" tabIndex="10">
                 {new Date(dailyData * 1000).toLocaleDateString()}
               </h1>
               {/* Display weather animation */}
@@ -33,7 +33,7 @@ export default function DailyForecastComponent({weatherData}) {
                 className="w-auto h-28"
               />
               {/* Display weather description */}
-              <h1 className="text-xl font-semibold m-1" tabIndex="0">
+              <h1 className="text-xl font-semibold m-1" tabIndex="10">
                 {
                   weatherInterpretationCodes[weatherData.daily.weather_code[index + 1]].day
                     .desc
@@ -42,7 +42,7 @@ export default function DailyForecastComponent({weatherData}) {
               <div className="flex flex-row items-center justify-evenly">
                 <div className="m-6 flex justify-between flex-col">
                   {/* Display maximum temperature */}
-                  <p className="font-bold text-xl flex flex-row" tabIndex="0">
+                  <p className="font-bold text-xl flex flex-row" tabIndex="10">
                     <img
                       src="weather/staticLogos/icons8-thermometer-up-100.svg"
                       alt=""
@@ -57,7 +57,7 @@ export default function DailyForecastComponent({weatherData}) {
                 </div>
                 <div>
                   {/* Display minimum temperature */}
-                  <p className="font-bold text-xl flex flex-row" tabIndex="0">
+                  <p className="font-bold text-xl flex flex-row" tabIndex="10">
                     <img
                       src="weather/staticLogos/icons8-thermometer-down-100.svg"
                       className="w-6 h-6"

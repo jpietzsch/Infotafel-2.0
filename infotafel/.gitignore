@@ -6,8 +6,10 @@ node_modules
 .pnp.js
 .yarn/install-state.gz
 
+
 # testing
 server/cache.json
+infotafel/server/cache.json
 
 /coverage
 

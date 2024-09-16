@@ -74,8 +74,6 @@ function Weather() {
         {/* Current Weather */}
         <CurrentWeatherComponent currentWeatherData={weatherData} />
       </div>
-      {/* DAILY Forecast */}
-      <DailyForecastComponent weatherData={weatherData} />
     </div>
   );
 }
