@@ -3,17 +3,6 @@ import "./globals.css";
 
 import Clock from "./components/currentime";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
-
 export const metadata = {
   title: "Infotafel",
   description: "Alles relevanten Informationen auf einen Blick",
@@ -26,7 +15,7 @@ export default function RootLayout({ children }) {
        <link rel="icon" href="SFZLogoTiny.png" /> 
         </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#070707] text-[#e5e5e5]`}
+        className="bg-[#070707] text-white"
       >
         {/*div around the content*/}
         <div className="min-w-screen min-h-screen flex flex-col">
