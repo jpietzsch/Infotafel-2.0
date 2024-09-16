@@ -6,6 +6,7 @@ import Fahrplan from "./components/bus";
 import Weather from "./components/weather";
 import LocInfo from "./components/locinfo";
 import Foods from "./components/foods";
+import Plan from "./components/plan";
 
 export default function Home() {
   // State to manage the active component in the carousel
@@ -18,7 +19,8 @@ export default function Home() {
     { component: <Foods key="foods" />, key: "foods" },
     { component: <Fahrplan key="fahrplan" />, key: "fahrplan" },
     { component: <Events key="events" />, key: "events" },
-    { component: <LocInfo key="locinfo" />, key: "locinfo" }
+    { component: <LocInfo key="locinfo" />, key: "locinfo" },
+    { component: <Plan key="plan" />, key: "plan"}
   ];
 
   // Handle forward navigation in the carousel
