@@ -1,6 +1,6 @@
 {
   "food": {
-    "timestamp": 1726638793132,
+    "timestamp": 1726639535238,
     "data": [
       {
         "date": "16.09.2024",
@@ -136,11 +136,11 @@
     ]
   },
   "weather": {
-    "timestamp": 1726638680264,
+    "timestamp": 1726639695557,
     "data": {
       "latitude": 50.84,
       "longitude": 12.879999,
-      "generationtime_ms": 0.23305416107177734,
+      "generationtime_ms": 0.19598007202148438,
       "utc_offset_seconds": 0,
       "timezone": "GMT",
       "timezone_abbreviation": "GMT",
@@ -157,10 +157,10 @@
         "wind_direction_10m": "°"
       },
       "current": {
-        "time": 1726638300,
+        "time": 1726639200,
         "interval": 900,
         "temperature_2m": 10.6,
-        "apparent_temperature": 10.4,
+        "apparent_temperature": 10.5,
         "rain": 0,
         "weather_code": 45,
         "cloud_cover": 100,
@@ -732,9 +732,6 @@
           1,
           1,
           1,
-          2,
-          2,
-          2,
           1,
           1,
           0,
