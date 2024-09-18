@@ -24,34 +24,34 @@ function Foods() {
   }, []);
 
   return (
-    <div className="w-screen mx-auto px-4 flex flex-grow min-w-screen">
-      <div className=" mx-20 flex flex-row items-start w-full">
+    <div className="w-screen mx-auto px-4 flex flex-col min-w-screen md:flex-row md:flex-wrap">
+      <div className="mx-4 md:mx-10 flex flex-col items-start w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
         {loading ? (
           <div className="text-2xl">Loading...</div>
         ) : Array.isArray(mealPlan) && mealPlan.length > 0 ? (
           mealPlan.map((day) => (
             <div
-              className="font-bold text-2xl my-16 sm:text-2xl md:text-3xl lg:text-4xl"
+              className="font-bold my-4 p-4 sm:p-6 rounded-md shadow-md w-full"
               key={day.date}
             >
-              <h1 tabindex="4" className="font-semibold text-4xl flex flex-col mt-8  ">
+              <h1 tabindex="4" className="font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-5xl mt-2">
                 {day.date}
               </h1>
-              <div className="font-semibold text-xl flex flex-col mt-8 ">
+              <div className="font-semibold text-lg sm:text-xl md:text-2xl mt-4">
                 {day.meals &&
                 day.meals.menus &&
                 Array.isArray(day.meals.menus.menuName) &&
                 day.meals.menus.menuName.length > 0 ? (
                   day.meals.menus.menuName.map((meal, mealIndex) => (
                     <div
-                      className="p-6 rounded-md flex flex-col justify-between"
+                      className="p-4 sm:p-6 mt-2 rounded-md"
                       key={mealIndex}
                     >
-                      <p tabindex="4" className="text-xl sm:text-base md:text-lg">
+                      <p tabindex="4" className="text-base sm:text-lg md:text-xl">
                         {meal}
                       </p>
                       {day.meals.menus.alergenes[mealIndex] ? (
-                        <p tabindex="4" className=" text-base mt-2 text-gray-400">
+                        <p tabindex="4" className="text-sm sm:text-base md:text-lg mt-2">
                           Allergene: {day.meals.menus.alergenes[mealIndex]}
                         </p>
                       ) : null}

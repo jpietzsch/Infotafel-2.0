@@ -10,29 +10,20 @@ export default function Events() {
   
     return (
 
-      <div className="w-full flex-1 flex h-1000 items-center">
+      <div className="w-full flex flex-col md:flex-row h-auto md:h-1000 items-center px-4 md:px-0">
 
-        <div className="w-7/12 flex flex-col">
-          <h2 tabIndex="4" className="text-white text-4xl font-bold mb-20 mx-20">Irgendjemand hat sich gestern von der Brücke gestürzt</h2>
-          <p tabIndex="5" className="text-white text-xl whitespace-pre-line ml-20">
+        <div className="w-full md:w-7/12 flex flex-col mb-8 md:mb-0">
+          <h2 tabIndex="4" className="text-white text-3xl md:text-4xl font-bold mb-8 md:mb-20 mx-0 md:mx-20">Irgendjemand hat sich gestern von der Brücke gestürzt</h2>
+          <p tabIndex="5" className="text-white text-base md:text-xl whitespace-pre-line ml-0 md:ml-20">
             {content}
           </p>
         </div>
 
-        <div className="w-5/12 flex items-center justify-end">
-          <img
+        <div className="w-full md:w-5/12 flex justify-center md:justify-end">
+        <img
             src="pipebomb.jpeg"
             alt="bildi"
-            style={{
-              objectFit: "cover",
-              width: "506px",
-              height: "506px",
-              borderRadius: "30px",
-              borderStyle: "solid",
-              borderColor: "white",
-              borderWidth: "6px",
-              margin: "auto"
-            }}
+            className="object-cover w-64 h-64 md:w-[506px] md:h-[506px] rounded-[30px] border-6 border-solid border-white"
           />
         </div>
       </div>
