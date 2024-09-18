@@ -50,7 +50,7 @@ function Weather() {
 
   if (loading) {
     return (
-      <div className="min-h-full h-screen flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center">
         <div className="text-white text-2xl">Loading...</div>
       </div>
     );
@@ -58,19 +58,15 @@ function Weather() {
 
   if (!weatherData) {
     return (
-      <div className="min-h-full h-screen flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center">
         <div className="text-white text-2xl">Error: Data not available</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-full h-screen flex flex-col flex-grow items-center">
-      <h1 className="w-0 h-0" tabIndex="3">
-        Wetter
-      </h1>
-
-      <div className="flex h-full w-full justify-center items-center flex-col">
+    <div className="flex flex-col flex-grow items-center">
+      <div className="flex w-full justify-center items-center flex-col">
         {/* Current Weather */}
         <CurrentWeatherComponent currentWeatherData={weatherData} />
       </div>

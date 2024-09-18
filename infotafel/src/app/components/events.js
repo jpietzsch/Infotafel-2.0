@@ -11,9 +11,7 @@ export default function Events() {
     return (
 
       <div className="w-full flex-1 flex h-1000 items-center">
-        <h1 className="w-0 h-0" tabIndex="3">
-        News
-      </h1>
+
         <div className="w-7/12 flex flex-col">
           <h2 tabIndex="4" className="text-white text-4xl font-bold mb-20 mx-20">Irgendjemand hat sich gestern von der Brücke gestürzt</h2>
           <p tabIndex="5" className="text-white text-xl whitespace-pre-line ml-20">

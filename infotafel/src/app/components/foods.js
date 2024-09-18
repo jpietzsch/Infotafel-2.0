@@ -24,11 +24,8 @@ function Foods() {
   }, []);
 
   return (
-    <div className="h-screen w-screen mx-auto px-4 flex flex-grow min-w-screen">
-      <h1 className="w-0 h-0" tabIndex="3">
-        Speiseplan
-      </h1>
-      <div className="flex flex-row items-start w-full">
+    <div className="w-screen mx-auto px-4 flex flex-grow min-w-screen">
+      <div className=" mx-20 flex flex-row items-start w-full">
         {loading ? (
           <div className="text-2xl">Loading...</div>
         ) : Array.isArray(mealPlan) && mealPlan.length > 0 ? (
