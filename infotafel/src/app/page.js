@@ -30,9 +30,8 @@ export default function Home() {
       setCanScrollNext(emblaApi.canScrollNext());
     };
 
-    // Check the initial state when Embla is ready
     emblaApi.on("select", onSelect);
-    onSelect(); // Run once on mount to initialize button states
+    onSelect();
 
     return () => emblaApi.off("select", onSelect);
   }, [emblaApi]);
@@ -43,21 +42,21 @@ export default function Home() {
       style={{ backgroundImage: `url('aE12.jpg?v=1')`, objectFit: "cover" }}
     >
       <div className="flex-1 flex bg-black/65 w-full relative overflow-hidden">
-        {/* Embla Carousel */}
+        {/* Carousel */}
         <div className="relative w-full" ref={emblaRef}>
           <div className="flex transition-transform duration-100 ease-in-out">
-            {/* Carousel Items */}
-            <div className="embla__slide w-full flex-shrink-0">
-              <Events />
-            </div>
-            <div className="embla__slide w-full flex-shrink-0">
-              <Fahrplan />
-            </div>
+            {/* Items */}
             <div className="embla__slide w-full flex-shrink-0">
               <Weather />
             </div>
             <div className="embla__slide w-full flex-shrink-0">
+              <Events />
+            </div>
+            <div className="embla__slide w-full flex-shrink-0">
               <LocInfo />
+            </div>
+            <div className="embla__slide w-full flex-shrink-0">
+              <Fahrplan />
             </div>
             <div className="embla__slide w-full flex-shrink-0">
               <Foods />

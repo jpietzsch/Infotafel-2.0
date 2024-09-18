@@ -100,7 +100,6 @@ function Fahrplan() {
   return (
     
     <div className="mx-auto text-white flex-grow w-full justify-evenly overflow-hidden">
-      <h1 className="w-0 h-0" tabIndex="3">Fahrplan</h1>
       <div className="flex flex-grow items-center">
         <div className="flex w-full justify-center items-center flex-col">
           <ThemeProvider theme={darkTheme}>
