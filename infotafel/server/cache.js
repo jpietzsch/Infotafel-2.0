@@ -14,8 +14,6 @@ const longitude = 12.875960703035425;
 
 app.use(cors());
 
-const CACHE_FILE_BUSPLAN = path.join(__dirname, "busplan_cache.json");
-
 const CACHE_FILE = path.join(__dirname, "cache.json");
 
 // full api link
@@ -235,24 +233,28 @@ app.get("/cache/busplan", async (req, res) => {
     currentDate
   )}&itdDateTimeDepArr=dep&includedMeans=checkbox&itdLPxx_ptActive=on&useRealtime=1&inclMOT_0=true&inclMOT_1=true&inclMOT_2=true&inclMOT_3=true&inclMOT_4=true&inclMOT_5=true&inclMOT_6=true&inclMOT_7=true&inclMOT_8=true&inclMOT_9=true&inclMOT_10=true&inclMOT_17=true&inclMOT_19=true&imparedOptionsActive=1&sessionID=0&requestID=0&itdLPxx_directRequest=1&coordOutputFormat=WGS84[dd.ddddd]`;
 
+
+
   try {
-    if (fs.existsSync(CACHE_FILE_BUSPLAN)) {
-      const cachedData = JSON.parse(
-        fs.readFileSync(CACHE_FILE_BUSPLAN, "utf8")
-      );
-      //console.log(cachedData)
-      if (!isTimestampExpired(cachedData.timestamp, 1)) {
-        res.json(cachedData);
-        return;
-      }
+    let cache = {};
+    if (fs.existsSync(CACHE_FILE)) {
+      cache = JSON.parse(fs.readFileSync(CACHE_FILE));
+      if (cache.busData && cache.busData.timestamp && !isTimestampExpired(cache.busData.timestamp, 1)) {
+        console.log("return cached bus data");
+        return res.json(cache.busData);
+      } else {
+        console.log("cache expired");
     }
     const html = await fetchHTML(url);
     const timestamp = Date.now();
     const parsedData = parseHTML(html);
     const busData = formatBusData(parsedData);
-    const cacheData = { timestamp, busData };
-    fs.writeFileSync(CACHE_FILE_BUSPLAN, JSON.stringify(cacheData));
-    res.json(cacheData);
+
+    cache.busData = { timestamp, busData };
+
+    fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2));
+    res.json(busData);
+  }
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -260,6 +262,50 @@ app.get("/cache/busplan", async (req, res) => {
 });
 
 //#endregion
+
+
+// VERTRETUNGSPLAN
+app.get("/cache/vertretungsplan", async (req, res) => {
+  const baseUrl = "https://api.sfz-cowerk.de/"
+  const url = `${baseUrl}vertretungsplan`;
+  const url2 = `${baseUrl}vertretungsplan/?morgen`
+
+  const clearedData = [];
+  const specializations = {};
+
+  try {
+    const response_tdy = await axios.get(url);
+    const response_tmr = await axios.get(url2);
+    for (let i = 1; i < response_tdy.data[1].length; i++) {
+      console.log(response_tdy.data[1][i]);
+      specializations[response_tdy.data[1][i]] = {
+        heute: [],
+        morgen: []
+      };
+      //heute
+      for (let j = 2; j < response_tdy.data.length; j++) {
+        // Remove if the actual Plan is fixed and does not have 2 first rows
+        if (j == 3) {
+          continue;
+        }
+        // until here (bcs the api atm sends back 2 first rows lol)
+        specializations[response_tdy.data[1][i]].heute.push(response_tdy.data[j][i]);
+      }
+
+      for (let j = 2; j < response_tmr.data.length; j++) {
+        // Somehow the tmr plan has nothing to remove bcs it only sends back 1 first row
+        specializations[response_tdy.data[1][i]].morgen.push(response_tmr.data[j][i]);
+      }
+    }
+    clearedData.push(specializations);
+    res.json(clearedData);
+
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+})
+
 
 
 
