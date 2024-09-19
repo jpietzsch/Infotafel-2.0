@@ -24,14 +24,18 @@ function Foods() {
   }, []);
 
   return (
-    <div className="w-screen mx-auto px-4 flex flex-col min-w-screen md:flex-row md:flex-wrap">
-      <div className="mx-4 md:mx-10 flex flex-col items-start w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
-        {loading ? (
-          <div className="text-2xl">Loading...</div>
-        ) : Array.isArray(mealPlan) && mealPlan.length > 0 ? (
-          mealPlan.map((day) => (
+    <div className="flex flex-col min-h-screen">
+      {/* Loading state */}
+      {loading && (
+        <div className="text-2xl mx-auto self-center">Loading...</div>
+      )}
+
+      {/* Meal plan content */}
+      {!loading && mealPlan && mealPlan.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+          {mealPlan.map((day) => (
             <div
-              className="font-bold my-4 p-4 sm:p-6 rounded-md shadow-md w-full"
+              className="font-bold p-4 sm:p-6 rounded-md shadow-md"
               key={day.date}
             >
               <h1 tabindex="4" className="font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-5xl mt-2">
@@ -62,11 +66,14 @@ function Foods() {
                 )}
               </div>
             </div>
-          ))
-        ) : (
-          <div className="text-2xl">No meal plan available</div>
-        )}
-      </div>
+          ))}
+        </div>
+      )}
+
+      {/* No meal plan available */}
+      {!loading && !mealPlan && (
+        <div className="text-2xl mx-auto self-center">No meal plan available</div>
+      )}
     </div>
   );
 }
