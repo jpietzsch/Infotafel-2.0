@@ -9,7 +9,7 @@ import { ArrowBack, ArrowForward } from "@mui/icons-material";
 const fachrichtungen = [
   { name: "Fachinformatiker", key: "FI" },
   { name: "Dialogmarketing", key: "DM" },
-  { name: "KBM", key: "KBM" },
+  { name: "Büromanagement", key: "KBM" },
   { name: "FPBK", key: "FPBK" },
   { name: "Berufsvorbereitung", key: "BVB" },
   { name: "Zerspaner", key: "ZM" },
@@ -25,7 +25,7 @@ const fachrichtungen = [
   { name: "BvBHs", key: "BvBHS" },
 ];
 
-export default function Plan() {
+export default function Plan({ isActive }) {
   const [fachrichtung, setFachrichtung] = useState("FI");
   const [vertretungsplan, setVertretungsplan] = useState({
     heute: [],
@@ -61,12 +61,22 @@ export default function Plan() {
     fetchData();
   }, [fachrichtung]);
 
+  // Accessibility settings
+  const tabIndexValue = isActive ? 0 : -1; // Only focusable when active
+  const ariaHiddenValue = !isActive; // Hide from screen readers when inactive
+
   return (
-    <div className="flex-1 flex flex-col justify-center p-0 m-0">
+    <div
+      className="flex-1 flex flex-col justify-center p-0 m-0"
+      tabIndex={tabIndexValue}
+      aria-hidden={ariaHiddenValue}
+    >
       <div className="flex justify-center mt-32 items-center w-full max-w-screen-lg mx-auto">
         <button
           onClick={() => instanceRef.current?.prev()}
           className="text-2xl text-white px-4 py-2 rounded-md mx-2"
+          tabIndex={tabIndexValue}
+          aria-hidden={ariaHiddenValue}
         >
           <ArrowBack />
         </button>
@@ -79,6 +89,8 @@ export default function Plan() {
                   ? "text-white font-bold"
                   : "text-gray-400"
               }`}
+              tabIndex={tabIndexValue}
+              aria-hidden={ariaHiddenValue}
             >
               <div className="text-2xl px-4 py-2 rounded-md mx-2">
                 {fachrichtung.name}
@@ -89,46 +101,31 @@ export default function Plan() {
         <button
           onClick={() => instanceRef.current?.next()}
           className="text-2xl text-white px-4 py-2 rounded-md mx-2"
+          tabIndex={tabIndexValue}
+          aria-hidden={ariaHiddenValue}
         >
           <ArrowForward />
         </button>
       </div>
+
+      {/* Heute Vertretungsplan */}
       <div className="overflow-x-auto">
-        <p className="m-auto text-center">Heute</p>
+        <p className="m-auto text-center" tabIndex={tabIndexValue}>
+          Heute
+        </p>
         <table className="mt-10 m-auto w-full max-w-5xl">
           <thead>
             <tr>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                1. <br /> 7:30-8:15
-              </th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                2. <br /> 8:20-9:05
-              </th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                3. <br /> 9:25-10:10
-              </th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                4. <br /> 10:15-11:00
-              </th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                5. <br /> 11:05-11:50
-              </th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                6. <br /> 12:35-13:20
-              </th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                7. <br /> 13:25-14:10
-              </th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                8. <br /> 14:20-15:05
-              </th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                9. <br /> 15:15-16:00
-              </th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                10.
-                <br /> 16:00-16:45
-              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">1.<br />7:30-8:15</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">2.<br />8:20-9:05</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">3.<br />9:25-10:10</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">4.<br />10:15-11:00</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">5.<br />11:05-11:50</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">6.<br />12:35-13:20</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">7.<br />13:25-14:10</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">8.<br />14:20-15:05</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">9.<br />15:15-16:00</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">10.<br />16:00-16:45</th>
             </tr>
           </thead>
           <tbody>
@@ -137,6 +134,8 @@ export default function Plan() {
                 <td
                   key={index}
                   className="border-2 px-2 py-2 min-w-[100px] h-20"
+                  tabIndex={tabIndexValue}
+                  aria-hidden={ariaHiddenValue}
                 >
                   {vertretung || ""}
                 </td>
@@ -145,47 +144,36 @@ export default function Plan() {
           </tbody>
         </table>
       </div>
+
+      {/* Morgen Vertretungsplan */}
       <div className="overflow-x-auto">
-        <p className="m-auto text-center">Morgen</p>
+        <p className="m-auto text-center" tabIndex={tabIndexValue}>
+          Morgen
+        </p>
         <table className="mt-10 m-auto w-full max-w-5xl">
           <thead>
             <tr>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                1. <br /> 7:30-8:15
-              </th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                2. <br /> 8:20-9:05
-              </th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                3. <br /> 9:25-10:10
-              </th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                4. <br /> 10:15-11:00
-              </th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                5. <br /> 11:05-11:50
-              </th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                6. <br /> 12:35-13:20
-              </th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                7. <br /> 13:25-14:10
-              </th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                8. <br /> 14:20-15:05
-              </th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                9. <br /> 15:15-16:00
-              </th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">
-                10.<br /> 16:00-16:45
-              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">1.<br />7:30-8:15</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">2.<br />8:20-9:05</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">3.<br />9:25-10:10</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">4.<br />10:15-11:00</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">5.<br />11:05-11:50</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">6.<br />12:35-13:20</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">7.<br />13:25-14:10</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">8.<br />14:20-15:05</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">9.<br />15:15-16:00</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">10.<br />16:00-16:45</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               {vertretungsplan.morgen.map((vertretung, index) => (
-                <td key={index} className="border-2 px-2 py-2 min-w-[100px] h-20">
+                <td
+                  key={index}
+                  className="border-2 px-2 py-2 min-w-[100px] h-20"
+                  tabIndex={tabIndexValue}
+                  aria-hidden={ariaHiddenValue}
+                >
                   {vertretung || ""}
                 </td>
               ))}

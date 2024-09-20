@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function Foods() {
+function Foods({ isActive }) {
   const [loading, setLoading] = useState(true);
   const [mealPlan, setMealPlan] = useState(null);
 
@@ -23,11 +23,17 @@ function Foods() {
     fetchData();
   }, []);
 
+  // Accessibility settings
+  const tabIndexValue = isActive ? 0 : -1; // Only focusable when active
+  const ariaHiddenValue = !isActive; // Hidden from screen readers when inactive
+
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col" tabIndex={tabIndexValue} aria-hidden={ariaHiddenValue}>
       {/* Loading state */}
       {loading && (
-        <div className="text-2xl mx-auto self-center">Loading...</div>
+        <div className="text-2xl mx-auto self-center" tabIndex={tabIndexValue}>
+          Loading...
+        </div>
       )}
 
       {/* Meal plan content */}
@@ -37,8 +43,10 @@ function Foods() {
             <div
               className="font-bold p-4 sm:p-6 rounded-md shadow-md"
               key={day.date}
+              tabIndex={tabIndexValue}
+              aria-hidden={ariaHiddenValue}
             >
-              <h1 tabindex="4" className="font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-5xl mt-2">
+              <h1 className="font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-5xl mt-2">
                 {day.date}
               </h1>
               <div className="font-semibold text-lg sm:text-xl md:text-2xl mt-4">
@@ -50,12 +58,14 @@ function Foods() {
                     <div
                       className="p-4 sm:p-6 mt-2 rounded-md"
                       key={mealIndex}
+                      tabIndex={tabIndexValue}
+                      aria-hidden={ariaHiddenValue}
                     >
-                      <p tabindex="4" className="text-base sm:text-lg md:text-xl">
+                      <p className="text-base sm:text-lg md:text-xl">
                         {meal}
                       </p>
                       {day.meals.menus.alergenes[mealIndex] ? (
-                        <p tabindex="4" className="text-sm sm:text-base md:text-lg mt-2">
+                        <p className="text-sm sm:text-base md:text-lg mt-2">
                           Allergene: {day.meals.menus.alergenes[mealIndex]}
                         </p>
                       ) : null}
@@ -72,7 +82,9 @@ function Foods() {
 
       {/* No meal plan available */}
       {!loading && !mealPlan && (
-        <div className="text-2xl mx-auto self-center">No meal plan available</div>
+        <div className="text-2xl mx-auto self-center" tabIndex={tabIndexValue}>
+          No meal plan available
+        </div>
       )}
     </div>
   );
