@@ -2,17 +2,13 @@
 
 import React, { useEffect, useCallback, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import Weather from "./components/weather";
 import Events from "./components/events";
 import Fahrplan from "./components/bus";
-import Weather from "./components/weather";
 import LocInfo from "./components/locinfo";
 import Foods from "./components/foods";
 import Plan from "./components/plan";
 import Image from "next/image";
-
-// Generate a random number between 1 and 1000 for 1% chance
-const safeRandom = Math.floor(Math.random() * 1000) + 1;
-console.log(safeRandom + " safeRandom");
 
 export default function Home() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
@@ -59,23 +55,20 @@ export default function Home() {
     };
   }, [scrollPrev, scrollNext]);
 
-  const backgroundImage =
-    safeRandom === 69 ? "placeholder.jpg" : "aE12.jpg?v=1";
-
   const slides = [
-    //<Weather key="weather" />,
-    <Events key="events" />,
-    <LocInfo key="locinfo" />,
-    <Fahrplan key="fahrplan" />,
-    <Foods key="foods" />,
-    <Plan key="plan" />
+    <Weather key="weather" isActive={activeIndex === 0} />,
+    <Events key="events" isActive={activeIndex === 1} />,
+    <LocInfo key="locinfo" isActive={activeIndex === 2} />,
+    <Fahrplan key="fahrplan" isActive={activeIndex === 3} />,
+    <Foods key="foods" isActive={activeIndex === 4} />,
+    <Plan key="plan" isActive={activeIndex === 5} />
   ];
 
   return (
     <div
       className="flex-1 bg-cover bg-center w-full h-screen flex flex-col p-0 m-0"
       style={{
-        backgroundImage: `url('${backgroundImage}')`,
+        backgroundImage: `url('aE12.jpg?v=1')`,
         objectFit: "cover",
       }}
     >
@@ -87,8 +80,8 @@ export default function Home() {
               <div
                 key={index}
                 className="embla__slide w-full flex-shrink-0"
-                tabIndex={index === activeIndex ? 0 : -1} // Focusable only when active
-                aria-hidden={index !== activeIndex} // Hidden from screen readers when inactive
+                tabIndex={index === activeIndex ? 0 : -1}
+                aria-hidden={index !== activeIndex}
               >
                 {slide}
               </div>
