@@ -9,7 +9,7 @@ import { ArrowBack, ArrowForward } from "@mui/icons-material";
 const fachrichtungen = [
   { name: "Fachinformatiker", key: "FI" },
   { name: "Dialogmarketing", key: "DM" },
-  { name: "Büromanagement", key: "KBM" },
+  { name: "KBM", key: "KBM" },
   { name: "FPBK", key: "FPBK" },
   { name: "Berufsvorbereitung", key: "BVB" },
   { name: "Zerspaner", key: "ZM" },
@@ -25,12 +25,10 @@ const fachrichtungen = [
   { name: "BvBHs", key: "BvBHS" },
 ];
 
-export default function Plan({ isActive }) {
-  const [fachrichtung, setFachrichtung] = useState("FI");
-  const [vertretungsplan, setVertretungsplan] = useState({
-    heute: [],
-    morgen: [],
-  });
+export default function Plan() {
+  const [fachrichtung, setFachrichtung] = useState("Fachinformatik");
+  const [planToday, setPlanToday] = useState([]);
+  const [planTomorrow, setPlanTomorrow] = useState([]);
 
   const [sliderRef, instanceRef] = useKeenSlider({
     loop: true,
@@ -49,11 +47,24 @@ export default function Plan({ isActive }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8000/cache/vertretungsplan`
-        );
-        const data = response.data[fachrichtung];
-        setVertretungsplan(data);
+        const dateToday = new Date().toISOString().split("T")[0];
+        const dateTomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+        const todayResponse = await axios.get(`http://localhost:1337/api/stundenplaene?populate=*&filters[beruf][Name][$eq]=${fachrichtung}&filters[Datum][$eq]=${dateToday}`);
+        const tomorrowResponse = await axios.get(`http://localhost:1337/api/stundenplaene?populate=*&filters[beruf][Name][$eq]=${fachrichtung}&filters[Datum][$eq]=${dateTomorrow}`);
+
+        const todayData = todayResponse.data.data[0]?.Vertretungsplan || [];
+        const tomorrowData = tomorrowResponse.data.data[0]?.Vertretungsplan || [];
+
+        if (todayData) {
+          todayData.sort((a, b) => a.Stunde - b.Stunde);
+          setPlanToday(todayData);
+        }
+        if (tomorrowData) {
+          tomorrowData.sort((a, b) => a.Stunde - b.Stunde);
+          setPlanTomorrow(tomorrowData);
+        }
+
+
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -61,22 +72,48 @@ export default function Plan({ isActive }) {
     fetchData();
   }, [fachrichtung]);
 
-  // Accessibility settings
-  const tabIndexValue = isActive ? 0 : -1; // Only focusable when active
-  const ariaHiddenValue = !isActive; // Hide from screen readers when inactive
+  useEffect(() => {
+    console.log("Updated Plan:", planToday, planTomorrow);
+  }, [planToday, planTomorrow]);
 
   return (
-    <div
-      className="flex-1 flex flex-col justify-center p-0 m-0"
-      tabIndex={tabIndexValue}
-      aria-hidden={ariaHiddenValue}
-    >
+
+    <div className="ml-96">
+      <p className="mb-10">
+        <h1>Heute</h1>
+        <div>
+          {Array.from({ length: 10 }).map((_, index) => (
+            <p key={index}>
+              {planToday.find(item => item.Stunde === index + 1) ? (
+                <span>{planToday.find(item => item.Stunde === index + 1).Text}</span>
+              ) : (
+                <span>Keine Vertretung</span>
+              )}
+            </p>
+          ))}
+        </div>
+      </p>
+      <p>
+        <h1>Morgen</h1>
+        <div>
+          {Array.from({ length: 10 }).map((_, index) => (
+            <p key={index}>
+              {planTomorrow.find(item => item.Stunde === index + 1) ? (
+                <span>{planTomorrow.find(item => item.Stunde === index + 1).Text}</span>
+              ) : (
+                <span>Keine Vertretung</span>
+              )}
+            </p>
+          ))}
+        </div>
+      </p>
+
+
+    {/*<div className="flex-1 h-screen flex flex-col justify-center p-0 m-0">
       <div className="flex justify-center mt-32 items-center w-full max-w-screen-lg mx-auto">
         <button
           onClick={() => instanceRef.current?.prev()}
           className="text-2xl text-white px-4 py-2 rounded-md mx-2"
-          tabIndex={tabIndexValue}
-          aria-hidden={ariaHiddenValue}
         >
           <ArrowBack />
         </button>
@@ -89,8 +126,6 @@ export default function Plan({ isActive }) {
                   ? "text-white font-bold"
                   : "text-gray-400"
               }`}
-              tabIndex={tabIndexValue}
-              aria-hidden={ariaHiddenValue}
             >
               <div className="text-2xl px-4 py-2 rounded-md mx-2">
                 {fachrichtung.name}
@@ -101,31 +136,46 @@ export default function Plan({ isActive }) {
         <button
           onClick={() => instanceRef.current?.next()}
           className="text-2xl text-white px-4 py-2 rounded-md mx-2"
-          tabIndex={tabIndexValue}
-          aria-hidden={ariaHiddenValue}
         >
           <ArrowForward />
         </button>
       </div>
-
-      {/* Heute Vertretungsplan */}
       <div className="overflow-x-auto">
-        <p className="m-auto text-center" tabIndex={tabIndexValue}>
-          Heute
-        </p>
+        <p className="m-auto text-center">Heute</p>
         <table className="mt-10 m-auto w-full max-w-5xl">
           <thead>
             <tr>
-              <th className="border-2 px-4 py-3 min-w-[100px]">1.<br />7:30-8:15</th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">2.<br />8:20-9:05</th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">3.<br />9:25-10:10</th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">4.<br />10:15-11:00</th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">5.<br />11:05-11:50</th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">6.<br />12:35-13:20</th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">7.<br />13:25-14:10</th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">8.<br />14:20-15:05</th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">9.<br />15:15-16:00</th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">10.<br />16:00-16:45</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                1. <br /> 7:30-8:15
+              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                2. <br /> 8:20-9:05
+              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                3. <br /> 9:25-10:10
+              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                4. <br /> 10:15-11:00
+              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                5. <br /> 11:05-11:50
+              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                6. <br /> 12:35-13:20
+              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                7. <br /> 13:25-14:10
+              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                8. <br /> 14:20-15:05
+              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                9. <br /> 15:15-16:00
+              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                10.
+                <br /> 16:00-16:45
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -134,8 +184,6 @@ export default function Plan({ isActive }) {
                 <td
                   key={index}
                   className="border-2 px-2 py-2 min-w-[100px] h-20"
-                  tabIndex={tabIndexValue}
-                  aria-hidden={ariaHiddenValue}
                 >
                   {vertretung || ""}
                 </td>
@@ -144,36 +192,47 @@ export default function Plan({ isActive }) {
           </tbody>
         </table>
       </div>
-
-      {/* Morgen Vertretungsplan */}
       <div className="overflow-x-auto">
-        <p className="m-auto text-center" tabIndex={tabIndexValue}>
-          Morgen
-        </p>
+        <p className="m-auto text-center">Morgen</p>
         <table className="mt-10 m-auto w-full max-w-5xl">
           <thead>
             <tr>
-              <th className="border-2 px-4 py-3 min-w-[100px]">1.<br />7:30-8:15</th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">2.<br />8:20-9:05</th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">3.<br />9:25-10:10</th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">4.<br />10:15-11:00</th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">5.<br />11:05-11:50</th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">6.<br />12:35-13:20</th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">7.<br />13:25-14:10</th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">8.<br />14:20-15:05</th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">9.<br />15:15-16:00</th>
-              <th className="border-2 px-4 py-3 min-w-[100px]">10.<br />16:00-16:45</th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                1. <br /> 7:30-8:15
+              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                2. <br /> 8:20-9:05
+              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                3. <br /> 9:25-10:10
+              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                4. <br /> 10:15-11:00
+              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                5. <br /> 11:05-11:50
+              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                6. <br /> 12:35-13:20
+              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                7. <br /> 13:25-14:10
+              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                8. <br /> 14:20-15:05
+              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                9. <br /> 15:15-16:00
+              </th>
+              <th className="border-2 px-4 py-3 min-w-[100px]">
+                10.<br /> 16:00-16:45
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr>
               {vertretungsplan.morgen.map((vertretung, index) => (
-                <td
-                  key={index}
-                  className="border-2 px-2 py-2 min-w-[100px] h-20"
-                  tabIndex={tabIndexValue}
-                  aria-hidden={ariaHiddenValue}
-                >
+                <td key={index} className="border-2 px-2 py-2 min-w-[100px] h-20">
                   {vertretung || ""}
                 </td>
               ))}
@@ -182,5 +241,7 @@ export default function Plan({ isActive }) {
         </table>
       </div>
     </div>
+  */}
+      </div>
   );
 }

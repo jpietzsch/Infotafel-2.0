@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"next dev\" \"npm run start-node\"",
+    "dev-full": "concurrently \"next dev\" \"npm run start-node\" \"npm run start-strapi\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "start-node": "node ./server/cache.js"
+    "start-node": "node ./server/cache.js",
+    "start-strapi": "cd ../infotafel-cms && npm run develop"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
