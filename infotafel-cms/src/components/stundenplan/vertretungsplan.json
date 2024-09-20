@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_stundenplan_vertretungsplans",
+  "info": {
+    "displayName": "Vertretungsplan",
+    "icon": "apps",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Stunde": {
+      "type": "integer",
+      "max": 10,
+      "min": 1
+    },
+    "Text": {
+      "type": "string"
+    }
+  }
+}

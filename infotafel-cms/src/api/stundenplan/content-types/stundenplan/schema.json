@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "stundenplaene",
+  "info": {
+    "singularName": "stundenplan",
+    "pluralName": "stundenplaene",
+    "displayName": "Stundenplan",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Datum": {
+      "unique": false,
+      "type": "date"
+    },
+    "beruf": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::beruf.beruf"
+    },
+    "Vertretungsplan": {
+      "displayName": "Vertretungsplan",
+      "type": "component",
+      "repeatable": true,
+      "component": "stundenplan.vertretungsplan"
+    }
+  }
+}
