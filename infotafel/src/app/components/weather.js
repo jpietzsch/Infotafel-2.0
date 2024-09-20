@@ -4,7 +4,6 @@ console.log("Wetter.js");
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
 import DailyForecastComponent from "../components/weathers/DailyForecastComponent";
 import CurrentWeatherComponent from "../components/weathers/CurrentWeatherComponent";
 
@@ -19,7 +18,7 @@ const debug = false;
  *
  * @returns {JSX.Element} The rendered weather component.
  */
-function Weather() {
+function Weather({ isActive }) {  // Pass a prop to check if this component is the active one
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -48,9 +47,17 @@ function Weather() {
 
   const { current: { time } = {} } = weatherData || {};
 
+  // Accessibility: Control tabindex based on whether the component is active
+  const tabIndexValue = isActive ? 0 : -1; // Only focusable when active
+  const ariaHiddenValue = !isActive; // Hide from screen readers when inactive
+
   if (loading) {
     return (
-      <div className="flex flex-col justify-center items-center min-h-screen">
+      <div
+        className="flex flex-col justify-center items-center min-h-screen"
+        tabIndex={tabIndexValue}
+        aria-hidden={ariaHiddenValue}
+      >
         <div className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl">Loading...</div>
       </div>
     );
@@ -58,14 +65,22 @@ function Weather() {
 
   if (!weatherData) {
     return (
-      <div className="flex flex-col justify-center items-center min-h-screen">
+      <div
+        className="flex flex-col justify-center items-center min-h-screen"
+        tabIndex={tabIndexValue}
+        aria-hidden={ariaHiddenValue}
+      >
         <div className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl">Error: Data not available</div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div
+      className="flex flex-col items-center justify-center"
+      tabIndex={tabIndexValue}
+      aria-hidden={ariaHiddenValue}
+    >
       <div className="flex w-full justify-center items-center flex-col">
         {/* Current Weather */}
         <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl">

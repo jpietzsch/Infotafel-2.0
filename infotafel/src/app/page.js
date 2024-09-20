@@ -10,7 +10,7 @@ import Foods from "./components/foods";
 import Plan from "./components/plan";
 import Image from "next/image";
 
-// Generate a random number between 1 and 100 for 1% chance
+// Generate a random number between 1 and 1000 for 1% chance
 const safeRandom = Math.floor(Math.random() * 1000) + 1;
 console.log(safeRandom + " safeRandom");
 
@@ -18,6 +18,7 @@ export default function Home() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(0); // Keep track of active slide
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -33,6 +34,7 @@ export default function Home() {
     const onSelect = () => {
       setCanScrollPrev(emblaApi.canScrollPrev());
       setCanScrollNext(emblaApi.canScrollNext());
+      setActiveIndex(emblaApi.selectedScrollSnap()); // Update active slide index
     };
 
     emblaApi.on("select", onSelect);
@@ -60,6 +62,15 @@ export default function Home() {
   const backgroundImage =
     safeRandom === 69 ? "placeholder.jpg" : "aE12.jpg?v=1";
 
+  const slides = [
+    //<Weather key="weather" />,
+    <Events key="events" />,
+    <LocInfo key="locinfo" />,
+    <Fahrplan key="fahrplan" />,
+    <Foods key="foods" />,
+    <Plan key="plan" />
+  ];
+
   return (
     <div
       className="flex-1 bg-cover bg-center w-full h-screen flex flex-col p-0 m-0"
@@ -72,25 +83,16 @@ export default function Home() {
         {/* Carousel */}
         <div className="relative w-full" ref={emblaRef}>
           <div className="flex transition-transform duration-100 ease-in-out">
-            {/* Items */}
-            <div className="embla__slide w-full flex-shrink-0">
-              <Weather />
-            </div>
-            <div className="embla__slide w-full flex-shrink-0">
-              <Events />
-            </div>
-            <div className="embla__slide w-full flex-shrink-0">
-              <LocInfo />
-            </div>
-            <div className="embla__slide w-full flex-shrink-0">
-              <Fahrplan />
-            </div>
-            <div className="embla__slide w-full flex-shrink-0">
-              <Foods />
-            </div>
-            <div className="embla__slide w-full flex-shrink-0">
-              <Plan />
-            </div>
+            {slides.map((slide, index) => (
+              <div
+                key={index}
+                className="embla__slide w-full flex-shrink-0"
+                tabIndex={index === activeIndex ? 0 : -1} // Focusable only when active
+                aria-hidden={index !== activeIndex} // Hidden from screen readers when inactive
+              >
+                {slide}
+              </div>
+            ))}
           </div>
 
           {/* Left Arrow */}
@@ -100,6 +102,7 @@ export default function Home() {
             }`}
             onClick={scrollPrev}
             disabled={!canScrollPrev}
+            aria-label="Previous Slide"
           >
             <Image src="/arrowleft.png" alt="Previous" width={50} height={50} />
           </button>
@@ -111,6 +114,7 @@ export default function Home() {
             }`}
             onClick={scrollNext}
             disabled={!canScrollNext}
+            aria-label="Next Slide"
           >
             <Image src="/arrowright.png" alt="Next" width={50} height={50} />
           </button>

@@ -7,7 +7,6 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ArrowRight from "@mui/icons-material/ArrowRight";
-
 import { ThemeProvider } from "@emotion/react";
 import { SvgIcon, createTheme } from "@mui/material";
 
@@ -41,7 +40,7 @@ const locations = {
   },
 };
 
-function Fahrplan() {
+function Fahrplan({ isActive }) {
   const [busplanData, setBusplanData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = React.useState(false);
@@ -89,17 +88,28 @@ function Fahrplan() {
     return () => clearTimeout(timer);
   }, [busplanData]);
 
+  // Accessibility settings
+  const tabIndexValue = isActive ? 0 : -1; // Only focusable when active
+  const ariaHiddenValue = !isActive; // Hidden from screen readers when inactive
+
   if (loading) {
     return (
-      <div className="bg-site-background mx-auto px-4 text-white flex-grow w-screen justify-evenly ">
+      <div
+        className="bg-site-background mx-auto px-4 text-white flex-grow w-screen justify-evenly"
+        tabIndex={tabIndexValue}
+        aria-hidden={ariaHiddenValue}
+      >
         <div className="text-white">Loading...</div>
       </div>
     );
   }
 
   return (
-    
-    <div className="mx-auto text-white flex-grow w-full justify-evenly overflow-hidden">
+    <div
+      className="mx-auto text-white flex-grow w-full justify-evenly overflow-hidden"
+      tabIndex={tabIndexValue}
+      aria-hidden={ariaHiddenValue}
+    >
       <div className="flex flex-grow items-center">
         <div className="flex w-full justify-center items-center flex-col">
           <ThemeProvider theme={darkTheme}>
@@ -110,7 +120,9 @@ function Fahrplan() {
                     ?.slice(0, 4)
                     .map((time, index, array) => (
                       <React.Fragment key={index}>
-                        <Typography>{time}</Typography>
+                        <Typography tabIndex={tabIndexValue}>
+                          {time}
+                        </Typography>
                         {index !== array.length - 1 && (
                           <SvgIcon component={ArrowRight} />
                         )}
@@ -131,7 +143,9 @@ function Fahrplan() {
 
                       return (
                         <React.Fragment key={index}>
-                          <p className={typographyClass}>{time}</p>
+                          <p className={typographyClass} tabIndex={tabIndexValue}>
+                            {time}
+                          </p>
                           {index !== array.length - 1 && (
                             <SvgIcon component={ArrowRight} />
                           )}
@@ -141,13 +155,15 @@ function Fahrplan() {
               </div>
             </div>
             <div className="flex flex-col lg:flex-row w-full justify-evenly">
-             <div className="flex flex-col space-y-4">
+              <div className="flex flex-col space-y-4">
                 {locations["31"].locations.map((location, index) => (
                   <div key={index} className="flex items-center">
                     <div className="w-4 h-4 bg-white rounded-full"></div>
                     <div className="ml-4">
-                      <Typography tabIndex="4">{location}</Typography>
-                      <Typography tabIndex="4">
+                      <Typography tabIndex={tabIndexValue}>
+                        {location}
+                      </Typography>
+                      <Typography tabIndex={tabIndexValue}>
                         {busplanData &&
                           addMinutesToTime(
                             busplanData["31"]?.realTimes[0] || "00:00",
@@ -163,10 +179,16 @@ function Fahrplan() {
                   src="31fahrplan.jpg"
                   alt="Fahrplan 31"
                   className="w-full"
+                  tabIndex={tabIndexValue}
+                  aria-hidden={ariaHiddenValue}
                 />
               </div>
             </div>
-            <p className="text-xs text-gray-400">
+            <p
+              className="text-xs text-gray-400"
+              tabIndex={tabIndexValue}
+              aria-hidden={ariaHiddenValue}
+            >
               *Alle Angaben sind unverbindlich. Busse können früher oder später
               eintreffen. Manchmal auch garnicht.
             </p>
