@@ -19,6 +19,7 @@ const debug = false;
  * @returns {JSX.Element} The rendered weather component.
  */
 function Weather({ isActive }) {  // Pass a prop to check if this component is the active one
+  console.log("Weather component isActive:", isActive);
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
 

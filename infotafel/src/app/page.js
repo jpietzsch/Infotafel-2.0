@@ -15,6 +15,7 @@ export default function Home() {
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0); // Keep track of active slide
+  const [isTransitioning, setIsTransitioning] = useState(false); // To handle the transition state
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -30,7 +31,12 @@ export default function Home() {
     const onSelect = () => {
       setCanScrollPrev(emblaApi.canScrollPrev());
       setCanScrollNext(emblaApi.canScrollNext());
-      setActiveIndex(emblaApi.selectedScrollSnap()); // Update active slide index
+      const newIndex = emblaApi.selectedScrollSnap();
+      setIsTransitioning(true); // Start transition
+      setTimeout(() => {
+        setActiveIndex(newIndex); // Update active slide index
+        setIsTransitioning(false); // End transition after duration
+      }, 200); // Match the transition duration (200ms)
     };
 
     emblaApi.on("select", onSelect);
@@ -39,12 +45,13 @@ export default function Home() {
     return () => emblaApi.off("select", onSelect);
   }, [emblaApi]);
 
+  // Re-add keybinding for numpad navigation
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.code === "Numpad4") {
-        scrollPrev();
+        scrollPrev(); // Move backward when Numpad4 is pressed
       } else if (event.code === "Numpad6") {
-        scrollNext();
+        scrollNext(); // Move forward when Numpad6 is pressed
       }
     };
 
@@ -61,7 +68,7 @@ export default function Home() {
     <LocInfo key="locinfo" isActive={activeIndex === 2} />,
     <Fahrplan key="fahrplan" isActive={activeIndex === 3} />,
     <Foods key="foods" isActive={activeIndex === 4} />,
-    <Plan key="plan" isActive={activeIndex === 5} />
+    <Plan key="plan" isActive={activeIndex === 5} />,
   ];
 
   return (
@@ -74,14 +81,23 @@ export default function Home() {
     >
       <div className="flex-1 flex bg-black/65 w-full relative overflow-hidden">
         {/* Carousel */}
-        <div className="relative w-full" ref={emblaRef}>
-          <div className="flex transition-transform duration-100 ease-in-out">
+        <div className="relative w-full h-full" ref={emblaRef}>
+          <div className="flex h-full transition-opacity ease-in-out duration-200">
             {slides.map((slide, index) => (
               <div
                 key={index}
-                className="embla__slide w-full flex-shrink-0"
+                className={`embla__slide w-full h-full flex-shrink-0 transition-opacity duration-200 ${
+                  index === activeIndex || isTransitioning
+                    ? "opacity-100 visible pointer-events-auto"
+                    : "opacity-0"
+                } ${
+                  index === activeIndex
+                    ? "visible pointer-events-auto"
+                    : "invisible pointer-events-none"
+                }`}
                 tabIndex={index === activeIndex ? 0 : -1}
                 aria-hidden={index !== activeIndex}
+                role="group" // Helps screen readers recognize slide groups
               >
                 {slide}
               </div>
