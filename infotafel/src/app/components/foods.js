@@ -24,7 +24,7 @@ function Foods() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col">
       {/* Loading state */}
       {loading && (
         <div className="text-2xl mx-auto self-center">Loading...</div>

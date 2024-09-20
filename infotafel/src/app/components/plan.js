@@ -62,7 +62,7 @@ export default function Plan() {
   }, [fachrichtung]);
 
   return (
-    <div className="flex-1 h-screen flex flex-col justify-center p-0 m-0">
+    <div className="flex-1 flex flex-col justify-center p-0 m-0">
       <div className="flex justify-center mt-32 items-center w-full max-w-screen-lg mx-auto">
         <button
           onClick={() => instanceRef.current?.prev()}

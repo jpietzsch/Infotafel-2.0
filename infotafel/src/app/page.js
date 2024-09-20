@@ -10,6 +10,10 @@ import Foods from "./components/foods";
 import Plan from "./components/plan";
 import Image from "next/image";
 
+// Generate a random number between 1 and 100 for 1% chance
+const safeRandom = Math.floor(Math.random() * 1000) + 1;
+console.log(safeRandom + " safeRandom");
+
 export default function Home() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
   const [canScrollPrev, setCanScrollPrev] = useState(false);
@@ -37,10 +41,32 @@ export default function Home() {
     return () => emblaApi.off("select", onSelect);
   }, [emblaApi]);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.code === "Numpad4") {
+        scrollPrev();
+      } else if (event.code === "Numpad6") {
+        scrollNext();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [scrollPrev, scrollNext]);
+
+  const backgroundImage =
+    safeRandom === 69 ? "placeholder.jpg" : "aE12.jpg?v=1";
+
   return (
     <div
       className="flex-1 bg-cover bg-center w-full h-screen flex flex-col p-0 m-0"
-      style={{ backgroundImage: `url('aE12.jpg?v=1')`, objectFit: "cover" }}
+      style={{
+        backgroundImage: `url('${backgroundImage}')`,
+        objectFit: "cover",
+      }}
     >
       <div className="flex-1 flex bg-black/65 w-full relative overflow-hidden">
         {/* Carousel */}
@@ -59,12 +85,12 @@ export default function Home() {
             <div className="embla__slide w-full flex-shrink-0">
               <Fahrplan />
             </div>
-            {/*<div className="embla__slide w-full flex-shrink-0">
+            <div className="embla__slide w-full flex-shrink-0">
               <Foods />
             </div>
             <div className="embla__slide w-full flex-shrink-0">
               <Plan />
-            </div>*/}
+            </div>
           </div>
 
           {/* Left Arrow */}
