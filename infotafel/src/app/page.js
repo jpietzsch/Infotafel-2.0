@@ -59,12 +59,12 @@ export default function Home() {
             <div className="embla__slide w-full flex-shrink-0">
               <Fahrplan />
             </div>
-            <div className="embla__slide w-full flex-shrink-0">
+            {/*<div className="embla__slide w-full flex-shrink-0">
               <Foods />
             </div>
             <div className="embla__slide w-full flex-shrink-0">
               <Plan />
-            </div>
+            </div>*/}
           </div>
 
           {/* Left Arrow */}
