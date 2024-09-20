@@ -19,8 +19,8 @@ export default function Events() {
           </p>
         </div>
 
-        <div className="w-full md:w-5/12 flex justify-center md:justify-end">
-        <img
+        <div className="w-full md:w-5/12 mt-2 flex justify-center p-4 md:p-6">
+          <img
             src="pipebomb.jpeg"
             alt="bildi"
             className="object-cover w-64 h-64 md:w-[506px] md:h-[506px] rounded-[30px] border-6 border-solid border-white"
