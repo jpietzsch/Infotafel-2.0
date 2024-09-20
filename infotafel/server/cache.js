@@ -270,14 +270,23 @@ app.get("/cache/vertretungsplan", async (req, res) => {
   const url = `${baseUrl}vertretungsplan`;
   const url2 = `${baseUrl}vertretungsplan/?morgen`
 
-  const clearedData = [];
   const specializations = {};
 
   try {
+    let cache = {};
+    if(fs.existsSync(CACHE_FILE)) {
+      cache = JSON.parse(fs.readFileSync(CACHE_FILE));
+      if (cache.vertretungsplan && cache.vertretungsplan.timestamp && !isTimestampExpired(cache.vertretungsplan.timestamp, 60)) {
+        return res.json(cache.vertretungsplan.data);
+      } else {
+      }
+    }
+
+
+
     const response_tdy = await axios.get(url);
     const response_tmr = await axios.get(url2);
     for (let i = 1; i < response_tdy.data[1].length; i++) {
-      console.log(response_tdy.data[1][i]);
       specializations[response_tdy.data[1][i]] = {
         heute: [],
         morgen: []
@@ -297,8 +306,12 @@ app.get("/cache/vertretungsplan", async (req, res) => {
         specializations[response_tdy.data[1][i]].morgen.push(response_tmr.data[j][i]);
       }
     }
-    clearedData.push(specializations);
-    res.json(clearedData);
+
+    const timestamp = Date.now();
+    cache.vertretungsplan = { timestamp, data: specializations };
+
+    fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2));
+    res.json(specializations);
 
   } catch (error) {
     console.error("Error:", error);
