@@ -104,7 +104,7 @@ function Fahrplan() {
         <div className="flex w-full justify-center items-center flex-col">
           <ThemeProvider theme={darkTheme}>
             <div className="mt-10 flex flex-col items-center w-full font-semibold">
-              <div className="flex w-full justify-evenly items-center">
+              <div className="flex flex-col md:flex-row w-full justify-evenly items-center">
                 {busplanData &&
                   busplanData["31"]?.departureTimes
                     ?.slice(0, 4)
@@ -117,7 +117,7 @@ function Fahrplan() {
                       </React.Fragment>
                     ))}
               </div>
-              <div className="flex w-full justify-evenly items-center mb-5">
+              <div className="flex flex-col md:flex-row w-full justify-evenly items-center mb-5">
                 {busplanData &&
                   busplanData["31"]?.realTimes
                     ?.slice(0, 4)
@@ -140,8 +140,8 @@ function Fahrplan() {
                     })}
               </div>
             </div>
-            <div className="flex flex-row w-full justify-evenly">
-              <div className="flex flex-col space-y-4">
+            <div className="flex flex-col lg:flex-row w-full justify-evenly">
+             <div className="flex flex-col space-y-4">
                 {locations["31"].locations.map((location, index) => (
                   <div key={index} className="flex items-center">
                     <div className="w-4 h-4 bg-white rounded-full"></div>
@@ -158,7 +158,7 @@ function Fahrplan() {
                   </div>
                 ))}
               </div>
-              <div className="w-1/2">
+              <div className="w-full lg:w-1/2">
                 <img
                   src="31fahrplan.jpg"
                   alt="Fahrplan 31"

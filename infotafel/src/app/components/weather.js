@@ -50,25 +50,30 @@ function Weather() {
 
   if (loading) {
     return (
-      <div className="flex flex-col justify-center items-center">
-        <div className="text-white text-2xl">Loading...</div>
+      <div className="flex flex-col justify-center items-center min-h-screen">
+        <div className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl">Loading...</div>
       </div>
     );
   }
 
   if (!weatherData) {
     return (
-      <div className="flex flex-col justify-center items-center">
-        <div className="text-white text-2xl">Error: Data not available</div>
+      <div className="flex flex-col justify-center items-center min-h-screen">
+        <div className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl">Error: Data not available</div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col flex-grow items-center">
+    <div className="flex flex-col items-center justify-center">
       <div className="flex w-full justify-center items-center flex-col">
         {/* Current Weather */}
-        <CurrentWeatherComponent currentWeatherData={weatherData} />
+        <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl">
+          <CurrentWeatherComponent currentWeatherData={weatherData} />
+        </div>
+      </div>
+      <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl mt-6">
+        <DailyForecastComponent forecastData={weatherData.daily} />
       </div>
     </div>
   );
