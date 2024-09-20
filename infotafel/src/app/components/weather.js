@@ -56,7 +56,6 @@ function Weather({ isActive }) {  // Pass a prop to check if this component is t
     return (
       <div
         className="flex flex-col justify-center items-center min-h-screen"
-        tabIndex={tabIndexValue}
         aria-hidden={ariaHiddenValue}
       >
         <div className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl">Loading...</div>
@@ -68,7 +67,6 @@ function Weather({ isActive }) {  // Pass a prop to check if this component is t
     return (
       <div
         className="flex flex-col justify-center items-center min-h-screen"
-        tabIndex={tabIndexValue}
         aria-hidden={ariaHiddenValue}
       >
         <div className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl">Error: Data not available</div>
@@ -79,7 +77,6 @@ function Weather({ isActive }) {  // Pass a prop to check if this component is t
   return (
     <div
       className="flex flex-col items-center justify-center"
-      tabIndex={tabIndexValue}
       aria-hidden={ariaHiddenValue}
     >
       <div className="flex w-full justify-center items-center flex-col">

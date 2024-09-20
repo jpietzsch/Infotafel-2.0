@@ -107,7 +107,6 @@ function Fahrplan({ isActive }) {
   return (
     <div
       className="mx-auto text-white flex-grow w-full justify-evenly overflow-hidden"
-      tabIndex={tabIndexValue}
       aria-hidden={ariaHiddenValue}
     >
       <div className="flex flex-grow items-center">
@@ -120,9 +119,7 @@ function Fahrplan({ isActive }) {
                     ?.slice(0, 4)
                     .map((time, index, array) => (
                       <React.Fragment key={index}>
-                        <Typography tabIndex={tabIndexValue}>
-                          {time}
-                        </Typography>
+                        <Typography tabIndex={tabIndexValue}>{time}</Typography>
                         {index !== array.length - 1 && (
                           <SvgIcon component={ArrowRight} />
                         )}
@@ -143,7 +140,10 @@ function Fahrplan({ isActive }) {
 
                       return (
                         <React.Fragment key={index}>
-                          <p className={typographyClass} tabIndex={tabIndexValue}>
+                          <p
+                            className={typographyClass}
+                            tabIndex={tabIndexValue}
+                          >
                             {time}
                           </p>
                           {index !== array.length - 1 && (

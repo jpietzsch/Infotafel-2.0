@@ -28,7 +28,7 @@ function Foods({ isActive }) {
   const ariaHiddenValue = !isActive; // Hidden from screen readers when inactive
 
   return (
-    <div className="flex flex-col" tabIndex={tabIndexValue} aria-hidden={ariaHiddenValue}>
+    <div className="flex flex-col" aria-hidden={ariaHiddenValue}>
       {/* Loading state */}
       {loading && (
         <div className="text-2xl mx-auto self-center" tabIndex={tabIndexValue}>
@@ -58,14 +58,19 @@ function Foods({ isActive }) {
                     <div
                       className="p-4 sm:p-6 mt-2 rounded-md"
                       key={mealIndex}
-                      tabIndex={tabIndexValue}
                       aria-hidden={ariaHiddenValue}
                     >
-                      <p className="text-base sm:text-lg md:text-xl">
+                      <p
+                        className="text-base sm:text-lg md:text-xl"
+                        tabIndex={tabIndexValue}
+                      >
                         {meal}
                       </p>
                       {day.meals.menus.alergenes[mealIndex] ? (
-                        <p className="text-sm sm:text-base md:text-lg mt-2">
+                        <p
+                          className="text-sm sm:text-base md:text-lg mt-2"
+                          tabIndex={tabIndexValue}
+                        >
                           Allergene: {day.meals.menus.alergenes[mealIndex]}
                         </p>
                       ) : null}

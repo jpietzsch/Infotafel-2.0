@@ -10,6 +10,9 @@ import Foods from "./components/foods";
 import Plan from "./components/plan";
 import Image from "next/image";
 
+const safeRandom = Math.floor(Math.random() * 1000) + 1;
+console.log(safeRandom + " safeRandom");
+
 export default function Home() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
   const [canScrollPrev, setCanScrollPrev] = useState(false);
@@ -62,6 +65,9 @@ export default function Home() {
     };
   }, [scrollPrev, scrollNext]);
 
+  const backgroundImage =
+    safeRandom === 69 ? "placeholder.jpg" : "aE12.jpg?v=1";
+
   const slides = [
     <Weather key="weather" isActive={activeIndex === 0} />,
     <Events key="events" isActive={activeIndex === 1} />,
@@ -75,7 +81,7 @@ export default function Home() {
     <div
       className="flex-1 bg-cover bg-center w-full h-screen flex flex-col p-0 m-0"
       style={{
-        backgroundImage: `url('aE12.jpg?v=1')`,
+        backgroundImage: `url('${backgroundImage}')`,
         objectFit: "cover",
       }}
     >

@@ -6,7 +6,6 @@ export default function LocInfo({ isActive }) {
   return (
     <div
       className="min-mx-4 mx-10 md:ml-52 mt-8 md:mt-16 w-full flex flex-col md:flex-row"
-      tabIndex={tabIndexValue}
       aria-hidden={ariaHiddenValue}
     >
       <div className="flex-col w-3/4 md:w-6/12">
