@@ -1,5 +1,62 @@
 import type { Struct, Schema } from '@strapi/strapi';
 
+export interface ApiBerufBeruf extends Struct.CollectionTypeSchema {
+  collectionName: 'berufe';
+  info: {
+    singularName: 'beruf';
+    pluralName: 'berufe';
+    displayName: 'Beruf';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Name: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::beruf.beruf'>;
+  };
+}
+
+export interface ApiStundenplanStundenplan extends Struct.CollectionTypeSchema {
+  collectionName: 'stundenplaene';
+  info: {
+    singularName: 'stundenplan';
+    pluralName: 'stundenplaene';
+    displayName: 'Stundenplan';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Datum: Schema.Attribute.Date;
+    beruf: Schema.Attribute.Relation<'oneToOne', 'api::beruf.beruf'>;
+    Vertretungsplan: Schema.Attribute.Component<
+      'stundenplan.vertretungsplan',
+      true
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::stundenplan.stundenplan'
+    >;
+  };
+}
+
 export interface PluginUploadFile extends Struct.CollectionTypeSchema {
   collectionName: 'files';
   info: {
@@ -485,90 +542,6 @@ export interface PluginUsersPermissionsUser
   };
 }
 
-export interface ApiBerufBeruf extends Struct.CollectionTypeSchema {
-  collectionName: 'berufe';
-  info: {
-    singularName: 'beruf';
-    pluralName: 'berufe';
-    displayName: 'Beruf';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Name: Schema.Attribute.String;
-    createdAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    publishedAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::beruf.beruf'>;
-  };
-}
-
-export interface ApiStundenplanStundenplan extends Struct.CollectionTypeSchema {
-  collectionName: 'stundenplaene';
-  info: {
-    singularName: 'stundenplan';
-    pluralName: 'stundenplaene';
-    displayName: 'Stundenplan';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Datum: Schema.Attribute.Date;
-    beruf: Schema.Attribute.Relation<'oneToOne', 'api::beruf.beruf'>;
-    Vertretungsplan: Schema.Attribute.Component<
-      'stundenplan.vertretungsplan',
-      true
-    >;
-    createdAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    publishedAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::stundenplan.stundenplan'
-    >;
-  };
-}
-
-export interface ApiTestTest extends Struct.CollectionTypeSchema {
-  collectionName: 'tests';
-  info: {
-    singularName: 'test';
-    pluralName: 'tests';
-    displayName: 'test';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    test: Schema.Attribute.Media<
-      'images' | 'files' | 'audios' | 'videos',
-      true
-    >;
-    createdAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    publishedAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::test.test'>;
-  };
-}
-
 export interface AdminPermission extends Struct.CollectionTypeSchema {
   collectionName: 'admin_permissions';
   info: {
@@ -934,6 +907,8 @@ export interface AdminTransferTokenPermission
 declare module '@strapi/strapi' {
   export module Public {
     export interface ContentTypeSchemas {
+      'api::beruf.beruf': ApiBerufBeruf;
+      'api::stundenplan.stundenplan': ApiStundenplanStundenplan;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::i18n.locale': PluginI18NLocale;
@@ -944,9 +919,6 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'api::beruf.beruf': ApiBerufBeruf;
-      'api::stundenplan.stundenplan': ApiStundenplanStundenplan;
-      'api::test.test': ApiTestTest;
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;
       'admin::role': AdminRole;
