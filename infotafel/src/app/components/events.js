@@ -1,12 +1,8 @@
 export default function Events({ isActive }) {
-  const content = `Gestern Abend ereignete sich ein tragischer Vorfall, 
-    als eine unbekannte Person von einer Brücke in die Tiefe sprang. 
-    Rettungskräfte waren schnell vor Ort, 
-    konnten jedoch nicht mehr helfen. 
-    Die genauen Hintergründe des Geschehens sind noch unklar, 
-    die Ermittlungen laufen. 
-    Zeugen werden gebeten, 
-    sich bei der Polizei zu melden.`;
+  const content = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
+  tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+  At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, 
+  no sea takimata sanctus est Lorem ipsum dolor sit amet. `;
 
   // Accessibility settings
   const tabIndexValue = isActive ? 0 : -1; // Only focusable when active
@@ -23,7 +19,7 @@ export default function Events({ isActive }) {
           className="text-white text-3xl md:text-4xl font-bold mb-8 md:mb-20 mx-0 md:mx-20"
           tabIndex={tabIndexValue}
         >
-          Irgendjemand hat sich gestern von der Brücke gestürzt
+          Lorem Ipsum 
         </h2>
         <p
           className="text-white text-base md:text-xl whitespace-pre-line ml-0 md:ml-20"

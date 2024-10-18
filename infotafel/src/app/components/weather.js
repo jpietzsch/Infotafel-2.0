@@ -76,12 +76,12 @@ function Weather({ isActive }) {  // Pass a prop to check if this component is t
 
   return (
     <div
-      className="flex flex-col items-center justify-center"
+      className="flex flex-col items-center justify-center min-h-screen p-4"
       aria-hidden={ariaHiddenValue}
     >
       <div className="flex w-full justify-center items-center flex-col">
         {/* Current Weather */}
-        <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl">
+        <div className="">
           <CurrentWeatherComponent currentWeatherData={weatherData} />
         </div>
       </div>

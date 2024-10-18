@@ -6,16 +6,15 @@ export default function LocInfo({ isActive }) {
   // Extract repeated block as a reusable component
   const InfoBlock = ({ label, content }) => (
     <div>
-      <div className="mt-10 md:mt-20 text-4xl md:text-6xl font-semibold" tabIndex={tabIndexValue}>
+      <div className="mt-8 md:mt-16 text-4xl md:text-5xl lg:text-6xl font-semibold" tabIndex={tabIndexValue}>
         {label}
       </div>
-      <div className="mt-4 md:mt-8 font-thin text-2xl md:text-4xl" tabIndex={tabIndexValue}>
+      <div className="font-light text-2xl md:text-3xl lg:text-4xl" tabIndex={tabIndexValue}>
         {content}
       </div>
     </div>
   );
 
-  // Reusable section component
   const Section1 = () => (
     <div className="flex flex-col md:w-6/12 mt-8 md:mt-0">
       <InfoBlock label="WG:" content="Vallah-Billah-Straße.187" />
@@ -45,9 +44,10 @@ export default function LocInfo({ isActive }) {
     </div>
   );
 
+  
   return (
     <div
-      className="min-mx-4 mx-10 md:ml-52 mt-8 md:mt-16 flex flex-col md:flex-row"
+      className="min-mx-6 mx-12 md:ml-36 mt-2 md:mt-4 flex flex-col md:flex-row"
       aria-hidden={ariaHiddenValue}
     >
       <Section1 />
