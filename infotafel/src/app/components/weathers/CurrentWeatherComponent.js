@@ -4,12 +4,12 @@ import Lottie from "lottie-react";
 
 import weatherInterpretationCodes from "../../weatherInterpretationCodes";
 
-const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+//const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 function CurrentWeatherComponent({ currentWeatherData }) {
   return (
     <div className="flex flex-row justify-evenly w-screen sm:max-w-screen-lg">
-      <div className="sm:mr-64" style={{ maxWidth: isMobile ? "40%" : "" }}>
+      <div className="sm:mr-64" style={{ maxWidth:"" }}>
         {/* Display the weather description */}
         <h1 className="text-4xl font-bold text-white m-12" tabIndex="4">
           {currentWeatherData?.current
@@ -35,7 +35,7 @@ function CurrentWeatherComponent({ currentWeatherData }) {
           {/* Display the temperature */}
           <p
             className="flex flex-row"
-            style={{ fontSize: isMobile ? "30px" : "50px" }}
+            style={{ fontSize:"50px" }}
             tabIndex="5"
           >
             <img
@@ -55,7 +55,7 @@ function CurrentWeatherComponent({ currentWeatherData }) {
           {/* Display the wind speed */}
           <p
             className="flex flex-row"
-            style={{ fontSize: isMobile ? "30px" : "50px" }}
+            style={{ fontSize:"50px" }}
             tabIndex="6"
           >
             <img
@@ -75,7 +75,7 @@ function CurrentWeatherComponent({ currentWeatherData }) {
           {/* Display the cloud cover */}
           <p
             className="flex flex-row"
-            style={{ fontSize: isMobile ? "30px" : "50px" }}
+            style={{ fontSize:"50px" }}
             tabIndex="7"
           >
             <img
@@ -95,7 +95,7 @@ function CurrentWeatherComponent({ currentWeatherData }) {
           {/* Display the rainfall */}
           <p
             className="flex flex-row"
-            style={{ fontSize: isMobile ? "30px" : "50px" }}
+            style={{ fontSize:"50px" }}
             tabIndex="8"
           >
             <img

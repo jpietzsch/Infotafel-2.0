@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "betreuers",
+  "info": {
+    "singularName": "betreuer",
+    "pluralName": "betreuers",
+    "displayName": "Betreuer",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "WG": {
+      "type": "string"
+    },
+    "Betreuer": {
+      "type": "string"
+    },
+    "Telefon": {
+      "type": "string"
+    }
+  }
+}

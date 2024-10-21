@@ -50,7 +50,6 @@ app.get("/cache/weather", async (req, res) => {
     if (fs.existsSync(CACHE_FILE)) {
       cache = JSON.parse(fs.readFileSync(CACHE_FILE));
       if (cache.weather && cache.weather.timestamp && !isTimestampExpired(cache.weather.timestamp, 5)) {
-        console.log("return cached weather data")
         return res.json(cache.weather.data);
       } else {
         console.log("cache expired")
@@ -62,7 +61,6 @@ app.get("/cache/weather", async (req, res) => {
         data
       }
     fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2));
-    console.log("trigger weather cache");
 
     res.json(data);
 
@@ -194,7 +192,6 @@ function parseHTML(html) {
         data.push({ lineNr, desc, times: [{ time, realtime }] });
       }
     }
-    console.log(data);
   });
 
   return data;
@@ -240,7 +237,6 @@ app.get("/cache/busplan", async (req, res) => {
     if (fs.existsSync(CACHE_FILE)) {
       cache = JSON.parse(fs.readFileSync(CACHE_FILE));
       if (cache.busData && cache.busData.timestamp && !isTimestampExpired(cache.busData.timestamp, 1)) {
-        console.log("return cached bus data");
         return res.json(cache.busData);
       } else {
         console.log("cache expired");
