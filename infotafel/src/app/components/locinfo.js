@@ -31,16 +31,32 @@ export default function LocInfo({ isActive }) {
 
   return (
     <div
-      className="grid grid-cols-3 gap-4 min-h-full items-center"
+      className="grid grid-cols-1 md:grid-cols-3 gap-8 min-h-full items-center"
       aria-hidden={ariaHiddenValue}
     >
       {locInfo.map((data, index) => (
-        <div key={index} className="flex flex-col md:w-6/12 mt-8 md:mt-0 items-center">
-          <h1 className="">{data.WG}</h1>
-          <h2>{data.Betreuer}</h2>
-          <h2>{data.Telefon}</h2>
+        <div 
+          key={index} 
+          className="flex flex-col w-full items-center text-center space-y-4 transform transition-transform hover:scale-105"
+        >
+          <div className="flex items-center space-x-3">
+            <h1 className="text-2xl font-bold text-white tracking-tight">{data.WG}</h1>
+          </div>
+          <div className="flex items-center space-x-3">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/user.png" alt="Betreuer Icon" className="w-6 h-6" />
+            <h2 className="text-lg font-medium text-gray-300">{data.Betreuer}</h2>
+          </div>
+          <div className="flex items-center space-x-3">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/phone.png" alt="Telefon Icon" className="w-6 h-6" />
+            <h2 className="text-md text-gray-400">{data.Telefon}</h2>
+          </div>
         </div>
       ))}
     </div>
   );
+  
+  
+  
+  
+  
 }
