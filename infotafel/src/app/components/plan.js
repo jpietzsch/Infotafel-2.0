@@ -15,7 +15,10 @@ export default function Plan() {
         const jobsData = response.data.data;
 
         if (jobsData && jobsData.length > 0) {
-          const jobNames = jobsData.map((job) => job.Name || "Unnamed Job");
+          // Sort the job names alphabetically
+          const jobNames = jobsData
+            .map((job) => job.Name || "Unnamed Job")
+            .sort((a, b) => a.localeCompare(b));
           setJobList(jobNames);
         } else {
           console.log("No jobs found.");
