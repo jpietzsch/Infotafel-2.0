@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Plan() {
-  const [fachrichtung, setFachrichtung] = useState("");
+  const [fachrichtung, setFachrichtung] = useState("BVB"); // Set BVB as default
   const [jobList, setJobList] = useState([]);
   const [planToday, setPlanToday] = useState([]);
   const [planTomorrow, setPlanTomorrow] = useState([]);
 
-  // Fetch jobs
   useEffect(() => {
     const fetchJobs = async () => {
       try {
@@ -15,7 +14,6 @@ export default function Plan() {
         const jobsData = response.data.data;
 
         if (jobsData && jobsData.length > 0) {
-          // Sort the job names alphabetically
           const jobNames = jobsData
             .map((job) => job.Name || "Unnamed Job")
             .sort((a, b) => a.localeCompare(b));
@@ -71,18 +69,28 @@ export default function Plan() {
       }
     };
     fetchData();
-  }, [fachrichtung]);
+  }, [fachrichtung]); // Automatically fetch data for the default fachrichtung (BVB)
 
   return (
     <div className="flex flex-col items-center p-6 space-y-8">
-      <div className="flex flex-wrap justify-center space-x-8 space-y-4 w-full max-w-screen-lg">
+      <div className="flex flex-wrap justify-center w-full max-w-screen-lg">
         {jobList.map((job, index) => (
           <button
             key={index}
-            className={`text-white text-lg font-bold uppercase hover:text-xl transition duration-300 ${
+            className={`text-white text-lg font-bold uppercase hover: transition duration-300 ${
               fachrichtung === job ? "underline" : ""
             }`}
             onClick={() => setFachrichtung(job)}
+            style={{
+              textShadow: "none",
+              transition: "text-shadow 0.3s",
+              margin: "10px", // Adds consistent margin around each button
+              textDecoration: fachrichtung === job ? "underline" : "none", // Apply underline for the active button
+            }}
+            onMouseEnter={(e) =>
+              (e.target.style.textShadow = "1px 1px 10px rgba(234, 179, 8, 1)")
+            }
+            onMouseLeave={(e) => (e.target.style.textShadow = "none")}
           >
             {job}
           </button>

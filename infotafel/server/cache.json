@@ -1,6 +1,6 @@
 {
   "food": {
-    "timestamp": 1729578112989,
+    "timestamp": 1729583926314,
     "data": [
       {
         "date": "21.10.2024",
@@ -140,22 +140,11 @@
     ]
   },
   "busData": {
-    "timestamp": 1729578088304,
+    "timestamp": 1729584219532,
     "busData": {
       "31": {
         "desc": "Chemnitz, Yorckgebiet",
         "departureTimes": [
-          "08:21",
-          "08:31",
-          "08:41",
-          "08:51",
-          "09:01",
-          "09:11",
-          "09:21",
-          "09:31",
-          "09:41",
-          "09:51",
-          "10:01",
           "10:11",
           "10:21",
           "10:31",
@@ -171,15 +160,24 @@
           "12:11",
           "12:21",
           "12:31",
-          "12:41"
+          "12:41",
+          "12:51",
+          "13:01",
+          "13:11",
+          "13:21",
+          "13:31",
+          "13:41",
+          "13:51",
+          "14:01",
+          "14:11",
+          "14:21"
         ],
         "realTimes": [
-          "08:21",
-          "08:31",
-          "08:41",
-          "08:51",
-          "09:01",
-          "09:11",
+          "10:11",
+          "10:21",
+          "10:31",
+          "10:41",
+          "10:51",
           null,
           null,
           null,
@@ -206,11 +204,6 @@
       "62": {
         "desc": "Chemnitz, Betriebshof Adelsberg",
         "departureTimes": [
-          "08:32",
-          "08:52",
-          "09:12",
-          "09:32",
-          "09:52",
           "10:12",
           "10:32",
           "10:52",
@@ -218,11 +211,18 @@
           "11:32",
           "11:52",
           "12:12",
-          "12:22"
+          "12:22",
+          "12:42",
+          "13:01",
+          "13:21",
+          "13:41",
+          "14:01",
+          "14:21"
         ],
         "realTimes": [
-          "08:32",
-          "08:52",
+          "10:12",
+          "10:32",
+          "10:52",
           null,
           null,
           null,
@@ -239,11 +239,11 @@
     }
   },
   "weather": {
-    "timestamp": 1729577842270,
+    "timestamp": 1729579015570,
     "data": {
       "latitude": 50.84,
       "longitude": 12.879999,
-      "generationtime_ms": 0.14603137969970703,
+      "generationtime_ms": 0.24509429931640625,
       "utc_offset_seconds": 0,
       "timezone": "GMT",
       "timezone_abbreviation": "GMT",
@@ -260,15 +260,15 @@
         "wind_direction_10m": "°"
       },
       "current": {
-        "time": 1729577700,
+        "time": 1729578600,
         "interval": 900,
-        "temperature_2m": 12.1,
-        "apparent_temperature": 10.8,
+        "temperature_2m": 12.4,
+        "apparent_temperature": 11.2,
         "rain": 0,
         "weather_code": 1,
         "cloud_cover": 39,
         "wind_speed_10m": 5.2,
-        "wind_direction_10m": 192
+        "wind_direction_10m": 196
       },
       "hourly_units": {
         "time": "unixtime",
