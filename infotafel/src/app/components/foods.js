@@ -42,7 +42,7 @@ function Foods({ isActive }) {
 
       {/* Meal plan content */}
       {!loading && mealPlan && mealPlan.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 ml-12 mr-12">
           {mealPlan.map((day) => (
             <div
               className="font-bold p-6 shadow-sm rounded-lg transition-transform transform hover:scale-105 duration-200 hover:shadow-lg"
@@ -60,7 +60,7 @@ function Foods({ isActive }) {
                 day.meals.menus.menuName.length > 0 ? (
                   day.meals.menus.menuName.map((meal, mealIndex) => (
                     <div
-                      className="p-4 mt-2 rounded-md bg-gray-700"
+                      className="p-4 mt-2 rounded-md bg-gray-700 h-36 flex flex-col justify-between"
                       key={mealIndex}
                       aria-hidden={ariaHiddenValue}
                     >

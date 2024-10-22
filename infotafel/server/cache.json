@@ -1,6 +1,6 @@
 {
   "food": {
-    "timestamp": 1729575847209,
+    "timestamp": 1729578112989,
     "data": [
       {
         "date": "21.10.2024",
@@ -140,14 +140,11 @@
     ]
   },
   "busData": {
-    "timestamp": 1729575844298,
+    "timestamp": 1729578088304,
     "busData": {
       "31": {
         "desc": "Chemnitz, Yorckgebiet",
         "departureTimes": [
-          "07:51",
-          "08:01",
-          "08:11",
           "08:21",
           "08:31",
           "08:41",
@@ -171,15 +168,18 @@
           "11:41",
           "11:51",
           "12:01",
-          "12:11"
+          "12:11",
+          "12:21",
+          "12:31",
+          "12:41"
         ],
         "realTimes": [
-          "07:51",
-          "08:01",
-          "08:11",
           "08:21",
           "08:31",
-          null,
+          "08:41",
+          "08:51",
+          "09:01",
+          "09:11",
           null,
           null,
           null,
@@ -206,8 +206,6 @@
       "62": {
         "desc": "Chemnitz, Betriebshof Adelsberg",
         "departureTimes": [
-          "07:52",
-          "08:12",
           "08:32",
           "08:52",
           "09:12",
@@ -218,12 +216,14 @@
           "10:52",
           "11:12",
           "11:32",
-          "11:52"
+          "11:52",
+          "12:12",
+          "12:22"
         ],
         "realTimes": [
-          "07:52",
-          "08:12",
           "08:32",
+          "08:52",
+          null,
           null,
           null,
           null,
@@ -239,11 +239,11 @@
     }
   },
   "weather": {
-    "timestamp": 1729575857239,
+    "timestamp": 1729577842270,
     "data": {
       "latitude": 50.84,
       "longitude": 12.879999,
-      "generationtime_ms": 0.1710653305053711,
+      "generationtime_ms": 0.14603137969970703,
       "utc_offset_seconds": 0,
       "timezone": "GMT",
       "timezone_abbreviation": "GMT",
@@ -260,15 +260,15 @@
         "wind_direction_10m": "°"
       },
       "current": {
-        "time": 1729575000,
+        "time": 1729577700,
         "interval": 900,
-        "temperature_2m": 12,
-        "apparent_temperature": 10.7,
+        "temperature_2m": 12.1,
+        "apparent_temperature": 10.8,
         "rain": 0,
-        "weather_code": 2,
-        "cloud_cover": 55,
-        "wind_speed_10m": 4.8,
-        "wind_direction_10m": 167
+        "weather_code": 1,
+        "cloud_cover": 39,
+        "wind_speed_10m": 5.2,
+        "wind_direction_10m": 192
       },
       "hourly_units": {
         "time": "unixtime",

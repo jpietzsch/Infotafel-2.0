@@ -31,13 +31,13 @@ export default function LocInfo({ isActive }) {
 
   return (
     <div
-      className="grid grid-cols-1 md:grid-cols-3 gap-8 min-h-full items-center"
+      className="grid grid-cols-1 md:grid-cols-3 gap-28 min-h-full items-center"
       aria-hidden={ariaHiddenValue}
     >
       {locInfo.map((data, index) => (
         <div 
           key={index} 
-          className="flex flex-col w-full items-center text-center space-y-4 transform transition-transform hover:scale-105"
+          className="flex flex-col w-full h-20 items-center text-center space-y-4 transform transition-transform hover:scale-105"
         >
           <div className="flex items-center space-x-3">
             <h1 className="text-2xl font-bold text-white tracking-tight">{data.WG}</h1>

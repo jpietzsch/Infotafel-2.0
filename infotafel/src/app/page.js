@@ -87,29 +87,23 @@ export default function Home() {
     >
       <div className="flex-1 flex bg-black/65 w-full relative overflow-hidden">
         {/* Carousel */}
-        <div className="relative w-full h-full" ref={emblaRef}>
+       <div className="relative w-full h-full" ref={emblaRef}>
           <div className="flex h-full transition-opacity ease-in-out duration-200">
             {slides.map((slide, index) => (
               <div
                 key={index}
-                className={`embla__slide w-full h-full flex-shrink-0 transition-opacity duration-200 ${
-                  index === activeIndex || isTransitioning
-                    ? "opacity-100 visible pointer-events-auto"
+                className={`embla__slide w-full h-full flex-shrink-0 overflow-y-auto overflow-x-hidden transition-opacity duration-200 pb-32 ${ 
+                  index === activeIndex || isTransitioning 
+                    ? "opacity-100 visible pointer-events-auto" 
                     : "opacity-0"
-                } ${
-                  index === activeIndex
-                    ? "visible pointer-events-auto"
-                    : "invisible pointer-events-none"
                 }`}
                 tabIndex={index === activeIndex ? 0 : -1}
                 aria-hidden={index !== activeIndex}
-                role="group" // Helps screen readers recognize slide groups
               >
                 {slide}
               </div>
             ))}
           </div>
-
           {/* Left Arrow */}
           <button
             className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 ${
