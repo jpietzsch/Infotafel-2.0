@@ -85,7 +85,7 @@ export default function Home() {
         objectFit: "cover",
       }}
     >
-      <div className="flex-1 flex bg-black/65 w-full relative overflow-hidden">
+      <div className="flex-1 flex bg-black/65 w-full relative overflow-hidden lg:overflow-hidden sm:overflow-auto">
         {/* Carousel */}
        <div className="relative w-full h-full" ref={emblaRef}>
           <div className="flex h-full transition-opacity ease-in-out duration-200">
@@ -106,7 +106,7 @@ export default function Home() {
           </div>
           {/* Left Arrow */}
           <button
-            className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 ${
+            className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 hidden sm:block ${
               !canScrollPrev ? "opacity-50 cursor-not-allowed" : ""
             }`}
             onClick={scrollPrev}
@@ -118,7 +118,7 @@ export default function Home() {
 
           {/* Right Arrow */}
           <button
-            className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 ${
+            className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 hidden sm:block ${
               !canScrollNext ? "opacity-50 cursor-not-allowed" : ""
             }`}
             onClick={scrollNext}
