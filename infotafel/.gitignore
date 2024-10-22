@@ -11,8 +11,6 @@ node_modules
 server/cache.json
 infotafel/server/cache.json
 
-./server/cache.json
-
 /coverage
 
 # next.js

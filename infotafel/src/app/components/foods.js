@@ -28,7 +28,7 @@ function Foods({ isActive }) {
   const ariaHiddenValue = !isActive; // Hidden from screen readers when inactive
 
   return (
-    <div className="flex flex-col justify-center items min-h-full" aria-hidden={ariaHiddenValue}>
+    <div className="flex flex-col justify-center min-h-full" aria-hidden={ariaHiddenValue}>
       {/* Loading state */}
       {loading && (
         <div
