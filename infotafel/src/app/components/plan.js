@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function Plan() {
+export default function Plan({ isActive = true }) { // default isActive to true
   const [fachrichtung, setFachrichtung] = useState("BVB"); // Set BVB as default
   const [jobList, setJobList] = useState([]);
   const [planToday, setPlanToday] = useState([]);
   const [planTomorrow, setPlanTomorrow] = useState([]);
+
+  // Accessibility settings
+  const tabIndexValue = isActive ? 0 : -1; // Only focusable when active
+  const ariaHiddenValue = !isActive; // Hidden from screen readers when inactive
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -72,7 +76,7 @@ export default function Plan() {
   }, [fachrichtung]); // Automatically fetch data for the default fachrichtung (BVB)
 
   return (
-    <div className="flex flex-col items-center p-6 space-y-8">
+    <div className="flex flex-col items-center p-6 space-y-8" aria-hidden={ariaHiddenValue}>
       <div className="flex flex-wrap justify-center w-full max-w-screen-lg">
         {jobList.map((job, index) => (
           <button
@@ -87,6 +91,8 @@ export default function Plan() {
               margin: "10px", // Adds consistent margin around each button
               textDecoration: fachrichtung === job ? "underline" : "none", // Apply underline for the active button
             }}
+            tabIndex={tabIndexValue} // Set the correct tab index
+            aria-hidden={ariaHiddenValue} // Hide from screen readers when inactive
             onMouseEnter={(e) =>
               (e.target.style.textShadow = "1px 1px 10px rgba(234, 179, 8, 1)")
             }
@@ -98,10 +104,12 @@ export default function Plan() {
       </div>
 
       <div className="w-full max-w-screen-lg mt-6">
-        <h1 className="text-2xl font-bold mb-4 text-yellow-500">Heute</h1>
+        <h1 className="text-2xl font-bold mb-4 text-yellow-500" tabIndex={tabIndexValue}>
+          Heute
+        </h1>
         <table className="table-auto border-collapse border border-gray-400 w-full text-center shadow-lg">
           <thead>
-            <tr className="bg-yellow-500 text-black">
+            <tr className="bg-yellow-500 text-black" tabIndex={tabIndexValue}>
               {Array.from({ length: 10 }).map((_, index) => (
                 <th key={index} className="p-3">
                   Stunde {index + 1}
@@ -112,7 +120,7 @@ export default function Plan() {
           <tbody>
             <tr>
               {Array.from({ length: 10 }).map((_, index) => (
-                <td key={index} className="p-3 border border-gray-300">
+                <td key={index} className="p-3 border border-gray-300" tabIndex={tabIndexValue}>
                   {planToday.find((item) => item.Stunde === index + 1)
                     ? planToday.find((item) => item.Stunde === index + 1).Text
                     : "-"}
@@ -122,10 +130,12 @@ export default function Plan() {
           </tbody>
         </table>
 
-        <h1 className="text-2xl font-bold mb-4 text-yellow-500 mt-8">Morgen</h1>
+        <h1 className="text-2xl font-bold mb-4 text-yellow-500 mt-8" tabIndex={tabIndexValue}>
+          Morgen
+        </h1>
         <table className="table-auto border-collapse border border-gray-400 w-full text-center shadow-lg">
           <thead>
-            <tr className="bg-yellow-500 text-black">
+            <tr className="bg-yellow-500 text-black" tabIndex={tabIndexValue}>
               {Array.from({ length: 10 }).map((_, index) => (
                 <th key={index} className="p-3">
                   Stunde {index + 1}
@@ -136,10 +146,9 @@ export default function Plan() {
           <tbody>
             <tr>
               {Array.from({ length: 10 }).map((_, index) => (
-                <td key={index} className="p-3 border border-gray-300">
+                <td key={index} className="p-3 border border-gray-300" tabIndex={tabIndexValue}>
                   {planTomorrow.find((item) => item.Stunde === index + 1)
-                    ? planTomorrow.find((item) => item.Stunde === index + 1)
-                        .Text
+                    ? planTomorrow.find((item) => item.Stunde === index + 1).Text
                     : "-"}
                 </td>
               ))}
