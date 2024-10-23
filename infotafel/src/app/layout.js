@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
         <div className="min-h-screen flex flex-col">
           
           {/* Navbar */}
-          <div className="w-full h-20 bg-yellow-500 flex p-5 text-black font-semibold justify-between fixed top-0">
+          <div className="w-full h-20 bg-yellow-500 flex p-5 text-black font-semibold justify-between sticky top-0">
             <img src="SFZLogo.svg" className="h-[120%]" />
             <Clock className="text-3xl">time place holder</Clock>
           </div>

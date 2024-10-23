@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function Plan({ isActive = true }) { // default isActive to true
-  const [fachrichtung, setFachrichtung] = useState("BVB"); // Set BVB as default
+export default function Plan({ isActive = true }) {
+  const [fachrichtung, setFachrichtung] = useState("BVB");
   const [jobList, setJobList] = useState([]);
   const [planToday, setPlanToday] = useState([]);
   const [planTomorrow, setPlanTomorrow] = useState([]);
 
   // Accessibility settings
   const tabIndexValue = isActive ? 0 : -1; // Only focusable when active
-  const ariaHiddenValue = !isActive; // Hidden from screen readers when inactive
+  const ariaHiddenValue = !isActive; // Hide from screen readers when inactive
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -73,10 +73,20 @@ export default function Plan({ isActive = true }) { // default isActive to true
       }
     };
     fetchData();
-  }, [fachrichtung]); // Automatically fetch data for the default fachrichtung (BVB)
+  }, [fachrichtung]);
 
   return (
-    <div className="flex flex-col items-center p-6 space-y-8" aria-hidden={ariaHiddenValue}>
+    <div
+      className="flex flex-col items-center p-6 space-y-8"
+      aria-hidden={ariaHiddenValue}
+      role="region"
+      aria-labelledby="plan-title"
+    >
+      <h1 id="plan-title" className="sr-only">
+        Vertretungsplan
+      </h1>
+
+      {/* Job buttons with ARIA labels for screen readers */}
       <div className="flex flex-wrap justify-center w-full max-w-screen-lg">
         {jobList.map((job, index) => (
           <button
@@ -93,6 +103,7 @@ export default function Plan({ isActive = true }) { // default isActive to true
             }}
             tabIndex={tabIndexValue} // Set the correct tab index
             aria-hidden={ariaHiddenValue} // Hide from screen readers when inactive
+            aria-label={`Job ${job}`} // Accessible label
             onMouseEnter={(e) =>
               (e.target.style.textShadow = "1px 1px 10px rgba(234, 179, 8, 1)")
             }
@@ -104,23 +115,36 @@ export default function Plan({ isActive = true }) { // default isActive to true
       </div>
 
       <div className="w-full max-w-screen-lg mt-6">
-        <h1 className="text-2xl font-bold mb-4 text-yellow-500" tabIndex={tabIndexValue}>
+        <h1
+          className="text-2xl font-bold mb-4 text-yellow-500"
+          tabIndex={tabIndexValue}
+          aria-live="polite"
+        >
           Heute
         </h1>
-        <table className="table-auto border-collapse border border-gray-400 w-full text-center shadow-lg">
+        <table
+          className="table-auto border-collapse border border-gray-400 w-full text-center shadow-lg"
+          role="table"
+          aria-label="Stundenplan für heute"
+        >
           <thead>
-            <tr className="bg-yellow-500 text-black" tabIndex={tabIndexValue}>
+            <tr className="bg-yellow-500 text-black" tabIndex={tabIndexValue} role="row">
               {Array.from({ length: 10 }).map((_, index) => (
-                <th key={index} className="p-3">
+                <th key={index} className="p-3" role="columnheader">
                   Stunde {index + 1}
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr role="row">
               {Array.from({ length: 10 }).map((_, index) => (
-                <td key={index} className="p-3 border border-gray-300" tabIndex={tabIndexValue}>
+                <td
+                  key={index}
+                  className="p-3 border border-gray-300"
+                  tabIndex={tabIndexValue}
+                  role="cell"
+                >
                   {planToday.find((item) => item.Stunde === index + 1)
                     ? planToday.find((item) => item.Stunde === index + 1).Text
                     : "-"}
@@ -130,23 +154,36 @@ export default function Plan({ isActive = true }) { // default isActive to true
           </tbody>
         </table>
 
-        <h1 className="text-2xl font-bold mb-4 text-yellow-500 mt-8" tabIndex={tabIndexValue}>
+        <h1
+          className="text-2xl font-bold mb-4 text-yellow-500 mt-8"
+          tabIndex={tabIndexValue}
+          aria-live="polite"
+        >
           Morgen
         </h1>
-        <table className="table-auto border-collapse border border-gray-400 w-full text-center shadow-lg">
+        <table
+          className="table-auto border-collapse border border-gray-400 w-full text-center shadow-lg"
+          role="table"
+          aria-label="Stundenplan für morgen"
+        >
           <thead>
-            <tr className="bg-yellow-500 text-black" tabIndex={tabIndexValue}>
+            <tr className="bg-yellow-500 text-black" tabIndex={tabIndexValue} role="row">
               {Array.from({ length: 10 }).map((_, index) => (
-                <th key={index} className="p-3">
+                <th key={index} className="p-3" role="columnheader">
                   Stunde {index + 1}
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr role="row">
               {Array.from({ length: 10 }).map((_, index) => (
-                <td key={index} className="p-3 border border-gray-300" tabIndex={tabIndexValue}>
+                <td
+                  key={index}
+                  className="p-3 border border-gray-300"
+                  tabIndex={tabIndexValue}
+                  role="cell"
+                >
                   {planTomorrow.find((item) => item.Stunde === index + 1)
                     ? planTomorrow.find((item) => item.Stunde === index + 1).Text
                     : "-"}
