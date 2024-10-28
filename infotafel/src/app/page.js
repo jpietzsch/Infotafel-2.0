@@ -87,12 +87,12 @@ export default function Home() {
     >
       <div className="flex-1 flex bg-black/65 w-full relative overflow-hidden lg:overflow-hidden sm:overflow-auto">
         {/* Carousel */}
-       <div className="relative w-full h-full" ref={emblaRef}>
-          <div className="flex h-full transition-opacity ease-in-out duration-200">
+       <div className="relative w-full" ref={emblaRef}>
+          <div className="flex transition-opacity ease-in-out duration-200">
             {slides.map((slide, index) => (
               <div
                 key={index}
-                className={`embla__slide w-full h-full flex-shrink-0 overflow-y-auto overflow-x-hidden transition-opacity duration-200 pb-32 ${ 
+                className={`embla__slide w-full flex-shrink-0 overflow-y-auto overflow-x-hidden transition-opacity duration-200 pb-32 ${ 
                   index === activeIndex || isTransitioning 
                     ? "opacity-100 visible pointer-events-auto" 
                     : "opacity-0"
