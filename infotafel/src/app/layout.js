@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className="bg-[#070707] text-white overflow-hidden">
         {/* Main wrapper - full height */}
-        <div className="min-h-screen flex flex-col">
+        <div className="flex flex-col">
           
           {/* Navbar */}
           <div className="w-full h-20 bg-yellow-500 flex p-5 text-black font-semibold justify-between sticky top-0">
@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
           </div>
           
           {/* Content wrapper - fills the remaining space */}
-          <div className="flex-grow">
+          <div>
             {children}
           </div>
         </div>

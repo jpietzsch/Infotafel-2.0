@@ -86,32 +86,26 @@ export default function Plan({ isActive = true }) {
         Vertretungsplan
       </h1>
 
-      {/* Job buttons with ARIA labels for screen readers */}
-      <div className="flex flex-wrap justify-center w-full max-w-screen-lg">
-        {jobList.map((job, index) => (
-          <button
-            key={index}
-            className={`text-white text-lg font-bold uppercase hover: transition duration-300 ${
-              fachrichtung === job ? "underline" : ""
-            }`}
-            onClick={() => setFachrichtung(job)}
-            style={{
-              textShadow: "none",
-              transition: "text-shadow 0.3s",
-              margin: "10px", // Adds consistent margin around each button
-              textDecoration: fachrichtung === job ? "underline" : "none", // Apply underline for the active button
-            }}
-            tabIndex={tabIndexValue} // Set the correct tab index
-            aria-hidden={ariaHiddenValue} // Hide from screen readers when inactive
-            aria-label={`Job ${job}`} // Accessible label
-            onMouseEnter={(e) =>
-              (e.target.style.textShadow = "1px 1px 10px rgba(234, 179, 8, 1)")
-            }
-            onMouseLeave={(e) => (e.target.style.textShadow = "none")}
-          >
-            {job}
-          </button>
-        ))}
+      {/* Dropdown for job selection */}
+      <div className="w-full max-w-screen-lg">
+        <select
+          id="job-select"
+          className="w-1/3 p-2 text-lg font-bold text-yellow-500 bg-black rounded-lg focus:outline-none border border-white" // Add border styling
+          value={fachrichtung}
+          onChange={(e) => setFachrichtung(e.target.value)}
+          tabIndex={tabIndexValue}
+          aria-hidden={ariaHiddenValue}
+          style={{
+            maxHeight: "200px", // Max height for scrollable dropdown
+            overflowY: "auto" // Enable scrolling if there are many items
+          }}
+        >
+          {jobList.map((job, index) => (
+            <option key={index} value={job}>
+              {job}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="w-full max-w-screen-lg mt-6">

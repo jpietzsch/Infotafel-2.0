@@ -79,15 +79,15 @@ export default function Home() {
 
   return (
     <div
-      className="flex-1 bg-cover bg-center w-full h-screen flex flex-col p-0 m-0"
+      className="bg-cover bg-center w-full flex flex-col p-0 m-0"
       style={{
         backgroundImage: `url('${backgroundImage}')`,
         objectFit: "cover",
       }}
     >
-      <div className="flex-1 flex bg-black/65 w-full relative overflow-hidden lg:overflow-hidden sm:overflow-auto">
+      <div className="flex bg-black/65 w-full overflow-hidden lg:overflow-hidden sm:overflow-auto">
         {/* Carousel */}
-       <div className="relative w-full" ref={emblaRef}>
+       <div className="w-full" ref={emblaRef}>
           <div className="flex transition-opacity ease-in-out duration-200">
             {slides.map((slide, index) => (
               <div
