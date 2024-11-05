@@ -19,13 +19,13 @@ export default function RootLayout({ children }) {
         <div className="flex flex-col">
           
           {/* Navbar */}
-          <div className="w-full h-20 bg-yellow-500 flex p-5 text-black font-semibold justify-between sticky top-0">
+          <div className="w-full h-20 bg-yellow-500 flex p-5 text-black font-semibold justify-between">
             <img src="SFZLogo.svg" className="h-[120%]" />
             <Clock className="text-3xl">time place holder</Clock>
           </div>
           
           {/* Content wrapper - fills the remaining space */}
-          <div>
+          <div className="mt-20">
             {children}
           </div>
         </div>
