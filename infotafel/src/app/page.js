@@ -9,6 +9,8 @@ import LocInfo from "./components/locinfo";
 import Foods from "./components/foods";
 import Plan from "./components/plan";
 import Image from "next/image";
+import GenInfo from "./components/geninfo";
+import Ticket from "./components/ticket";
 
 const safeRandom = Math.floor(Math.random() * 1000) + 1;
 console.log(safeRandom + " safeRandom");
@@ -70,11 +72,13 @@ export default function Home() {
 
   const slides = [
     <Weather key="weather" isActive={activeIndex === 0} />,
-    <Events key="events" isActive={activeIndex === 1} />,
-    <LocInfo key="locinfo" isActive={activeIndex === 2} />,
+    <Foods key="foods" isActive={activeIndex === 1} />,
+    <Plan key="plan" isActive={activeIndex === 2} />,
     <Fahrplan key="fahrplan" isActive={activeIndex === 3} />,
-    <Foods key="foods" isActive={activeIndex === 4} />,
-    <Plan key="plan" isActive={activeIndex === 5} />,
+    <Events key="events" isActive={activeIndex === 4} />,
+    <LocInfo key="locinfo" isActive={activeIndex === 5} />,
+    <GenInfo key="geninfo" isActive={activeIndex === 6} />,
+    <Ticket key="ticket" isActive={activeIndex === 7} />,
   ];
 
   return (
