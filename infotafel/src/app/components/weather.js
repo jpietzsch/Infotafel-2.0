@@ -1,25 +1,17 @@
-"use client";
+// weather.js
 
-console.log("Wetter.js");
+"use client";
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import DailyForecastComponent from "../components/weathers/DailyForecastComponent";
-import CurrentWeatherComponent from "../components/weathers/CurrentWeatherComponent";
+import Lottie from "lottie-react";
+import weatherInterpretationCodes from "../weatherInterpretationCodes";
 
 const API_BASE_URL = "http://localhost:8000/cache";
 
 const debug = false;
 
-/**
- * Renders the weather component.
- * Fetches weather data from an API and displays the current weather, hourly forecast, and daily forecast.
- * Handles loading and error states.
- *
- * @returns {JSX.Element} The rendered weather component.
- */
 function Weather({ isActive }) {  // Pass a prop to check if this component is the active one
-  console.log("Weather component isActive:", isActive);
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -35,18 +27,15 @@ function Weather({ isActive }) {  // Pass a prop to check if this component is t
         }
 
         setWeatherData(weatherResponse.data);
-        setLoading(false); // Set loading to false when all data is fetched
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
-        // Handle error gracefully, e.g., set loading to false and display error message
         setLoading(false);
       }
     };
 
     fetchData();
   }, []);
-
-  const { current: { time } = {} } = weatherData || {};
 
   // Accessibility: Control tabindex based on whether the component is active
   const tabIndexValue = isActive ? 0 : -1; // Only focusable when active
@@ -58,7 +47,7 @@ function Weather({ isActive }) {  // Pass a prop to check if this component is t
         className="flex flex-col justify-center items-center min-h-screen"
         aria-hidden={ariaHiddenValue}
       >
-        <div className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl">Loading...</div>
+        <div className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl" tabIndex={tabIndexValue}>Loading...</div>
       </div>
     );
   }
@@ -69,24 +58,91 @@ function Weather({ isActive }) {  // Pass a prop to check if this component is t
         className="flex flex-col justify-center items-center min-h-screen"
         aria-hidden={ariaHiddenValue}
       >
-        <div className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl">Error: Data not available</div>
+        <div className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl" tabIndex={tabIndexValue}>Error: Data not available</div>
       </div>
     );
   }
 
+  // Merged CurrentWeatherComponent code
   return (
     <div
       className="flex flex-col items-center justify-center min-h-screen p-4"
       aria-hidden={ariaHiddenValue}
     >
       <div className="flex w-full justify-center items-center flex-col">
-        {/* Current Weather */}
-        <div className="">
-          <CurrentWeatherComponent currentWeatherData={weatherData} />
+        <div className="flex flex-row justify-evenly w-screen sm:max-w-screen-lg" aria-hidden={ariaHiddenValue}>
+          <div className="sm:mr-64">
+            <h1 className="text-4xl font-bold text-white m-12" tabIndex={tabIndexValue}>
+              {weatherData?.current
+                ? weatherInterpretationCodes[weatherData.current.weather_code].day.desc
+                : null}
+            </h1>
+            <Lottie
+              animationData={
+                weatherData?.current
+                  ? weatherInterpretationCodes[weatherData.current.weather_code].day.animatedIcon
+                  : null
+              }
+              className="w-auto h-86"
+            />
+          </div>
+          <div className="text-white flex flex-col">
+            <div className="flex flex-col justify-evenly flex-1">
+              <p className="flex flex-row" style={{ fontSize: "50px" }} tabIndex={tabIndexValue}>
+                <img
+                  src="weather/staticLogos/thermometer.svg"
+                  className="w-12 h-auto mr-10"
+                  alt=""
+                  style={{
+                    filter:
+                      "invert(80%) sepia(63%) saturate(2257%) hue-rotate(350deg) brightness(102%) contrast(107%)",
+                  }}
+                />
+                {weatherData?.current ? weatherData.current.temperature_2m : null}
+                °C
+              </p>
+              <p className="flex flex-row" style={{ fontSize: "50px" }} tabIndex={tabIndexValue}>
+                <img
+                  src="weather/staticLogos/wind.svg"
+                  className="w-12 h-auto mr-10"
+                  alt=""
+                  style={{
+                    filter:
+                      "invert(80%) sepia(63%) saturate(2257%) hue-rotate(350deg) brightness(102%) contrast(107%)",
+                  }}
+                />
+                {weatherData?.current ? weatherData.current.wind_speed_10m : null}
+                KM/h
+              </p>
+              <p className="flex flex-row" style={{ fontSize: "50px" }} tabIndex={tabIndexValue}>
+                <img
+                  src="weather/staticLogos/clouds.svg"
+                  className="w-12 h-auto mr-10"
+                  alt=""
+                  style={{
+                    filter:
+                      "invert(80%) sepia(63%) saturate(2257%) hue-rotate(350deg) brightness(102%) contrast(107%)",
+                  }}
+                />
+                {weatherData?.current ? weatherData.current.cloud_cover : null}
+                %
+              </p>
+              <p className="flex flex-row" style={{ fontSize: "50px" }} tabIndex={tabIndexValue}>
+                <img
+                  src="weather/staticLogos/moderate-rain.svg"
+                  alt=""
+                  className="w-12 h-auto mr-10"
+                  style={{
+                    filter:
+                      "invert(80%) sepia(63%) saturate(2257%) hue-rotate(350deg) brightness(102%) contrast(107%)",
+                  }}
+                />
+                {weatherData?.current ? weatherData.current.rain : null}
+                mm
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl mt-6">
-        <DailyForecastComponent forecastData={weatherData.daily} />
       </div>
     </div>
   );

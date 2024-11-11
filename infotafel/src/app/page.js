@@ -9,6 +9,8 @@ import LocInfo from "./components/locinfo";
 import Foods from "./components/foods";
 import Plan from "./components/plan";
 import Image from "next/image";
+import GenInfo from "./components/geninfo";
+import Ticket from "./components/ticket";
 
 const safeRandom = Math.floor(Math.random() * 1000) + 1;
 console.log(safeRandom + " safeRandom");
@@ -70,29 +72,31 @@ export default function Home() {
 
   const slides = [
     <Weather key="weather" isActive={activeIndex === 0} />,
-    <Events key="events" isActive={activeIndex === 1} />,
-    <LocInfo key="locinfo" isActive={activeIndex === 2} />,
+    <Foods key="foods" isActive={activeIndex === 1} />,
+    <Plan key="plan" isActive={activeIndex === 2} />,
     <Fahrplan key="fahrplan" isActive={activeIndex === 3} />,
-    <Foods key="foods" isActive={activeIndex === 4} />,
-    <Plan key="plan" isActive={activeIndex === 5} />,
+    <Events key="events" isActive={activeIndex === 4} />,
+    <LocInfo key="locinfo" isActive={activeIndex === 5} />,
+    <GenInfo key="geninfo" isActive={activeIndex === 6} />,
+    <Ticket key="ticket" isActive={activeIndex === 7} />,
   ];
 
   return (
     <div
-      className="flex-1 bg-cover bg-center w-full h-screen flex flex-col p-0 m-0"
+      className="bg-cover bg-center w-full flex flex-col p-0 m-0"
       style={{
         backgroundImage: `url('${backgroundImage}')`,
         objectFit: "cover",
       }}
     >
-      <div className="flex-1 flex bg-black/65 w-full relative overflow-hidden">
+      <div className="flex bg-black/65 w-full overflow-hidden lg:overflow-hidden sm:overflow-auto">
         {/* Carousel */}
-       <div className="relative w-full h-full" ref={emblaRef}>
-          <div className="flex h-full transition-opacity ease-in-out duration-200">
+       <div className="w-full" ref={emblaRef}>
+          <div className="flex transition-opacity ease-in-out duration-200">
             {slides.map((slide, index) => (
               <div
                 key={index}
-                className={`embla__slide w-full h-full flex-shrink-0 overflow-y-auto overflow-x-hidden transition-opacity duration-200 pb-32 ${ 
+                className={`embla__slide w-full flex-shrink-0 overflow-y-auto overflow-x-hidden transition-opacity duration-200 pb-32 ${ 
                   index === activeIndex || isTransitioning 
                     ? "opacity-100 visible pointer-events-auto" 
                     : "opacity-0"
@@ -106,7 +110,7 @@ export default function Home() {
           </div>
           {/* Left Arrow */}
           <button
-            className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 ${
+            className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 hidden sm:block ${
               !canScrollPrev ? "opacity-50 cursor-not-allowed" : ""
             }`}
             onClick={scrollPrev}
@@ -118,7 +122,7 @@ export default function Home() {
 
           {/* Right Arrow */}
           <button
-            className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 ${
+            className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 hidden sm:block ${
               !canScrollNext ? "opacity-50 cursor-not-allowed" : ""
             }`}
             onClick={scrollNext}
