@@ -24,9 +24,6 @@ export default function LocInfo({ isActive }) {
     fetchData()
   }, [])
 
-
-
-
   // Extract repeated block as a reusable component
 
   return (

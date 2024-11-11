@@ -539,6 +539,33 @@ export interface ApiBetreuerBetreuer extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiEventEvent extends Struct.CollectionTypeSchema {
+  collectionName: 'events';
+  info: {
+    singularName: 'event';
+    pluralName: 'events';
+    displayName: 'events';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Schema.Attribute.String;
+    content: Schema.Attribute.Text;
+    bild: Schema.Attribute.Media<'images' | 'files'>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'>;
+  };
+}
+
 export interface ApiStundenplanStundenplan extends Struct.CollectionTypeSchema {
   collectionName: 'stundenplaene';
   info: {
@@ -949,6 +976,7 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::beruf.beruf': ApiBerufBeruf;
       'api::betreuer.betreuer': ApiBetreuerBetreuer;
+      'api::event.event': ApiEventEvent;
       'api::stundenplan.stundenplan': ApiStundenplanStundenplan;
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;
