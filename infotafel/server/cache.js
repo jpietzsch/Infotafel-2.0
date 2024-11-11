@@ -157,45 +157,84 @@ async function fetchHTML(url) {
   }
 }
 
-function parseHTML(html) {
+function parseHTML(html, infohtml) {
   const $ = cheerio.load(html);
+  const $2 = cheerio.load(infohtml);
   const data = [];
-  $("div.std3_departure-line").each((index, element) => {
-    const lineNr = $(element)
-      .find(".std3_dm-mot-info a")
-      .text()
-      .trim()
-      .replace(/[^0-9]/g, "")
-      .substring(2, 0);
-    const desc = $(element)
-      .find(".std3_dm-mot-info")
-      .text()
-      .trim()
-      .replace("Stadtbus", "")
-      .replace(/\d+/g, "");
-    const time = $(element).find(".std3_dm-time:first").text().trim();
-    const realtime = $(element).find(".std3_realtime-column").text().trim();
-    const existingEntryIndex = data.findIndex(
-      (entry) => entry.lineNr === lineNr && entry.desc === desc
-    );
+  
+  $2('.lay_list_block').each(function() {
+      const restrictionType = $2(this).find('div').filter(function() {
+          return $(this).css('width') === '155px' && $(this).css('font-size') === '17px' && $(this).css('margin-top') === '5px';
+      }).text().trim();
+  
+      const busRoute = $2(this).find('div[style*="max-width: 130px;"]').text().trim();
+      const location = $2(this).find('h1').text().trim();
+      const dateTime = $2(this).find('div').filter(function() {
+          const text = $2(this).text().trim();
+          return text && !/^\d+$/.test(text) && !text.match(/^(Straßensperrung|Vollsperrung|[0-9|]+)/);
+      }).first().text().trim();
+  
+      data.push({
+          problems: {
+              restriction: restrictionType,
+              busRoute: busRoute,
+              location: location,
+              dateTime: dateTime
+          }
+      });
+  });
+  
+  console.log(data);
+  
+  
+  
+  
+  
+  
+  
 
-    if (existingEntryIndex !== -1) {
-      if (!realtime) {
-        data[existingEntryIndex].times.push({ time });
+  $("div.std3_departure-line").each((index, element) => {
+      const lineNr = $(element)
+          .find(".std3_dm-mot-info a")
+          .text()
+          .trim()
+          .replace(/[^0-9]/g, "")
+          .substring(0, 2);
+
+      if (lineNr !== "31") return;
+
+      const desc = $(element)
+          .find(".std3_dm-mot-info")
+          .text()
+          .trim()
+          .replace("Stadtbus", "")
+          .replace(/\d+/g, "");
+
+      const time = $(element).find(".std3_dm-time:first").text().trim();
+      const realtime = $(element).find(".std3_realtime-column").text().trim();
+      
+      const existingEntryIndex = data.findIndex(
+          (entry) => entry.lineNr === lineNr && entry.desc === desc
+      );
+
+      if (existingEntryIndex !== -1) {
+          if (!realtime) {
+              data[existingEntryIndex].times.push({ time });
+          } else {
+              data[existingEntryIndex].times.push({ time, realtime });
+          }
       } else {
-        data[existingEntryIndex].times.push({ time, realtime });
+          if (!realtime) {
+              data.push({ lineNr, desc, times: [{ time }] });
+          } else {
+              data.push({ lineNr, desc, times: [{ time, realtime }] });
+          }
       }
-    } else {
-      if (!realtime) {
-        data.push({ lineNr, desc, times: [{ time }] });
-      } else {
-        data.push({ lineNr, desc, times: [{ time, realtime }] });
-      }
-    }
   });
 
   return data;
 }
+
 
 function formatBusData(parsedData) {
   const busData = {};
@@ -208,18 +247,10 @@ function formatBusData(parsedData) {
   return busData;
 }
 
-function formatDate(date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${day}.${month}.${year}`;
-}
+const formatDate = (date) => date.toISOString().split('T')[0].split('-').reverse().join('.');
+const formatTime = (date) => date.toTimeString().slice(0, 5).replace(':', '%3A');
 
-function formatTime(date) {
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  return `${hours}%3A${minutes}`;
-}
+
 
 app.get("/cache/busplan", async (req, res) => {
   const baseUrl = "https://efa.vvo-online.de/VMSSL3/XSLT_DM_REQUEST";
@@ -230,20 +261,21 @@ app.get("/cache/busplan", async (req, res) => {
     currentDate
   )}&itdDateTimeDepArr=dep&includedMeans=checkbox&itdLPxx_ptActive=on&useRealtime=1&inclMOT_0=true&inclMOT_1=true&inclMOT_2=true&inclMOT_3=true&inclMOT_4=true&inclMOT_5=true&inclMOT_6=true&inclMOT_7=true&inclMOT_8=true&inclMOT_9=true&inclMOT_10=true&inclMOT_17=true&inclMOT_19=true&imparedOptionsActive=1&sessionID=0&requestID=0&itdLPxx_directRequest=1&coordOutputFormat=WGS84[dd.ddddd]`;
 
-
+  const infoURL = 'https://www.cvag.de/de/Verkehrsinformation_5791.html?typ=Bus&linie=31'
 
   try {
     let cache = {};
     if (fs.existsSync(CACHE_FILE)) {
       cache = JSON.parse(fs.readFileSync(CACHE_FILE));
-      if (cache.busData && cache.busData.timestamp && !isTimestampExpired(cache.busData.timestamp, 1)) {
+      if (cache.busData && cache.busData.timestamp && !isTimestampExpired(cache.busData.timestamp, 0.1)) {
         return res.json(cache.busData);
       } else {
         console.log("cache expired");
     }
-    const html = await fetchHTML(url);
+    const bushtml = await fetchHTML(url);
+    const infohtml = await fetchHTML(infoURL)
     const timestamp = Date.now();
-    const parsedData = parseHTML(html);
+    const parsedData = parseHTML(bushtml, infohtml);
     const busData = formatBusData(parsedData);
 
     cache.busData = { timestamp, busData };
