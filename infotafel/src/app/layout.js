@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
           </div>
           
           {/* Content wrapper - fills the remaining space */}
-          <div className="mt-20">
+          <div className="flex-grow">
             {children}
           </div>
         </div>
