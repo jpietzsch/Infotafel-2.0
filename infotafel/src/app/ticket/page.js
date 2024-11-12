@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react'
 
-const Ticket = () => {
+function page() {
   return (
     <div className="bg-black text-white flex items-center justify-center h-screen">
       <div className="text-center space-y-4">
@@ -39,7 +39,7 @@ const Ticket = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Ticket;
+export default page

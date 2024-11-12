@@ -55,8 +55,7 @@ export default function LocInfo({ isActive }) {
         <button className=" mt-20 px-10 py-4 bg-yellow-500 text-black rounded-full hover:bg-white focus:ring-2 focus:ring-blue-300">
           <a
             className="font-bold text-xl"
-            href="https://www.youtube.com"
-            target="_blank"
+            href="/ticket"
             rel="noopener noreferrer"
           >
             Ticket System Informatik

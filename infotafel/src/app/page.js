@@ -10,7 +10,6 @@ import Foods from "./components/foods";
 import Plan from "./components/plan";
 import Image from "next/image";
 import GenInfo from "./components/geninfo";
-import Ticket from "./components/ticket";
 
 const safeRandom = Math.floor(Math.random() * 1000) + 1;
 console.log(safeRandom + " safeRandom");
