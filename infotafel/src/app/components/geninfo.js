@@ -1,38 +1,67 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export default function GenInfo({ isActive }) {
-  const [genInfo, setGenInfo] = useState([]);
+export default function LocInfo({ isActive }) {
+  const [locInfo, setLocInfo] = useState([]);
 
-  const tabIndexValue = isActive ? 0 : -1;
-  const ariaHiddenValue = !isActive;
+  // Accessibility settings
+  const tabIndexValue = isActive ? 0 : -1; // Only focusable when active
+  const ariaHiddenValue = !isActive; // Hide from screen readers when inactive
 
-  /*useEffect(() => {
+  // Get backend info from Strapi API
+  useEffect(() => {
     const fetchData = async () => {
-          try {
-      const response = await axios.get(`http://localhost:1337/api/gen-infos?`)
-      console.log(response.data.data)
-      setLocInfo(response.data.data)
-
+      try {
+        const response = await axios.get(
+          `http://localhost:1337/api/gen-infos?`
+        );
+        console.log(response.data.data);
+        setLocInfo(response.data.data);
       } catch (e) {
-        console.log('The API request failed')
+        console.log("The API request failed");
       }
-    }
-    fetchData()
-  }, [])*/
+    };
+    fetchData();
+  }, []);
 
   return (
-    <div
-      className="grid grid-cols-1 md:grid-cols-3 gap-28 min-h-full items-center"
-      aria-hidden={ariaHiddenValue}
-    >
-      <div className="flex flex-col w-full h-20 items-center text-center space-y-4 transform transition-transform hover:scale-105">
-        <div className="flex items-center space-x-3">
-          <h1 className="text-2xl font-bold text-white tracking-tight">
-            PlaceHolder
-          </h1>
-          <p>Placeholder Mini</p>
-        </div>
+    <div>
+      <div
+        className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-28 items-center"
+        aria-hidden={ariaHiddenValue}
+      >
+        {locInfo.map((data, index) => (
+          <div
+            key={index}
+            className="flex flex-col w-full items-center text-center space-y-2 transform transition-transform hover:scale-125"
+          >
+            <div className="flex items-center space-x-3">
+              <h1 className="text-2xl font-bold text-white tracking-tight">
+                {data.Personal}
+              </h1>
+            </div>
+            <div className="flex items-center space-x-3">
+              <h2 className="text-lg font-medium text-gray-300">
+                {data.Email}
+              </h2>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="flex mt-20 flex-col items-center mt-8">
+        <h3 className="text-2xl font-semibold text-white mb-4 text-center">
+          alternativ bei fragen im Haus 01 melden
+        </h3>
+        <button className=" mt-20 px-10 py-4 bg-yellow-500 text-black rounded-full hover:bg-white focus:ring-2 focus:ring-blue-300">
+          <a
+            className="font-bold text-xl"
+            href="https://www.youtube.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Ticket System Informatik
+          </a>
+        </button>
       </div>
     </div>
   );

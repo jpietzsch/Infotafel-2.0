@@ -572,15 +572,14 @@ export interface ApiGenInfoGenInfo extends Struct.CollectionTypeSchema {
     singularName: 'gen-info';
     pluralName: 'gen-infos';
     displayName: 'GenInfo';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    AusbildungsleitungsEMail: Schema.Attribute.String;
-    SchulleitungsEMail: Schema.Attribute.String;
-    TNVEMail: Schema.Attribute.String;
-    CaseManagementEMail: Schema.Attribute.String;
+    Personal: Schema.Attribute.Text;
+    Email: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
