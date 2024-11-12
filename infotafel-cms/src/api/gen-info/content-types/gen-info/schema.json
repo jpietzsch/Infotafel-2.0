@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "gen_infos",
+  "info": {
+    "singularName": "gen-info",
+    "pluralName": "gen-infos",
+    "displayName": "GenInfo"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "AusbildungsleitungsEMail": {
+      "type": "string"
+    },
+    "SchulleitungsEMail": {
+      "type": "string"
+    },
+    "TNVEMail": {
+      "type": "string"
+    },
+    "CaseManagementEMail": {
+      "type": "string"
+    }
+  }
+}

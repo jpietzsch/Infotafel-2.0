@@ -34,7 +34,7 @@ export default function LocInfo({ isActive }) {
       {locInfo.map((data, index) => (
         <div 
           key={index} 
-          className="flex flex-col w-full h-20 items-center text-center space-y-4 transform transition-transform hover:scale-105"
+          className="flex flex-col w-full items-center text-center space-y-2 transform transition-transform hover:scale-125"
         >
           <div className="flex items-center space-x-3">
             <h1 className="text-2xl font-bold text-white tracking-tight">{data.WG}</h1>

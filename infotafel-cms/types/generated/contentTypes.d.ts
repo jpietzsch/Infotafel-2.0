@@ -566,6 +566,36 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiGenInfoGenInfo extends Struct.CollectionTypeSchema {
+  collectionName: 'gen_infos';
+  info: {
+    singularName: 'gen-info';
+    pluralName: 'gen-infos';
+    displayName: 'GenInfo';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    AusbildungsleitungsEMail: Schema.Attribute.String;
+    SchulleitungsEMail: Schema.Attribute.String;
+    TNVEMail: Schema.Attribute.String;
+    CaseManagementEMail: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::gen-info.gen-info'
+    >;
+  };
+}
+
 export interface ApiStundenplanStundenplan extends Struct.CollectionTypeSchema {
   collectionName: 'stundenplaene';
   info: {
@@ -977,6 +1007,7 @@ declare module '@strapi/strapi' {
       'api::beruf.beruf': ApiBerufBeruf;
       'api::betreuer.betreuer': ApiBetreuerBetreuer;
       'api::event.event': ApiEventEvent;
+      'api::gen-info.gen-info': ApiGenInfoGenInfo;
       'api::stundenplan.stundenplan': ApiStundenplanStundenplan;
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;

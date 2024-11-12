@@ -78,7 +78,7 @@ export default function Home() {
     <Events key="events" isActive={activeIndex === 4} />,
     <LocInfo key="locinfo" isActive={activeIndex === 5} />,
     <GenInfo key="geninfo" isActive={activeIndex === 6} />,
-    <Ticket key="ticket" isActive={activeIndex === 7} />,
+    //<Ticket key="ticket" isActive={activeIndex === 7} />,
   ];
 
   return (
