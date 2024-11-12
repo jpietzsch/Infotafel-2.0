@@ -25,38 +25,44 @@ export default function LocInfo({ isActive }) {
   }, []);
 
   return (
-    <div>
+    <div aria-hidden={ariaHiddenValue}>
       <div
-        className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-28 items-center"
-        aria-hidden={ariaHiddenValue}
+        className={`mt-20 grid grid-cols-1 md:grid-cols-2 gap-28 items-center ${
+          isActive ? '' : 'pointer-events-none'
+        }`}
       >
         {locInfo.map((data, index) => (
           <div
             key={index}
             className="flex flex-col w-full items-center text-center space-y-2 transform transition-transform hover:scale-125"
+            tabIndex={tabIndexValue}
           >
             <div className="flex items-center space-x-3">
-              <h1 className="text-2xl font-bold text-white tracking-tight">
+              <h1 className="text-2xl font-bold text-white tracking-tight" tabIndex={tabIndexValue}>
                 {data.Personal}
               </h1>
             </div>
             <div className="flex items-center space-x-3">
-              <h2 className="text-lg font-medium text-gray-300">
+              <h2 className="text-lg font-medium text-gray-300" tabIndex={tabIndexValue}>
                 {data.Email}
               </h2>
             </div>
           </div>
         ))}
       </div>
-      <div className="flex mt-20 flex-col items-center mt-8">
+      <div className="flex mt-20 flex-col items-center mt-8" tabIndex={tabIndexValue}>
         <h3 className="text-2xl font-semibold text-white mb-4 text-center">
           alternativ bei fragen im Haus 01 melden
         </h3>
-        <button className=" mt-20 px-10 py-4 bg-yellow-500 text-black rounded-full hover:bg-white focus:ring-2 focus:ring-blue-300">
+        <button
+          className="mt-20 px-10 py-4 bg-yellow-500 text-black rounded-full hover:bg-white focus:ring-2 focus:ring-blue-300"
+          tabIndex={tabIndexValue}
+        >
           <a
             className="font-bold text-xl"
             href="/ticket"
             rel="noopener noreferrer"
+            tabIndex={tabIndexValue}
           >
             Ticket System Informatik
           </a>
