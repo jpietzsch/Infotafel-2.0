@@ -628,6 +628,35 @@ export interface ApiStundenplanStundenplan extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiTicketTicket extends Struct.CollectionTypeSchema {
+  collectionName: 'tickets';
+  info: {
+    singularName: 'ticket';
+    pluralName: 'tickets';
+    displayName: 'Tickets';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    ticketID: Schema.Attribute.UID;
+    vorname: Schema.Attribute.String;
+    nachname: Schema.Attribute.String;
+    email: Schema.Attribute.String;
+    standort: Schema.Attribute.String;
+    beschreibung: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::ticket.ticket'>;
+  };
+}
+
 export interface AdminPermission extends Struct.CollectionTypeSchema {
   collectionName: 'admin_permissions';
   info: {
@@ -1008,6 +1037,7 @@ declare module '@strapi/strapi' {
       'api::event.event': ApiEventEvent;
       'api::gen-info.gen-info': ApiGenInfoGenInfo;
       'api::stundenplan.stundenplan': ApiStundenplanStundenplan;
+      'api::ticket.ticket': ApiTicketTicket;
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;
       'admin::role': AdminRole;
