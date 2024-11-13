@@ -4,7 +4,8 @@
   "info": {
     "singularName": "ticket",
     "pluralName": "tickets",
-    "displayName": "Tickets"
+    "displayName": "Tickets",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -28,6 +29,14 @@
     },
     "beschreibung": {
       "type": "text"
+    },
+    "zugewiesen": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "admin::user"
+    },
+    "abgeschlossen": {
+      "type": "boolean"
     }
   }
 }

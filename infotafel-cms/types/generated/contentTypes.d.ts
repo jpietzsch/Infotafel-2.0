@@ -634,6 +634,7 @@ export interface ApiTicketTicket extends Struct.CollectionTypeSchema {
     singularName: 'ticket';
     pluralName: 'tickets';
     displayName: 'Tickets';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -645,6 +646,8 @@ export interface ApiTicketTicket extends Struct.CollectionTypeSchema {
     email: Schema.Attribute.String;
     standort: Schema.Attribute.String;
     beschreibung: Schema.Attribute.Text;
+    zugewiesen: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    abgeschlossen: Schema.Attribute.Boolean;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
