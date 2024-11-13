@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tickets",
+  "info": {
+    "singularName": "ticket",
+    "pluralName": "tickets",
+    "displayName": "Ticket"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ticketNumber": {
+      "type": "uid"
+    },
+    "Nachname": {
+      "type": "string"
+    },
+    "Vorname": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "string"
+    },
+    "TicketStatus": {
+      "type": "string"
+    },
+    "Beschreibung": {
+      "type": "text"
+    },
+    "Standort": {
+      "type": "string"
+    }
+  }
+}
