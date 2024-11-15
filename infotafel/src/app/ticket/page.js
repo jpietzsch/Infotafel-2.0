@@ -1,22 +1,25 @@
 'use client';
-import React from 'react'
+import React, { useState } from 'react';
 import axios from 'axios';
 
 function page() {
-  const baseURL = "http://localhost:1337/api"
+  const baseURL = "http://localhost:1337/api";
+  
+  // State to manage loading, success, or error status
+  const [status, setStatus] = useState(null);  // `null`, 'success', or 'error'
 
   async function onSubmit(event) {
     event.preventDefault();
-  
+
     const formData = new FormData(event.target);
-  
+    
     // Convert formData to an object
     const data = Object.fromEntries(formData.entries());
     console.log(data); // This will log an object with key-value pairs of form data
-    
 
-    axios.post(
-      `${baseURL}/tickets`  , {
+    try {
+      // Make the POST request to create the ticket
+      await axios.post(`${baseURL}/tickets`, {
         data: {
           vorname: data.vorname,
           nachname: data.nachname,
@@ -24,15 +27,15 @@ function page() {
           standort: data.standort,
           beschreibung: data.beschreibung
         }
-      }
-    )
+      });
 
-
-
-
+      // If the request is successful, update the status to 'success'
+      setStatus('success');
+    } catch (error) {
+      // If there's an error, update the status to 'error'
+      setStatus('error');
+    }
   }
-  
-
 
   return (
     <form onSubmit={onSubmit}>
@@ -68,13 +71,17 @@ function page() {
           </div>
 
           <div className="flex justify-center space-x-4 pt-4">
-            <button className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-full">Abbrechen</button>
+            <button className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-full" onClick={() => window.location.href = 'https://www.youtube.com'}>Abbrechen</button>
             <button type='submit' className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-full">Abschicken</button>
           </div>
+
+          {/* Visual confirmation message */}
+          {status === 'success' && <p className="text-green-500 mt-4">Ticket send!</p>}
+          {status === 'error' && <p className="text-red-500 mt-4">Error creating ticket. Please try again later.</p>}
         </div>
       </div>
     </form>
-  )
+  );
 }
 
-export default page
+export default page;
