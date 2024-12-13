@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 
 export default function Plan({ isActive = true }) {
@@ -6,6 +6,8 @@ export default function Plan({ isActive = true }) {
   const [jobList, setJobList] = useState([]);
   const [planToday, setPlanToday] = useState([]);
   const [planTomorrow, setPlanTomorrow] = useState([]);
+
+  const selectRef = useRef(null); // Reference to the select element
 
   // Accessibility settings
   const tabIndexValue = isActive ? 0 : -1; // Only focusable when active
@@ -31,6 +33,39 @@ export default function Plan({ isActive = true }) {
     };
     fetchJobs();
   }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.code === "Numpad8") {
+        // Move up through the select options when Numpad8 is pressed
+        if (selectRef.current) {
+          const currentIndex = selectRef.current.selectedIndex;
+          if (currentIndex > 0) {
+            const newIndex = currentIndex - 1;
+            selectRef.current.selectedIndex = newIndex;
+            setFachrichtung(selectRef.current.value); // Update fachrichtung
+          }
+        }
+      } else if (event.code === "Numpad2") {
+        // Move down through the select options when Numpad2 is pressed
+        if (selectRef.current) {
+          const currentIndex = selectRef.current.selectedIndex;
+          if (currentIndex < selectRef.current.options.length - 1) {
+            const newIndex = currentIndex + 1;
+            selectRef.current.selectedIndex = newIndex;
+            setFachrichtung(selectRef.current.value); // Update fachrichtung
+          }
+        }
+      }
+    };
+  
+    window.addEventListener("keydown", handleKeyDown);
+  
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [fachrichtung]); // Ensure the `fachrichtung` is the source of truth
+  
 
   useEffect(() => {
     if (!fachrichtung) return;
@@ -81,6 +116,7 @@ export default function Plan({ isActive = true }) {
       aria-hidden={ariaHiddenValue}
       role="region"
       aria-labelledby="plan-title"
+      lang="de"
     >
       <h1 id="plan-title" className="sr-only">
         Vertretungsplan
@@ -89,6 +125,7 @@ export default function Plan({ isActive = true }) {
       {/* Dropdown for job selection */}
       <div className="w-full max-w-screen-lg">
         <select
+          ref={selectRef} // Add ref to the select element
           id="job-select"
           className="w-1/3 p-2 text-lg font-bold text-yellow-500 bg-black rounded-lg focus:outline-none border border-white" // Add border styling
           value={fachrichtung}
@@ -111,8 +148,7 @@ export default function Plan({ isActive = true }) {
       <div className="w-full max-w-screen-lg mt-6">
         <h1
           className="text-2xl font-bold mb-4 text-yellow-500"
-          tabIndex={tabIndexValue}
-          aria-live="polite"
+          tabIndex="-1"
         >
           Heute
         </h1>
@@ -150,8 +186,7 @@ export default function Plan({ isActive = true }) {
 
         <h1
           className="text-2xl font-bold mb-4 text-yellow-500 mt-8"
-          tabIndex={tabIndexValue}
-          aria-live="polite"
+          tabIndex="-1"
         >
           Morgen
         </h1>

@@ -179,7 +179,7 @@ function Fahrplan({ isActive }) {
                   src="31fahrplan.jpg"
                   alt="Fahrplan 31"
                   className="w-full"
-                  tabIndex={tabIndexValue}
+                  tabIndex="-1"
                   aria-hidden={ariaHiddenValue}
                 />
               </div>
