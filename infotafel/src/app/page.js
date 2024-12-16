@@ -99,7 +99,7 @@ export default function Home() {
                     ? "opacity-100 visible pointer-events-auto" 
                     : "opacity-0"
                 }`}
-                tabIndex={index === activeIndex ? 0 : -1}
+
                 aria-hidden={index !== activeIndex}
               >
                 {slide}

@@ -14,7 +14,7 @@ const Clock = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  return <div className="font-semibold text-3xl" suppressHydrationWarning>{time.toLocaleTimeString()}</div>;
+  return <div className="font-semibold text-3xl" suppressHydrationWarning tabIndex={-1}>{time.toLocaleTimeString()}</div>;
 };
 
 export default Clock;

@@ -42,7 +42,7 @@ function Foods({ isActive }) {
 
       {/* Meal plan content */}
       {!loading && mealPlan && mealPlan.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 ml-12 mr-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 ml-6 mr-6">
           {mealPlan.map((day) => (
             <div
               className="font-bold p-6 shadow-sm rounded-lg transition-transform transform hover:scale-105 duration-200 hover:shadow-lg"
@@ -50,10 +50,10 @@ function Foods({ isActive }) {
               tabIndex={tabIndexValue}
               aria-hidden={ariaHiddenValue}
             >
-              <h1 className="font-semibold text-2xl sm:text-3xl text-white">
+              <h1 className="font-semibold text-xl sm:text-2xl md:text-3xl text-white">
                 {day.date}
               </h1>
-              <div className="font-medium text-lg mt-4 text-gray-300">
+              <div className="font-medium text-base sm:text-lg mt-4 text-gray-300">
                 {day.meals &&
                 day.meals.menus &&
                 Array.isArray(day.meals.menus.menuName) &&
@@ -65,14 +65,14 @@ function Foods({ isActive }) {
                       aria-hidden={ariaHiddenValue}
                     >
                       <p
-                        className="text-base sm:text-lg md:text-xl text-gray-200"
+                        className="text-sm sm:text-base md:text-lg text-gray-200"
                         tabIndex={tabIndexValue}
                       >
                         {meal}
                       </p>
                       {day.meals.menus.alergenes[mealIndex] && (
                         <p
-                          className="text-sm mt-2 text-gray-400"
+                          className="text-xs sm:text-sm mt-2 text-gray-400"
                           tabIndex={tabIndexValue}
                         >
                           Allergene: {day.meals.menus.alergenes[mealIndex]}
