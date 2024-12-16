@@ -157,32 +157,10 @@ async function fetchHTML(url) {
   }
 }
 
-function parseHTML(html, infohtml) {
+function parseHTML(html) {
   const $ = cheerio.load(html);
-  const $2 = cheerio.load(infohtml);
   const data = [];
-  
-  $2('.lay_list_block').each(function() {
-      const restrictionType = $2(this).find('div').filter(function() {
-          return $(this).css('width') === '155px' && $(this).css('font-size') === '17px' && $(this).css('margin-top') === '5px';
-      }).text().trim();
-  
-      const busRoute = $2(this).find('div[style*="max-width: 130px;"]').text().trim();
-      const location = $2(this).find('h1').text().trim();
-      const dateTime = $2(this).find('div').filter(function() {
-          const text = $2(this).text().trim();
-          return text && !/^\d+$/.test(text) && !text.match(/^(Straßensperrung|Vollsperrung|[0-9|]+)/);
-      }).first().text().trim();
-  
-      data.push({
-          problems: {
-              restriction: restrictionType,
-              busRoute: busRoute,
-              location: location,
-              dateTime: dateTime
-          }
-      });
-  });
+
   
   console.log(data);
   
@@ -273,9 +251,8 @@ app.get("/cache/busplan", async (req, res) => {
         console.log("cache expired");
     }
     const bushtml = await fetchHTML(url);
-    const infohtml = await fetchHTML(infoURL)
     const timestamp = Date.now();
-    const parsedData = parseHTML(bushtml, infohtml);
+    const parsedData = parseHTML(bushtml);
     const busData = formatBusData(parsedData);
 
     cache.busData = { timestamp, busData };

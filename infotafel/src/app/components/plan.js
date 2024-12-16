@@ -58,14 +58,13 @@ export default function Plan({ isActive = true }) {
         }
       }
     };
-  
+
     window.addEventListener("keydown", handleKeyDown);
-  
+
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [fachrichtung]); // Ensure the `fachrichtung` is the source of truth
-  
+  }, [fachrichtung]);
 
   useEffect(() => {
     if (!fachrichtung) return;
@@ -125,17 +124,13 @@ export default function Plan({ isActive = true }) {
       {/* Dropdown for job selection */}
       <div className="w-full max-w-screen-lg">
         <select
-          ref={selectRef} // Add ref to the select element
+          ref={selectRef}
           id="job-select"
-          className="w-1/3 p-2 text-lg font-bold text-yellow-500 bg-black rounded-lg focus:outline-none border border-white" // Add border styling
+          className="w-full sm:w-1/3 p-2 text-lg font-bold text-yellow-500 bg-black rounded-lg focus:outline-none border border-white"
           value={fachrichtung}
           onChange={(e) => setFachrichtung(e.target.value)}
           tabIndex={tabIndexValue}
           aria-hidden={ariaHiddenValue}
-          style={{
-            maxHeight: "200px", // Max height for scrollable dropdown
-            overflowY: "auto" // Enable scrolling if there are many items
-          }}
         >
           {jobList.map((job, index) => (
             <option key={index} value={job}>
@@ -145,83 +140,78 @@ export default function Plan({ isActive = true }) {
         </select>
       </div>
 
-      <div className="w-full max-w-screen-lg mt-6">
-        <h1
-          className="text-2xl font-bold mb-4 text-yellow-500"
-          tabIndex="-1"
-        >
-          Heute
-        </h1>
-        <table
-          className="table-auto border-collapse border border-gray-400 w-full text-center shadow-lg"
-          role="table"
-          aria-label="Stundenplan für heute"
-        >
-          <thead>
-            <tr className="bg-yellow-500 text-black" tabIndex={tabIndexValue} role="row">
-              {Array.from({ length: 10 }).map((_, index) => (
-                <th key={index} className="p-3" role="columnheader">
-                  Stunde {index + 1}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            <tr role="row">
-              {Array.from({ length: 10 }).map((_, index) => (
-                <td
-                  key={index}
-                  className="p-3 border border-gray-300"
-                  tabIndex={tabIndexValue}
-                  role="cell"
-                >
-                  {planToday.find((item) => item.Stunde === index + 1)
-                    ? planToday.find((item) => item.Stunde === index + 1).Text
-                    : "-"}
-                </td>
-              ))}
-            </tr>
-          </tbody>
-        </table>
+      {/* Today and Tomorrow Sections */}
+      {["Heute", "Morgen"].map((day, index) => {
+        const plan = index === 0 ? planToday : planTomorrow;
 
-        <h1
-          className="text-2xl font-bold mb-4 text-yellow-500 mt-8"
-          tabIndex="-1"
-        >
-          Morgen
-        </h1>
-        <table
-          className="table-auto border-collapse border border-gray-400 w-full text-center shadow-lg"
-          role="table"
-          aria-label="Stundenplan für morgen"
-        >
-          <thead>
-            <tr className="bg-yellow-500 text-black" tabIndex={tabIndexValue} role="row">
-              {Array.from({ length: 10 }).map((_, index) => (
-                <th key={index} className="p-3" role="columnheader">
-                  Stunde {index + 1}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            <tr role="row">
-              {Array.from({ length: 10 }).map((_, index) => (
-                <td
-                  key={index}
-                  className="p-3 border border-gray-300"
-                  tabIndex={tabIndexValue}
-                  role="cell"
-                >
-                  {planTomorrow.find((item) => item.Stunde === index + 1)
-                    ? planTomorrow.find((item) => item.Stunde === index + 1).Text
-                    : "-"}
-                </td>
-              ))}
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        return (
+          <div className="w-full max-w-screen-lg mt-6 space-y-6" key={day}>
+            <h1 className="text-2xl font-bold mb-4 text-yellow-500">{day}</h1>
+
+            {/* Mobile View */}
+            <div className="block sm:hidden">
+              <div className="w-full max-h-52 overflow-y-auto bg-gray-700 rounded-lg shadow-md p-2">
+                {plan.length > 0 ? (
+                  plan.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col mb-2 p-3 bg-gray-800 rounded-lg shadow-md"
+                    >
+                      <h3 className="font-bold text-yellow-500">Stunde {item.Stunde}</h3>
+                      <p className="text-gray-300">{item.Text || "Keine Vertretung"}</p>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-gray-300">Keine Vertretungen für {day.toLowerCase()}.</p>
+                )}
+              </div>
+            </div>
+
+            {/* Desktop View */}
+            <div className="hidden sm:block">
+              <table
+                className="table-auto border-collapse border border-gray-400 w-full text-center"
+                role="table"
+                aria-label={`Stundenplan für ${day.toLowerCase()}`}
+                style={{ tableLayout: "fixed" }}
+              >
+                <thead>
+                  <tr className="bg-yellow-500 text-black" tabIndex={tabIndexValue} role="row">
+                    {Array.from({ length: 10 }).map((_, index) => (
+                      <th
+                        key={index}
+                        className="p-3 border border-gray-300"
+                        role="columnheader"
+                        style={{ whiteSpace: "normal", wordWrap: "break-word" }}
+                      >
+                        Stunde {index + 1}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr role="row">
+                    {Array.from({ length: 10 }).map((_, index) => (
+                      <td
+                        key={index}
+                        className="p-3 border border-gray-300"
+                        tabIndex={tabIndexValue}
+                        role="cell"
+                        style={{
+                          whiteSpace: "normal",
+                          wordWrap: "break-word",
+                        }}
+                      >
+                        {plan.find((item) => item.Stunde === index + 1)?.Text || "-"}
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

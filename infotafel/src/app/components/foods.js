@@ -1,102 +1,102 @@
-"use client";
+  "use client";
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+  import React, { useEffect, useState } from "react";
+  import axios from "axios";
 
-function Foods({ isActive }) {
-  const [loading, setLoading] = useState(true);
-  const [mealPlan, setMealPlan] = useState(null);
+  function Foods({ isActive }) {
+    const [loading, setLoading] = useState(true);
+    const [mealPlan, setMealPlan] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/cache/food");
-        console.log("Fetched Data: ", response.data);
-        setMealPlan(Array.isArray(response.data) ? response.data : []);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setLoading(false);
-      }
-    };
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get("http://localhost:8000/cache/food");
+          console.log("Fetched Data: ", response.data);
+          setMealPlan(Array.isArray(response.data) ? response.data : []);
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          setLoading(false);
+        }
+      };
 
-    fetchData();
-  }, []);
+      fetchData();
+    }, []);
 
-  // Accessibility settings
-  const tabIndexValue = isActive ? 0 : -1; // Only focusable when active
-  const ariaHiddenValue = !isActive; // Hidden from screen readers when inactive
+    // Accessibility settings
+    const tabIndexValue = isActive ? 0 : -1; // Only focusable when active
+    const ariaHiddenValue = !isActive; // Hidden from screen readers when inactive
 
-  return (
-    <div className="flex flex-col justify-center min-h-full" aria-hidden={ariaHiddenValue}>
-      {/* Loading state */}
-      {loading && (
-        <div
-          className="text-2xl mx-auto self-center flex items-center justify-center text-gray-300"
-          tabIndex={tabIndexValue}
-        >
-          <div className="loader ease-linear rounded-full border-4 border-t-4 h-12 w-12 mr-4"></div>
-          <p>Loading...</p>
-        </div>
-      )}
+    return (
+      <div className="flex flex-col justify-center min-h-full" aria-hidden={ariaHiddenValue}>
+        {/* Loading state */}
+        {loading && (
+          <div
+            className="text-2xl mx-auto self-center flex items-center justify-center text-gray-300"
+            tabIndex={tabIndexValue}
+          >
+            <div className="loader ease-linear rounded-full border-4 border-t-4 h-12 w-12 mr-4"></div>
+            <p>Loading...</p>
+          </div>
+        )}
 
-      {/* Meal plan content */}
-      {!loading && mealPlan && mealPlan.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 ml-6 mr-6">
-          {mealPlan.map((day) => (
-            <div
-              className="font-bold p-6 shadow-sm rounded-lg transition-transform transform hover:scale-105 duration-200 hover:shadow-lg"
-              key={day.date}
-              tabIndex={tabIndexValue}
-              aria-hidden={ariaHiddenValue}
-            >
-              <h1 className="font-semibold text-xl sm:text-2xl md:text-3xl text-white">
-                {day.date}
-              </h1>
-              <div className="font-medium text-base sm:text-lg mt-4 text-gray-300">
-                {day.meals &&
-                day.meals.menus &&
-                Array.isArray(day.meals.menus.menuName) &&
-                day.meals.menus.menuName.length > 0 ? (
-                  day.meals.menus.menuName.map((meal, mealIndex) => (
-                    <div
-                      className="p-4 mt-2 rounded-md bg-gray-700 h-36 flex flex-col justify-between"
-                      key={mealIndex}
-                      aria-hidden={ariaHiddenValue}
-                    >
-                      <p
-                        className="text-sm sm:text-base md:text-lg text-gray-200"
-                        tabIndex={tabIndexValue}
+        {/* Meal plan content */}
+        {!loading && mealPlan && mealPlan.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 ml-6 mr-6">
+            {mealPlan.map((day) => (
+              <div
+                className="font-bold p-6 shadow-sm rounded-lg transition-transform transform hover:scale-105 duration-200 hover:shadow-lg"
+                key={day.date}
+                tabIndex={tabIndexValue}
+                aria-hidden={ariaHiddenValue}
+              >
+                <h1 className="font-semibold text-xl sm:text-2xl md:text-3xl text-white">
+                  {day.date}
+                </h1>
+                <div className="font-medium text-base sm:text-lg mt-4 text-gray-300">
+                  {day.meals &&
+                  day.meals.menus &&
+                  Array.isArray(day.meals.menus.menuName) &&
+                  day.meals.menus.menuName.length > 0 ? (
+                    day.meals.menus.menuName.map((meal, mealIndex) => (
+                      <div
+                        className="p-4 mt-2 rounded-md bg-gray-700 h-36 flex flex-col justify-between"
+                        key={mealIndex}
+                        aria-hidden={ariaHiddenValue}
                       >
-                        {meal}
-                      </p>
-                      {day.meals.menus.alergenes[mealIndex] && (
                         <p
-                          className="text-xs sm:text-sm mt-2 text-gray-400"
+                          className="text-sm sm:text-base md:text-lg text-gray-200"
                           tabIndex={tabIndexValue}
                         >
-                          Allergene: {day.meals.menus.alergenes[mealIndex]}
+                          {meal}
                         </p>
-                      )}
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-gray-400">No meals available</p>
-                )}
+                        {day.meals.menus.alergenes[mealIndex] && (
+                          <p
+                            className="text-xs sm:text-sm mt-2 text-gray-400"
+                            tabIndex={tabIndexValue}
+                          >
+                            Allergene: {day.meals.menus.alergenes[mealIndex]}
+                          </p>
+                        )}
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-gray-400">No meals available</p>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
 
-      {/* No meal plan available */}
-      {!loading && (!mealPlan || mealPlan.length === 0) && (
-        <div className="text-2xl mx-auto self-center text-gray-300" tabIndex={tabIndexValue}>
-          <p>No meal plan available</p>
-        </div>
-      )}
-    </div>
-  );
-}
+        {/* No meal plan available */}
+        {!loading && (!mealPlan || mealPlan.length === 0) && (
+          <div className="text-2xl mx-auto self-center text-gray-300" tabIndex={tabIndexValue}>
+            <p>No meal plan available</p>
+          </div>
+        )}
+      </div>
+    );
+  }
 
-export default Foods;
+  export default Foods;

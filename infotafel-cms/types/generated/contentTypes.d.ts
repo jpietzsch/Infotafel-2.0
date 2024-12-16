@@ -485,6 +485,39 @@ export interface PluginUsersPermissionsUser
   };
 }
 
+export interface ApiBackgroundBackground extends Struct.CollectionTypeSchema {
+  collectionName: 'backgrounds';
+  info: {
+    singularName: 'background';
+    pluralName: 'backgrounds';
+    displayName: 'Hintergrund';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Beschreibung: Schema.Attribute.String;
+    Hintergrund: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    Aktiv: Schema.Attribute.Boolean;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::background.background'
+    >;
+  };
+}
+
 export interface ApiBerufBeruf extends Struct.CollectionTypeSchema {
   collectionName: 'berufe';
   info: {
@@ -1035,6 +1068,7 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::background.background': ApiBackgroundBackground;
       'api::beruf.beruf': ApiBerufBeruf;
       'api::betreuer.betreuer': ApiBetreuerBetreuer;
       'api::event.event': ApiEventEvent;

@@ -2,13 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import Typography from "@mui/material/Typography";
-import ArrowRight from "@mui/icons-material/ArrowRight";
 import { ThemeProvider } from "@emotion/react";
-import { SvgIcon, createTheme } from "@mui/material";
+import { createTheme, Typography, Box, SvgIcon, Divider } from "@mui/material";
+import ArrowRight from "@mui/icons-material/ArrowRight";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ErrorIcon from "@mui/icons-material/Error";
+import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 
 const darkTheme = createTheme({
   palette: {
@@ -16,38 +16,9 @@ const darkTheme = createTheme({
   },
 });
 
-const locations = {
-  31: {
-    extra_times: [1, 2, 3, 5, 6, 7, 11, 12, 14, 15, 17, 18, 22],
-    locations: [
-      "Rehabilitationszentrum für Blinde, Chemnitz",
-      "Frauen- und Kinderklinik, Chemnitz",
-      "Klinikum Flemmingstr., Chemnitz",
-      "Talanger, Chemnitz",
-      "Wattstraße, Chemnitz",
-      "Kanalstraße, Chemnitz",
-      "Leonhardtstraße, Chemnitz",
-      "Henriettenstraße, Chemnitz",
-      "Gerhart-Hauptmann-Platz, Chemnitz",
-      "Marianne-Brandt-Straße, Chemnitz",
-      "Reichsstraße, Chemnitz",
-      "Zentralhaltestelle, Chemnitz",
-    ],
-  },
-  62: {
-    extra_times: [1, 2, 3, 5, 6, 7, 11, 12, 14, 15, 17, 18, 22],
-    locations: ["DEBUG1", "DEBUG2", "DEBUG3", "DEBUG4", "DEBUG5", "DEBUG6"],
-  },
-};
-
 function Fahrplan({ isActive }) {
   const [busplanData, setBusplanData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,6 +75,103 @@ function Fahrplan({ isActive }) {
     );
   }
 
+  const renderTimeStatus = (stationName, busLine, plannedTime, realTime, index) => {
+    const isDelayed = plannedTime !== realTime;
+    return (
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        mb={2}
+        key={index}
+        className="w-full px-3 py-2 bg-gray-800 rounded-md shadow-md hover:bg-gray-700 transition duration-200"
+        sx={{
+          width: "100%",
+          maxWidth: "600px", // Increased max width on desktop
+          mx: "auto", // Center the container horizontally
+        }}
+      >
+        <Box display="flex" flexDirection="column" alignItems="center" mb={1}>
+          {/* Station Name and Bus Line Header */}
+          <Typography
+            variant="h6"
+            className="text-white font-semibold"
+            tabIndex={tabIndexValue}
+            sx={{
+              fontSize: { xs: "1rem", sm: "1.2rem", md: "1.4rem" }, // Responsive font size for different screen sizes
+              display: "flex",
+              alignItems: "center",
+              marginBottom: "5px", // Reduced margin to make it tighter
+            }}
+          >
+            <SvgIcon component={DirectionsBusIcon} sx={{ mr: 1, fontSize: "1.4rem" }} />
+            {stationName} - Bus {busLine}
+          </Typography>
+          <Divider sx={{ width: "80%", my: 1, borderColor: "gray" }} />
+        </Box>
+
+        <Box
+          display="flex"
+          flexDirection={{ xs: "row", sm: "row" }} // Ensures the times are side by side for mobile
+          justifyContent="center" // Centers both time boxes horizontally
+          alignItems="center"
+          mb={1}
+          sx={{
+            width: "100%", // Ensure the times take up full width
+            gap: { xs: 1, sm: 2 }, // Adjust gap to be smaller on mobile
+            px: { xs: 2, sm: 3 }, // Padding for mobile and small devices
+          }}
+        >
+          {/* Geplante Zeit (Planned Time) */}
+          <Box display="flex" flexDirection="column" alignItems="center">
+            <Typography
+              className="text-gray-400"
+              tabIndex={tabIndexValue}
+              sx={{ fontSize: "0.9rem", textAlign: "center" }}
+            >
+              Geplante Zeit
+            </Typography>
+            <SvgIcon component={AccessTimeIcon} color="primary" sx={{ fontSize: "1.2rem", mb: 1 }} />
+            <Typography
+              className="ml-2"
+              tabIndex={tabIndexValue}
+              sx={{ fontSize: "1.1rem", textAlign: "center" }}
+            >
+              {plannedTime}
+            </Typography>
+          </Box>
+
+          {/* Aktuelle Zeit (Real-Time) */}
+          <Box display="flex" flexDirection="column" alignItems="center">
+            <Typography
+              className="text-gray-400"
+              tabIndex={tabIndexValue}
+              sx={{ fontSize: "0.9rem", textAlign: "center" }}
+            >
+              Aktuelle Zeit
+            </Typography>
+            {isDelayed ? (
+              <SvgIcon component={ErrorIcon} color="error" sx={{ fontSize: "1.3rem", mb: 1 }} />
+            ) : (
+              <SvgIcon component={CheckCircleIcon} color="success" sx={{ fontSize: "1.3rem", mb: 1 }} />
+            )}
+            <Typography
+              className={`ml-2 ${isDelayed ? "text-red-500" : "text-green-500"}`}
+              tabIndex={tabIndexValue}
+              sx={{ fontSize: "1.1rem", textAlign: "center" }}
+            >
+              {realTime}
+            </Typography>
+          </Box>
+        </Box>
+
+        {isDelayed && (
+          <Typography className="ml-4 text-sm text-red-500">{`Verspätet`}</Typography>
+        )}
+      </Box>
+    );
+  };
+
   return (
     <div
       className="mx-auto text-white flex-grow w-full justify-evenly overflow-hidden"
@@ -112,109 +180,44 @@ function Fahrplan({ isActive }) {
       <div className="flex flex-grow items-center">
         <div className="flex w-full justify-center items-center flex-col">
           <ThemeProvider theme={darkTheme}>
-            <div className="mt-10 flex flex-col items-center w-full font-semibold">
-              <div className="flex flex-col md:flex-row w-full justify-evenly items-center">
+            <div className="mt-6 flex flex-col items-center w-full font-semibold">
+              <Box
+                className="w-full"
+                sx={{
+                  maxWidth: "1200px", // Maximum width for desktop
+                  width: "90%", // Allow some padding on both sides
+                  px: { xs: 1, sm: 2 }, // Padding for mobile and small devices
+                }}
+              >
                 {busplanData &&
                   busplanData["31"]?.departureTimes
                     ?.slice(0, 4)
-                    .map((time, index, array) => (
-                      <React.Fragment key={index}>
-                        <Typography tabIndex={tabIndexValue}>{time}</Typography>
-                        {index !== array.length - 1 && (
-                          <SvgIcon component={ArrowRight} />
-                        )}
-                      </React.Fragment>
-                    ))}
-              </div>
-              <div className="flex flex-col md:flex-row w-full justify-evenly items-center mb-5">
-                {busplanData &&
-                  busplanData["31"]?.realTimes
-                    ?.slice(0, 4)
-                    .map((time, index, array) => {
-                      let typographyClass = "";
-                      if (busplanData["31"].departureTimes[index] !== time) {
-                        typographyClass = "text-red-500";
-                      } else {
-                        typographyClass = "text-green-500";
-                      }
-
-                      return (
-                        <React.Fragment key={index}>
-                          <p
-                            className={typographyClass}
-                            tabIndex={tabIndexValue}
-                          >
-                            {time}
-                          </p>
-                          {index !== array.length - 1 && (
-                            <SvgIcon component={ArrowRight} />
-                          )}
-                        </React.Fragment>
-                      );
+                    .map((time, index) => {
+                      const stationName = "Flemmingstraße (Haus 7)"; // Can be customized
+                      const busLine = "31"; // Can be customized
+                      const realTime = busplanData["31"]?.realTimes?.[index] || time;
+                      return renderTimeStatus(stationName, busLine, time, realTime, index);
                     })}
-              </div>
+              </Box>
             </div>
-            <div className="flex flex-col lg:flex-row w-full justify-evenly">
-              <div className="flex flex-col space-y-4">
-                {locations["31"].locations.map((location, index) => (
-                  <div key={index} className="flex items-center">
-                    <div className="w-4 h-4 bg-white rounded-full"></div>
-                    <div className="ml-4">
-                      <Typography tabIndex={tabIndexValue}>
-                        {location}
-                      </Typography>
-                      <Typography tabIndex={tabIndexValue}>
-                        {busplanData &&
-                          addMinutesToTime(
-                            busplanData["31"]?.realTimes[0] || "00:00",
-                            locations["31"].extra_times[index]
-                          )}
-                      </Typography>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="w-full lg:w-1/2">
-                <img
-                  src="31fahrplan.jpg"
-                  alt="Fahrplan 31"
-                  className="w-full"
-                  tabIndex="-1"
-                  aria-hidden={ariaHiddenValue}
-                />
-              </div>
-            </div>
-            <p
-              className="text-xs text-gray-400"
+
+            {/* Disclaimer Text */}
+            <Box
+              display="flex"
+              justifyContent="center"
+              mt={3}
+              className="text-gray-400 text-xs"
               tabIndex={tabIndexValue}
-              aria-hidden={ariaHiddenValue}
             >
-              *Alle Angaben sind unverbindlich. Busse können früher oder später
-              eintreffen. Manchmal auch garnicht.
-            </p>
+              <Typography>
+                *Für die angegebene Zeit haften wir nicht. Zeiten können variieren.
+              </Typography>
+            </Box>
           </ThemeProvider>
         </div>
       </div>
     </div>
   );
 }
-
-const addMinutesToTime = (timeString, extraMinutes) => {
-  if (!timeString) return "N/A";
-
-  const [hoursStr, minutesStr] = timeString.split(":");
-  let hours = parseInt(hoursStr);
-  let minutes = parseInt(minutesStr);
-
-  minutes += extraMinutes;
-
-  hours += Math.floor(minutes / 60);
-  minutes = minutes % 60;
-
-  const formattedHours = String(hours).padStart(2, "0");
-  const formattedMinutes = String(minutes).padStart(2, "0");
-
-  return `${formattedHours}:${formattedMinutes}`;
-};
 
 export default Fahrplan;

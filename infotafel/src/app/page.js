@@ -10,9 +10,8 @@ import Foods from "./components/foods";
 import Plan from "./components/plan";
 import Image from "next/image";
 import GenInfo from "./components/geninfo";
+import axios from "axios";
 
-const safeRandom = Math.floor(Math.random() * 1000) + 1;
-console.log(safeRandom + " safeRandom");
 
 export default function Home() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
@@ -20,6 +19,7 @@ export default function Home() {
   const [canScrollNext, setCanScrollNext] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0); // Keep track of active slide
   const [isTransitioning, setIsTransitioning] = useState(false); // To handle the transition state
+  const [backgroundImage, setBackgroundImage] = useState("black_bg.jpg")
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -66,8 +66,32 @@ export default function Home() {
     };
   }, [scrollPrev, scrollNext]);
 
-  const backgroundImage =
-    safeRandom === 69 ? "placeholder.jpg" : "aE12.jpg?v=1";
+
+  useEffect(() => {
+    const fetchBackground = async () => {
+      try {
+        const response = await axios.get(
+          'http://localhost:1337/api/backgrounds?populate=*&&filters[Aktiv][$eq]=true'
+        );
+        const backgrounds = response.data.data;
+
+        // Check if there are any active backgrounds
+        if (backgrounds.length > 0) {
+          // Pick a random background from the active ones
+          const randomIndex = Math.floor(Math.random() * backgrounds.length);
+          const randomBg = backgrounds[randomIndex];
+
+          // Set the random background to state
+          console.log(randomBg.Hintergrund[0].url)
+          setBackgroundImage("http://localhost:1337"+randomBg.Hintergrund[0].url)
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchBackground();
+  }, []);
 
   const slides = [
     <Weather key="weather" isActive={activeIndex === 0} />,
