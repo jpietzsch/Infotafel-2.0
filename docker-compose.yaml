@@ -7,8 +7,6 @@ services:
     working_dir: /usr/src/app
     ports:
       - "9991:3000"
-    networks:
-      - infotafel_default
     volumes:
       - ./infotafel:/usr/src/app
     command: ["npm", "run", "start"]
@@ -20,8 +18,6 @@ services:
     working_dir: /usr/src/app
     ports:
       - "9992:8000"
-    networks:
-      - infotafel_default
     volumes:
       - ./infotafel:/usr/src/app
     command: ["npm", "run", "start-node"]
@@ -33,13 +29,7 @@ services:
     working_dir: /usr/src/cms
     ports:
       - "9993:1337"
-    networks:
-      - infotafel_default
     volumes:
       - ./infotafel-cms:/usr/src/cms
     command: ["npm", "run", "start-strapi"]
     restart: always
-
-networks:
-  infotafel_default:
-    external: true
