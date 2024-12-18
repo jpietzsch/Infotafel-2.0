@@ -3,10 +3,10 @@ version: "3.8"
 services:
   infotafel-frontend:
     build: 
-      context: /infotafel
+      context: ./infotafel
       dockerfile: Dockerfile
       network: host
-      
+
     container_name: infotafel_next_frontend
     working_dir: /usr/src/app  # This should be where the package.json of the frontend is
     ports:
