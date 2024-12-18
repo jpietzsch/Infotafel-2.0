@@ -2,17 +2,16 @@ version: "3.8"
 
 services:
   infotafel-frontend:
-    build: ./infotafel
+    build: 
+      context: /infotafel
+      dockerfile: Dockerfile
+      network: host
+      
     container_name: infotafel_next_frontend
     working_dir: /usr/src/app  # This should be where the package.json of the frontend is
     ports:
       - "9991:3000"
     volumes:
       - ./infotafel:/usr/src/app  # Ensures the code is mounted to the correct location
-    command: ["npm", "run", "start"]
+    #command: ["npm", "run", "start"]
     restart: always
-
-
-networks:
-  infotafel_default:
-    driver: bridge
