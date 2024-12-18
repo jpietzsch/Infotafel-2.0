@@ -1,26 +1,26 @@
 version: "3.8"
 
 services:
-  infotafel:
+  infotafel-frontend:
     build: ./infotafel
-    container_name: infotafel_next_frotnend
+    container_name: infotafel_next_frontend
     working_dir: /usr/src/app
     ports:
-      - "3000:3000" # Next.js Standardport
+      - "3000:3000" # Port für das Next.js Frontend
     volumes:
       - ./infotafel:/usr/src/app
     command: ["npm", "run", "start"] # Startet Next.js (Production Mode)
     restart: always
 
-  infotafel:
+  infotafel-backend:
     build: ./infotafel
     container_name: infotafel_next_backend
     working_dir: /usr/src/app
     ports:
-      - "8000:8000" # Next.js Standardport
+      - "8000:8000" # Port für das Node.js Backend
     volumes:
       - ./infotafel:/usr/src/app
-    command: ["npm", "run", "start-node"] # Startet Next.js (Production Mode)
+    command: ["npm", "run", "start-node"] # Starte das Backend
     restart: always
 
   infotafel-cms:
@@ -28,7 +28,7 @@ services:
     container_name: infotafel_cms
     working_dir: /usr/src/cms
     ports:
-      - "1337:1337"
+      - "1337:1337" # Port für Strapi CMS
     volumes:
       - ./infotafel-cms:/usr/src/cms
     command: ["npm", "run", "start-strapi"]
