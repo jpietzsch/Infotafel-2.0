@@ -50,7 +50,7 @@ export default function LocInfo({ isActive }) {
           </div>
         ))}
       </div>
-      <div className="flex mt-20 flex-col items-center mt-8" tabIndex={tabIndexValue}>
+      <div className="flex mt-20 flex-col items-center" tabIndex={tabIndexValue}>
         <h3 className="text-2xl font-semibold text-white mb-4 text-center">
           alternativ bei fragen im Haus 01 melden
         </h3>
