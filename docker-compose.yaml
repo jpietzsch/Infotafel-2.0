@@ -6,7 +6,7 @@ services:
     container_name: infotafel_next_frontend
     working_dir: /usr/src/app
     ports:
-      - "3000:3000" # Port für das Next.js Frontend
+      - "3000:3000/tcp" # Port für das Next.js Frontend
     volumes:
       - ./infotafel:/usr/src/app
     command: ["npm", "run", "start"] # Startbefehl für das Frontend
@@ -17,7 +17,7 @@ services:
     container_name: infotafel_next_backend
     working_dir: /usr/src/app
     ports:
-      - "8000:8000" # Port für das Node.js Backend
+      - "8000:8000/tcp" # Port für das Node.js Backend
     volumes:
       - ./infotafel:/usr/src/app
     command: ["npm", "run", "start-node"] # Startbefehl für das Backend
@@ -28,7 +28,7 @@ services:
     container_name: infotafel_cms
     working_dir: /usr/src/cms
     ports:
-      - "1337:1337" # Port für Strapi CMS
+      - "1337:1337/tcp" # Port für Strapi CMS
     volumes:
       - ./infotafel-cms:/usr/src/cms
     command: ["npm", "run", "start-strapi"]
