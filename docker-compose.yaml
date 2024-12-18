@@ -33,3 +33,7 @@ services:
       - ./infotafel-cms:/usr/src/cms  # Ensures the CMS code is mounted to the correct location
     command: ["npm", "run", "start-strapi"]
     restart: always
+
+
+network:
+  - infotafel_default
