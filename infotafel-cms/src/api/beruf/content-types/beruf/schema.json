@@ -4,7 +4,8 @@
   "info": {
     "singularName": "beruf",
     "pluralName": "berufe",
-    "displayName": "Beruf"
+    "displayName": "Beruf",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -12,6 +13,9 @@
   "pluginOptions": {},
   "attributes": {
     "Name": {
+      "type": "string"
+    },
+    "kurz": {
       "type": "string"
     }
   }

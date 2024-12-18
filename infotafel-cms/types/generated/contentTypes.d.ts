@@ -524,12 +524,14 @@ export interface ApiBerufBeruf extends Struct.CollectionTypeSchema {
     singularName: 'beruf';
     pluralName: 'berufe';
     displayName: 'Beruf';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
     Name: Schema.Attribute.String;
+    kurz: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;

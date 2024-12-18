@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "dev-full": "concurrently \"cd /infotafel && next dev\" \"cd /infotafel && npm run start-node\" \"cd /infotafel-cms && npm run start-strapi\"",
+  "install:all": "npm install --prefix infotafel && npm install --prefix infotafel-cms"
+  },
   "dependencies": {
     "concurrently": "^9.0.0",
     "lottie": "^0.0.1",
