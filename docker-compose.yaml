@@ -4,18 +4,18 @@ services:
   infotafel-frontend:
     build: ./infotafel
     container_name: infotafel_next_frontend
-    working_dir: /usr/src/app
+    working_dir: /usr/src/app  # This should be where the package.json of the frontend is
     ports:
       - "9991:3000"
     volumes:
-      - ./infotafel:/usr/src/app
+      - ./infotafel:/usr/src/app  # Ensures the code is mounted to the correct location
     command: ["npm", "run", "start"]
     restart: always
 
   infotafel-backend:
     build: ./infotafel
     container_name: infotafel_next_backend
-    working_dir: /usr/src/app
+    working_dir: /usr/src/app  # This should be where the package.json of the backend is
     ports:
       - "9992:8000"
     volumes:
@@ -26,10 +26,10 @@ services:
   infotafel-cms:
     build: ./infotafel-cms
     container_name: infotafel_cms
-    working_dir: /usr/src/cms
+    working_dir: /usr/src/cms  # This should be where the package.json of the CMS is
     ports:
       - "9993:1337"
     volumes:
-      - ./infotafel-cms:/usr/src/cms
+      - ./infotafel-cms:/usr/src/cms  # Ensures the CMS code is mounted to the correct location
     command: ["npm", "run", "start-strapi"]
     restart: always
