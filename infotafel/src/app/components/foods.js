@@ -105,7 +105,7 @@ function Foods({ isActive }) {
 
       {/* PC*/}
       {!loading && !isMobile && mealPlan && mealPlan.length > 0 && (
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 m-3">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 m-8">
           {mealPlan.map((day) => (
             <div
               key={day.date}
