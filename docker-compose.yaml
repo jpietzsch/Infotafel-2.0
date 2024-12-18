@@ -9,7 +9,7 @@ services:
       - "3000:3000" # Port für das Next.js Frontend
     volumes:
       - ./infotafel:/usr/src/app
-    command: ["npm", "run", "start"] # Startet Next.js (Production Mode)
+    command: ["npm", "run", "start"] # Startbefehl für das Frontend
     restart: always
 
   infotafel-backend:
@@ -20,7 +20,7 @@ services:
       - "8000:8000" # Port für das Node.js Backend
     volumes:
       - ./infotafel:/usr/src/app
-    command: ["npm", "run", "start-node"] # Starte das Backend
+    command: ["npm", "run", "start-node"] # Startbefehl für das Backend
     restart: always
 
   infotafel-cms:
