@@ -35,5 +35,6 @@ services:
     restart: always
 
 
-network:
-  - infotafel_default
+networks:
+  infotafel_default:
+    driver: bridge
