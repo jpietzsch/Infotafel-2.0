@@ -7,6 +7,8 @@ services:
     working_dir: /usr/src/app
     ports:
       - "9991:3000"  # Use port 9991 on the host for Next.js frontend
+    networks:
+      - infotafel_default
     volumes:
       - ./infotafel:/usr/src/app
     command: ["npm", "run", "start"] # Startbefehl für das Frontend
@@ -18,6 +20,8 @@ services:
     working_dir: /usr/src/app
     ports:
       - "9992:8000"  # Use port 9992 on the host for Node.js backend
+    networks:
+      - infotafel_default
     volumes:
       - ./infotafel:/usr/src/app
     command: ["npm", "run", "start-node"] # Startbefehl für das Backend
@@ -26,6 +30,8 @@ services:
   infotafel-cms:
     build: ./infotafel-cms
     container_name: infotafel_cms
+    networks:
+      - infotafel_default
     working_dir: /usr/src/cms
     ports:
       - "9993:1337"  # Use port 9993 on the host for Strapi CMS
@@ -33,3 +39,8 @@ services:
       - ./infotafel-cms:/usr/src/cms
     command: ["npm", "run", "start-strapi"]
     restart: always
+
+
+networks:
+  # The presence of these objects is sufficient to define them
+  infotafel_default: {}
