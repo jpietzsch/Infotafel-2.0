@@ -2,31 +2,27 @@ version: "3.8"
 
 services:
   infotafel-frontend:
-    build: 
+    build:
       context: ./infotafel
       dockerfile: Dockerfile
     container_name: infotafel_next_frontend
-    working_dir: /usr/src/app  # This should be where the package.json of the frontend is
-    volumes:
-      - infotafel_frontend_data:/usr/src/app  # Named volume
-    command: ["sh", "-c", "npm run build && npm run start"]  # Run build before start
+    ports:
+      - "9990:3000"
+      - "9991:8000" # Map host port 9991 to container port 9991
     restart: always
-    network_mode: "host"  # Use host network mode (works on Linux)
+    depends_on: #If you have a backend service that the frontend depends on
+      - infotafel-cms
 
   infotafel-cms:
-    build: 
+    build:
       context: ./infotafel-cms
       dockerfile: Dockerfile
     container_name: infotafel_cms
-    working_dir: /usr/src/cms  # This should be where the package.json of the CMS is
-    volumes:
-      - infotafel_cms_data:/usr/src/cms  # Named volume
-    command: ["npm", "run", "start"]
+    ports:
+      - "9992:9992" # Map host port 9992 to container port 9992
     restart: always
-    network_mode: "host"  # Use host network mode (works on Linux)
 
 volumes:
-  infotafel_frontend_data:
-  infotafel_cms_data:
-
-# Remove the external network configuration, it is unnecessary with `network_mode: host`
+  # Only create volumes if you actually need persistent data
+  # infotafel_frontend_data:
+  # infotafel_cms_data:
