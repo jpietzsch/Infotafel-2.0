@@ -1,18 +1,28 @@
-# Base image
-FROM node:18
+# Stage 1: Install dependencies
+FROM node:18 AS build
 
-# Set the working directory
 WORKDIR /usr/src/app
 
-# Copy only package.json and package-lock.json first (for Docker caching)
+# Copy package.json and package-lock.json to install dependencies
 COPY package*.json ./
+RUN npm install
 
-# Install dependencies and print a log during the build
-RUN echo "Installing dependencies..." && npm install
+# Stage 2: Copy the rest of the app
+FROM node:18
+
+WORKDIR /usr/src/app
+
+# Copy installed dependencies from build stage
+COPY --from=build /usr/src/app /usr/src/app
 
 # Copy the rest of the application
 COPY . .
 
+# Run build process
+RUN npm run build
 
-# Expose application ports (optional)
+# Expose ports
 EXPOSE 3000 8000
+
+# Command to start the app
+CMD ["npm", "run", "start"]
