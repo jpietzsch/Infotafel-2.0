@@ -13,8 +13,6 @@ RUN echo "Installing dependencies..." && npm install
 # Copy the rest of the application
 COPY . .
 
-# Build the app and log the action
-RUN echo "Building the app..." && npm run build
 
 # Expose application ports (optional)
 EXPOSE 3000 8000
