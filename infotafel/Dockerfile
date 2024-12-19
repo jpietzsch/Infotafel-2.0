@@ -1,15 +1,20 @@
-# Basis-Image
+# Base image
 FROM node:18
 
-# Arbeitsverzeichnis festlegen
+# Set the working directory
 WORKDIR /usr/src/app
 
-# package.json kopieren und Abhängigkeiten installieren
+# Copy only package.json and package-lock.json first (for Docker caching)
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
-# Quellcode kopieren
+# Copy the rest of the application
 COPY . .
 
-# Ports öffnen (Frontend und Backend)
+# Expose application ports
 EXPOSE 3000 8000
+
+# Default command
+CMD ["npm", "start"]
