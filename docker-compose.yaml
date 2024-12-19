@@ -10,27 +10,12 @@ services:
     working_dir: /usr/src/app  # This should be where the package.json of the frontend is
     ports:
       - "9991:3000"
+      - "9992:8000"
     volumes:
       - infotafel_frontend_data:/usr/src/app  # Named volume
     networks:
       - infotafel_default
     command: ["sh", "-c", "npm install && npm run build && npm run start"]  # Run build before start
-    restart: always
-
-  infotafel-backend:
-    build: 
-      context: ./infotafel
-      dockerfile: Dockerfile
-      network: host
-    container_name: infotafel_next_backend
-    working_dir: /usr/src/app  # This should be where the package.json of the backend is
-    ports:
-      - "9992:8000"
-    volumes:
-      - infotafel_backend_data:/usr/src/app  # Named volume
-    networks:
-      - infotafel_default
-    command: ["npm", "run", "start-node"]
     restart: always
 
   infotafel-cms:
@@ -51,7 +36,6 @@ services:
 
 volumes:
   infotafel_frontend_data:
-  infotafel_backend_data:
   infotafel_cms_data:
 
 networks:

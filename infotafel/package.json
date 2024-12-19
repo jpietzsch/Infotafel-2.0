@@ -6,7 +6,7 @@
     "dev": "next dev",
     "dev-full": "concurrently \"next dev\" \"npm run start-node\" \"npm run start-strapi\"",
     "build": "next build",
-    "start": "next start",
+    "start": "concurrently \"next start\" \"npm run start-node\"",
     "lint": "next lint",
     "start-node": "node ./server/cache.js",
     "start-strapi": "cd ../infotafel-cms && npm run develop"
