@@ -8,4 +8,4 @@ COPY . .
 
 EXPOSE 3000 8000
 
-CMD ["npm", "npm install && npm run dev"]
+CMD ["sh", "-c", "npm install && npm run dev"]
