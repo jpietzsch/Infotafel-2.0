@@ -1,10 +1,15 @@
-FROM node:18-alpine
+FROM node:18
 WORKDIR /usr/src/app
 
 COPY package*.json ./
+RUN npm cache clean --force
+
+RUN npm install --force
 
 COPY . .
 
-EXPOSE 3000 8000
+RUN npm run build
 
-CMD ["sh", "-c", "npm install && npm run dev"]
+EXPOSE 3000
+
+CMD ["npm", "start"]
