@@ -1,18 +1,16 @@
-# Verwende Node.js als Basis
 FROM node:18
 
-# Arbeitsverzeichnis festlegen
-WORKDIR /usr/src/cms
+WORKDIR /usr/src/app
 
-RUN npm config set registry https://registry.npmjs.org/
-# package.json und Abhängigkeiten installieren
+# Copy only package.json and package-lock.json first
 COPY package*.json ./
-RUN /usr/local/bin/npm install
 
-# Quellcode kopieren
+# Install dependencies BEFORE copying the rest of the code
+RUN npm install 
+
+# Now copy the rest of the application code
 COPY . .
 
-# Port öffnen
 EXPOSE 1337
 
-CMD ["npm", "start"]
+CMD ["npm", "start"] 
