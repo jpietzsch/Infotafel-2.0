@@ -5,7 +5,7 @@ services:
     build: 
       context: ./infotafel
       dockerfile: Dockerfile
-      network: host
+      network: stack
     container_name: infotafel_next_frontend
     working_dir: /usr/src/app  # This should be where the package.json of the frontend is
     ports:
@@ -22,7 +22,7 @@ services:
     build: 
       context: ./infotafel-cms
       dockerfile: Dockerfile
-      network: host
+      network: stack
     container_name: infotafel_cms
     working_dir: /usr/src/cms  # This should be where the package.json of the CMS is
     ports:
