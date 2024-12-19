@@ -5,13 +5,15 @@ services:
     build: 
       context: ./infotafel
       dockerfile: Dockerfile
-      networks: infotafel_default
+      network: infotafel_default
     container_name: infotafel_next_frontend
     working_dir: /usr/src/app  # This should be where the package.json of the frontend is
     ports:
       - "9991:3000"
     volumes:
       - infotafel_frontend_data:/usr/src/app  # Named volume
+    networks:
+      - infotafel_default
     command: ["npm", "run", "start"]
     restart: always
 
@@ -19,13 +21,15 @@ services:
     build: 
       context: ./infotafel
       dockerfile: Dockerfile
-      networks: infotafel_default
+      network: infotafel_default
     container_name: infotafel_next_backend
     working_dir: /usr/src/app  # This should be where the package.json of the backend is
     ports:
       - "9992:8000"
     volumes:
       - infotafel_backend_data:/usr/src/app  # Named volume
+    networks:
+      - infotafel_default
     command: ["npm", "run", "start-node"]
     restart: always
 
@@ -33,13 +37,15 @@ services:
     build: 
       context: ./infotafel-cms
       dockerfile: Dockerfile
-      networks: infotafel_default
+      network: infotafel_default
     container_name: infotafel_cms
     working_dir: /usr/src/cms  # This should be where the package.json of the CMS is
     ports:
       - "9993:1337"
     volumes:
       - infotafel_cms_data:/usr/src/cms  # Named volume
+    networks:
+      - infotafel_default
     command: ["npm", "run", "start-strapi"]
     restart: always
 
