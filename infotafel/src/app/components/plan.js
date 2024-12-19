@@ -111,7 +111,7 @@ export default function Plan({ isActive = true }) {
 
   return (
     <div
-      className="flex flex-col items-center p-6 space-y-8"
+      className="flex flex-col items-center p-6 space-y-8 sm:mt-24"
       aria-hidden={ariaHiddenValue}
       role="region"
       aria-labelledby="plan-title"
@@ -168,7 +168,7 @@ export default function Plan({ isActive = true }) {
             </div>
 
             {/* Desktop View */}
-            <div className="hidden sm:block">
+            <div className="hidden sm:block relative">
               <table
                 className="table-auto border-collapse border border-gray-400 w-full text-center"
                 role="table"
