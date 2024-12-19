@@ -10,7 +10,7 @@ RUN npm config set registry https://registry.npmjs.org/ \
     && ping -c 3 registry.npmjs.org \
     && nslookup registry.npmjs.org \
     && npm ci --verbose \
-    || { echo "npm ci failed. Check logs above:"; cat /tmp/npm-debug.log || true; exit 1; }
+    || { echo "npm ci failed. Check logs above:"; true; exit 1; }
 
 COPY . .
 
