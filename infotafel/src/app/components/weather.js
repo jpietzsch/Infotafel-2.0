@@ -70,7 +70,7 @@ function Weather({ isActive }) {
     >
       <div className="flex flex-col items-center w-full sm:max-w-screen-lg" tabIndex={-1}>
         <div className="flex flex-col sm:flex-row w-full sm:justify-evenly items-center" aria-hidden={ariaHiddenValue}>
-          <div className="w-full sm:w-auto sm:mr-12">
+          <div className="transition-transform transform hover:scale-105 duration-200 w-full sm:w-auto sm:mr-12">
             <h1 className="text-3xl sm:text-4xl font-bold text-white text-center sm:text-left m-6" tabIndex={tabIndexValue}>
               {weatherData?.current
                 ? weatherInterpretationCodes[weatherData.current.weather_code].day.desc
@@ -87,7 +87,7 @@ function Weather({ isActive }) {
           </div>
           <div className="text-white flex flex-col items-center sm:items-start w-full sm:w-auto">
             <div className="flex flex-col justify-evenly items-center sm:items-start w-full">
-              <p className="flex flex-row items-center text-4xl sm:text-5xl my-4" tabIndex={tabIndexValue}>
+              <p className="transition-transform transform hover:scale-105 duration-200 flex flex-row items-center text-4xl sm:text-5xl my-4" tabIndex={tabIndexValue}>
                 <img
                   src="weather/staticLogos/thermometer.svg"
                   className="w-12 h-auto mr-4"
@@ -99,7 +99,7 @@ function Weather({ isActive }) {
                 />
                 {weatherData?.current ? weatherData.current.temperature_2m : null}°C
               </p>
-              <p className="flex flex-row items-center text-4xl sm:text-5xl my-4" tabIndex={tabIndexValue}>
+              <p className="transition-transform transform hover:scale-105 duration-200 flex flex-row items-center text-4xl sm:text-5xl my-4" tabIndex={tabIndexValue}>
                 <img
                   src="weather/staticLogos/wind.svg"
                   className="w-12 h-auto mr-4"
@@ -111,7 +111,7 @@ function Weather({ isActive }) {
                 />
                 {weatherData?.current ? weatherData.current.wind_speed_10m : null} KM/h
               </p>
-              <p className="flex flex-row items-center text-4xl sm:text-5xl my-4" tabIndex={tabIndexValue}>
+              <p className="transition-transform transform hover:scale-105 duration-200 flex flex-row items-center text-4xl sm:text-5xl my-4" tabIndex={tabIndexValue}>
                 <img
                   src="weather/staticLogos/clouds.svg"
                   className="w-12 h-auto mr-4"
@@ -123,7 +123,7 @@ function Weather({ isActive }) {
                 />
                 {weatherData?.current ? weatherData.current.cloud_cover : null}%
               </p>
-              <p className="flex flex-row items-center text-4xl sm:text-5xl my-4" tabIndex={tabIndexValue}>
+              <p className="transition-transform transform hover:scale-105 duration-200 flex flex-row items-center text-4xl sm:text-5xl my-4" tabIndex={tabIndexValue}>
                 <img
                   src="weather/staticLogos/moderate-rain.svg"
                   alt="Rain"
