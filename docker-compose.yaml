@@ -12,7 +12,7 @@ services:
       - "9991:3000"
     volumes:
       - infotafel_frontend_data:/usr/src/app  # Named volume
-      - infotafel_frotnend_data/node_modules
+      - infotafel_frotnend_data:/usr/src/app/node_modules
     command: ["npm", "run", "start"]
     restart: always
 
@@ -27,7 +27,7 @@ services:
       - "9992:8000"
     volumes:
       - infotafel_backend_data:/usr/src/app  # Named volume
-      - infotafel_backend_data/node_modules
+      - infotafel_backend_data:/usr/src/app/node_modules
     command: ["npm", "run", "start-node"]
     restart: always
 
@@ -42,7 +42,7 @@ services:
       - "9993:1337"
     volumes:
       - infotafel_cms_data:/usr/src/cms  # Named volume
-      - infotafel_cms_data/node_modules
+      - infotafel_cms_data:/usr/src/cms/node_modules
     command: ["npm", "run", "start-strapi"]
     restart: always
 
