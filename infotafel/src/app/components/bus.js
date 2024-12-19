@@ -180,7 +180,7 @@ function Fahrplan({ isActive }) {
       <div className="flex flex-grow items-center">
         <div className="flex w-full justify-center items-center flex-col">
           <ThemeProvider theme={darkTheme}>
-            <div className="mt-6 flex flex-col items-center w-full font-semibold">
+            <div className="mt-10 flex flex-col items-center w-full font-semibold">
               <Box
                 className="w-full"
                 sx={{
