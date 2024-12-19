@@ -2,51 +2,51 @@ version: "3.8"
 
 services:
   infotafel-frontend:
-    build: 
+    build:
       context: ./infotafel
       dockerfile: Dockerfile
       network: host
     container_name: infotafel_next_frontend
-    working_dir: /usr/src/app  # This should be where the package.json of the frontend is
+    working_dir: /usr/src/app
     ports:
       - "9991:3000"
     volumes:
-      - infotafel_frontend_data:/usr/src/app  # Named volume
+      - infotafel_frontend_data:/usr/src/app
     networks:
       - infotafel_default
-    command: ["npm", "run", "start"]
+    command: ["sh", "-c", "npm install && npm run start"]  # Added npm install
     restart: always
 
   infotafel-backend:
-    build: 
+    build:
       context: ./infotafel
       dockerfile: Dockerfile
       network: host
     container_name: infotafel_next_backend
-    working_dir: /usr/src/app  # This should be where the package.json of the backend is
+    working_dir: /usr/src/app
     ports:
       - "9992:8000"
     volumes:
-      - infotafel_backend_data:/usr/src/app  # Named volume
+      - infotafel_backend_data:/usr/src/app
     networks:
       - infotafel_default
-    command: ["npm", "run", "start-node"]
+    command: ["sh", "-c", "npm install && npm run start-node"]  # Added npm install
     restart: always
 
   infotafel-cms:
-    build: 
+    build:
       context: ./infotafel-cms
       dockerfile: Dockerfile
       network: host
     container_name: infotafel_cms
-    working_dir: /usr/src/cms  # This should be where the package.json of the CMS is
+    working_dir: /usr/src/cms
     ports:
       - "9993:1337"
     volumes:
-      - infotafel_cms_data:/usr/src/cms  # Named volume
+      - infotafel_cms_data:/usr/src/cms
     networks:
       - infotafel_default
-    command: ["npm", "run", "start-strapi"]
+    command: ["sh", "-c", "npm install && npm run start-strapi"]  # Added npm install
     restart: always
 
 volumes:
