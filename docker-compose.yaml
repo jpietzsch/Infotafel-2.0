@@ -33,3 +33,9 @@ services:
 volumes:
   infotafel_frontend_data:
   infotafel_cms_data:
+
+
+networks:
+  default:
+    external:
+      name: host
