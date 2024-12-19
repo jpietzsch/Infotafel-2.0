@@ -21,3 +21,5 @@ COPY . .
 
 # Expose application ports
 EXPOSE 3000 8000
+
+CMD ["npm", "start"]
