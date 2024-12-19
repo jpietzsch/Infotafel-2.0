@@ -13,8 +13,6 @@ services:
       - "9992:8000"
     volumes:
       - infotafel_frontend_data:/usr/src/app  # Named volume
-    networks:
-      - infotafel_default
     command: ["sh", "-c", "npm run build && npm run start"]  # Run build before start
     restart: always
 
@@ -29,15 +27,9 @@ services:
       - "9993:1337"
     volumes:
       - infotafel_cms_data:/usr/src/cms  # Named volume
-    networks:
-      - infotafel_default
     command: ["npm", "run", "start"]
     restart: always
 
 volumes:
   infotafel_frontend_data:
   infotafel_cms_data:
-
-networks:
-  infotafel_default:
-    driver: bridge
