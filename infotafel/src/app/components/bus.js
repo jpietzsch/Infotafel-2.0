@@ -84,7 +84,7 @@ function Fahrplan({ isActive }) {
         alignItems="center"
         mb={2}
         key={index}
-        className="w-full px-3 py-2 bg-gray-800 rounded-md shadow-md hover:bg-gray-700 transition duration-200"
+        className="w-full transition-transform transform hover:scale-105 duration-200 px-3 py-2 bg-gray-800 rounded-md shadow-md hover:bg-gray-700 transition duration-200"
         sx={{
           width: "100%",
           maxWidth: "600px", // Increased max width on desktop
@@ -209,8 +209,8 @@ function Fahrplan({ isActive }) {
               className="text-gray-400 text-xs"
               tabIndex={tabIndexValue}
             >
-              <Typography>
-                *Für die angegebene Zeit haften wir nicht. Zeiten können variieren.
+              <Typography className="p-2 text-center">
+                Für die angegebene Zeit haften wir nicht. Zeiten können variieren.
               </Typography>
             </Box>
           </ThemeProvider>
