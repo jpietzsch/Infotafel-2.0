@@ -5,8 +5,8 @@ services:
     build:
       context: ./infotafel
       dockerfile: Dockerfile
+      network: host
     container_name: infotafel_next_frontend
-    network_mode: "host"
     ports:
       - "9990:3000"
       - "9991:8000" # Map host port 9991 to container port 9991
@@ -18,8 +18,8 @@ services:
     build:
       context: ./infotafel-cms
       dockerfile: Dockerfile
+      network: host
     container_name: infotafel_cms
-    network_mode: "host"
     ports:
       - "9992:9992" # Map host port 9992 to container port 9992
     restart: always
