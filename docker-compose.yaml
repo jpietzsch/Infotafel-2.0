@@ -11,16 +11,4 @@ services:
       - "9990:3000"
       - "9991:8000" # Map host port 9991 to container port 9991
     restart: always
-    depends_on: #If you have a backend service that the frontend depends on
-      - infotafel-cms
-
-  infotafel-cms:
-    build:
-      context: ./infotafel-cms
-      dockerfile: Dockerfile
-      network: host
-    container_name: infotafel_cms
-    ports:
-      - "9992:9992" # Map host port 9992 to container port 9992
-    restart: always
 
