@@ -17,7 +17,7 @@ RUN npm install
 COPY . .
 
 # Build the app during the build phase (optional, only if needed)
-RUN npm run build  # Add this only if your app requires a build step
+#RUN npm run build  # Add this only if your app requires a build step
 
 # Expose application ports
 EXPOSE 3000 8000
