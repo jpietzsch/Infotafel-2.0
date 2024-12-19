@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install dependencies during the build phase
-RUN npm install
+RUN /usr/local/bin/npm install
 
 # Copy the rest of the application
 COPY . .

@@ -6,7 +6,7 @@ WORKDIR /usr/src/cms
 
 # package.json und Abhängigkeiten installieren
 COPY package*.json ./
-RUN npm install
+RUN /usr/local/bin/npm install
 
 # Quellcode kopieren
 COPY . .
@@ -14,5 +14,3 @@ COPY . .
 # Port öffnen
 EXPOSE 1337
 
-# Strapi starten
-CMD ["npm", "run", "start"]
