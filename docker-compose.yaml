@@ -22,7 +22,3 @@ services:
       - "9992:9992" # Map host port 9992 to container port 9992
     restart: always
 
-volumes:
-  # Only create volumes if you actually need persistent data
-  # infotafel_frontend_data:
-  # infotafel_cms_data:
