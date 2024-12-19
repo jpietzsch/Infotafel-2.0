@@ -7,14 +7,14 @@ WORKDIR /usr/src/app
 # Copy only package.json and package-lock.json first (for Docker caching)
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install dependencies and print a log during the build
+RUN echo "Installing dependencies..." && npm install
 
 # Copy the rest of the application
 COPY . .
 
-# Expose application ports
-EXPOSE 3000 8000
+# Build the app and log the action
+RUN echo "Building the app..." && npm run build
 
-# Default command
-CMD ["npm", "start"]
+# Expose application ports (optional)
+EXPOSE 3000 8000
