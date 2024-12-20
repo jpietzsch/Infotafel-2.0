@@ -5,9 +5,6 @@ services:
       context: ./infotafel
       dockerfile: Dockerfile
       network: host
-      args:
-        - NEXT_PUBLIC_BACKEND_APP_API_URL=${NEXT_PUBLIC_BACKEND_APP_API_URL}
-        - NEXT_PUBLIC_STRAPI_APP_API_URL=${NEXT_PUBLIC_STRAPI_APP_API_URL}
     ports:
       - "9990:3000"
       - "9991:8000" # Map host port 9991 to container port 9991
