@@ -7,9 +7,6 @@ services:
       dockerfile: Dockerfile
       network: host
     container_name: infotafel_next_frontend
-    environment:
-      - NEXT_PUBLIC_BACKEND_APP_API_URL=http://backend:8000/ 
-      - NEXT_PUBLIC_STRAPI_APP_API_URL=http://strapi:1337/
     ports:
       - "9990:3000"
       - "9991:8000" # Map host port 9991 to container port 9991
