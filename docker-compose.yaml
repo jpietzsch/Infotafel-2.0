@@ -1,3 +1,4 @@
+version: "3.9"
 
 services:
   infotafel-frontend:
@@ -5,12 +6,18 @@ services:
       context: ./infotafel
       dockerfile: Dockerfile
       network: host
+      args:
+        - NEXT_PUBLIC_BACKEND_APP_API_URL=${NEXT_PUBLIC_BACKEND_APP_API_URL} 
+        - NEXT_PUBLIC_STRAPI_APP_API_URL=${NEXT_PUBLIC_STRAPI_APP_API_URL} 
     ports:
       - "9990:3000"
-      - "9991:8000" # Map host port 9991 to container port 9991
+      - "9991:8000" 
     restart: always
     env_file:
       - stack.env 
+    networks:
+      - infotafel-2024 
+
   infotafel_cms:
     build:
       context: ./infotafel-cms
@@ -20,7 +27,7 @@ services:
     ports:
       - "9993:1337"
     restart: always
-    
+
 networks:
   infotafel-2024: 
     driver: bridge
