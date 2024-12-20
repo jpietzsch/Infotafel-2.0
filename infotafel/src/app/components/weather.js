@@ -4,8 +4,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Lottie from "lottie-react";
 import weatherInterpretationCodes from "../weatherInterpretationCodes";
+import dotenv from 'dotenv';
 
-const API_BASE_URL = "http://localhost:8000/cache";
+dotenv.config()
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_APP_API_URL + "cache";
 const debug = false;
 
 function Weather({ isActive }) {

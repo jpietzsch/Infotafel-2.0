@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 export default function Plan({ isActive = true }) {
   const [fachrichtung, setFachrichtung] = useState("BVB");
@@ -16,7 +19,7 @@ export default function Plan({ isActive = true }) {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get(`http://localhost:1337/api/berufe`);
+        const response = await axios.get(process.env.NEXT_PUBLIC_STRAPI_APP_API_URL + `api/berufe`);
         const jobsData = response.data.data;
 
         if (jobsData && jobsData.length > 0) {
@@ -79,10 +82,10 @@ export default function Plan({ isActive = true }) {
           .split("T")[0];
 
         const todayResponse = await axios.get(
-          `http://localhost:1337/api/stundenplaene?populate=*&filters[beruf][Name][$eq]=${fachrichtung}&filters[Datum][$eq]=${dateToday}`
+          process.env.NEXT_PUBLIC_STRAPI_APP_API_URL + `api/stundenplaene?populate=*&filters[beruf][Name][$eq]=${fachrichtung}&filters[Datum][$eq]=${dateToday}`
         );
         const tomorrowResponse = await axios.get(
-          `http://localhost:1337/api/stundenplaene?populate=*&filters[beruf][Name][$eq]=${fachrichtung}&filters[Datum][$eq]=${dateTomorrow}`
+          process.env.NEXT_PUBLIC_STRAPI_APP_API_URL + `api/stundenplaene?populate=*&filters[beruf][Name][$eq]=${fachrichtung}&filters[Datum][$eq]=${dateTomorrow}`
         );
 
         const todayData = todayResponse.data.data[0]?.Vertretungsplan || [];

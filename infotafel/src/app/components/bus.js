@@ -9,6 +9,9 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ErrorIcon from "@mui/icons-material/Error";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const darkTheme = createTheme({
   palette: {
@@ -23,8 +26,7 @@ function Fahrplan({ isActive }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/cache/busplan");
-        console.log("Fahrplan data:", response.data.busData);
+        const response = await axios.get(process.env.NEXT_PUBLIC_BACKEND_APP_API_URL + "cache/busplan");
         setBusplanData(response.data.busData);
         setLoading(false);
       } catch (error) {

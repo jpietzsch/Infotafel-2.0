@@ -2,6 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 function Foods({ isActive }) {
   const [loading, setLoading] = useState(true);
@@ -11,8 +14,7 @@ function Foods({ isActive }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/cache/food");
-        console.log("Fetched Data: ", response.data);
+        const response = await axios.get(process.env.NEXT_PUBLIC_BACKEND_APP_API_URL + "cache/food");
         setMealPlan(Array.isArray(response.data) ? response.data : []);
         if (response.data.length > 0) {
           setSelectedDay(response.data[0].date); // Standardmäßig den ersten Tag auswählen
