@@ -23,3 +23,6 @@ services:
       - "9993:1337"
     restart: always
     
+networks:
+  infotafel-2024: 
+    driver: bridge
