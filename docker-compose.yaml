@@ -13,6 +13,8 @@ services:
       - "9990:3000"
       - "9991:8000" # Map host port 9991 to container port 9991
     restart: always
+    env_file:
+      - .env
   infotafel_cms:
     build:
       context: ./infotafel-cms
