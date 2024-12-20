@@ -16,7 +16,7 @@ services:
     restart: always
   infotafel_cms:
     build:
-      context: ./infotafel_cms
+      context: ./infotafel-cms
       dockerfile: Dockerfile
       network: host
     container_name: infotafel_cms
